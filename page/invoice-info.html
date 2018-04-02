@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/mui.picker.css" />
+		<link rel="stylesheet" type="text/css" href="../css/mui.poppicker.css" />
+		<link rel="stylesheet" type="text/css" href="../css/global.css" />
+		<link rel="stylesheet" type="text/css" href="../css/app.css" />
+	</head>
+
+	<body id="invoice_info">
+		<header class="mui-bar mui-bar-nav bgf">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left color_b"></a>
+			<h1 class="mui-title">设置发票信息</h1>
+		</header>
+		<div class="mui-content">
+			<div class="invoice_type bgf">
+				<h4>发票类型</h4>
+				<div class="type_info">
+					<span class="fp active" data-name="ptfp" id="ptfp">普通发票</span>
+					<span class="fp" data-name="zzsfp" id="zzsfp">增值税发票</span>
+				</div>
+			</div>
+			<!--普通发票-->
+			<div class="putong">
+				<div class="invoice_type bgf">
+					<h4>类型</h4>
+					<div class="type_info">
+						<span class="fp active" data-name="gr" id="gr">个人</span>
+						<span class="fp" data-name="dw" id="dw">单位</span>
+					</div>
+				</div>
+				<div class="invoice_type bgf">
+					<h4>发票抬头</h4>
+					<div class="type_info">
+						<div class="mui-input-row">
+							<input id='companyname' type="text" class="mui-input-clear mui-input" placeholder="请输入单位名称或个人">
+							<input id='shibiecode' type="text" class="mui-input-clear mui-input" placeholder="请在此填写纳税人识别号" style="display: none;">
+						</div>
+					</div>
+				</div>
+				<div class="invoice_type bgf">
+					<h4>发票内容<span>发票内容选项已根据税法调整具体以展示为准</span></h4>
+					<div class="type_info">
+						<span class="fp active" data-name="goods1" id="goods1">商品明细</span>
+						<span class="fp" data-name="goods2" id="goods2">商品类别</span>
+					</div>
+					<p class="f12"> 发票内容将显示详细商品名称与价格信息</p>
+				</div>
+			</div>
+
+			<!--增值税发票-->
+			<div class="zengzhi">
+				<div class="invoice_type bgf">
+					<h4>发票信息填写</h4>
+					<div class="type_info">
+						<div class="mui-input-row">
+							<input id='companyname1' type="text" class="mui-input-clear mui-input" placeholder="单位名称">
+							<input id='shibiecode1' type="text" class="mui-input-clear mui-input" placeholder="纳税人识别编码">
+							<input id='address' type="text" class="mui-input-clear mui-input" placeholder="注册地址">
+							<input id='telephone' type="text" class="mui-input-clear mui-input" placeholder="注册电话">
+							<input id='khbank' type="text" class="mui-input-clear mui-input" placeholder="开户银行">
+							<input id='bankAccount' type="text" class="mui-input-clear mui-input" placeholder="银行账户">
+						</div>
+					</div>
+				</div>
+				<div class="invoice_type bgf">
+					<h4>收票人信息</h4>
+					<div class="type_info">
+						<div class="mui-input-row">
+							<input id='spname' type="text" class="mui-input-clear mui-input" placeholder="收票人姓名">
+							<input id='sptelephone' type="text" class="mui-input-clear mui-input" placeholder="收票人电话">
+						</div>
+					</div>
+				</div>
+				<ul class="mui-table-view balance1">
+					<!--<li class="mui-table-view-cell takeUser">	
+						<div class="mui-input-row">
+							<label>收货人</label>
+							<input name="takeUser" id="username"  type="text" class="mui-input-clear mui-input" placeholder="">
+						</div>
+					</li>
+					<li class="mui-table-view-cell takeUser">	
+						<div class="mui-input-row">
+							<label>联系电话</label>
+							<input name="phone" id="telephone"  type="text" class="mui-input-clear mui-input" placeholder="">
+						</div>
+					</li>-->
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right" id="showCityPicker3">
+							<span class="fl">收票人地址：</span><span class="fl" id="cityResult3"></span><span class="fr mar_rig20 color_b">请选择</span>
+						</a>
+					</li>
+					<input type="hidden" name="addressId" id="addressId" value="" />
+					<!--<li class="mui-tableaddressId-view-cell takeUser">
+						<textarea rows="2" id="addressInfo" placeholder="请写详细地址不少于5个字" style="padding:10px;"></textarea>
+					</li>-->
+				</ul>
+				<div class="invoice_type bgf">
+					<h4>收票人详细地址</h4>
+					<div class="type_info">
+						<div class="mui-input-row">
+							<textarea name="spr_address" id="apaddress2" class="mui-input-clear mui-input" rows="" cols=""></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="mui-content-padded">
+				<button type="button" id="qd" class="mui-btn mui-btn-danger mui-btn-block">确定</button>
+			</div>
+		</div>
+		<script src="../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.picker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			var invoice = "1"; //#发票类型，1：普通2：增值税
+			var invoiceType = "1"; //#类型：1个人  2单位
+			var companyname = ""; //xxx #单位名称或个人
+			var shibiecode = ""; //xxx #纳税人识别号
+			var contents = "商品明细"; //xxx #发票内容(商品明细，商品类别)
+
+			//			以下是只有增值税才有的
+
+			var address = ""; //xxx #单位注册地址
+			var telephone = ""; //xxx #单位注册电话
+			var khbank = ""; //xxx #开户银行
+			var bankAccount = ""; //xxx #银行账户
+			var spname = ""; //xxx #收票人姓名
+			var sptelephone = ""; //xxx #收票人电话
+			var cityResult3 = ""; //=xxx #收票人地址
+			var addressId = ""; //=xxx #收票人地址对应id
+			var apaddress2 = ""; //xxx #收票人详址 
+			var spaddress = "";
+			var orderid = "";
+			var param;
+			var token = localStorage.getItem("token");
+			mui.init();
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview();
+				orderid = self.orderid; //获得列表页传过来的id
+				/*返回   订单信息*/
+				mui.ajax({
+					url: WEB_HOST + "/userCenter/showfapiao",
+					type: "get",
+					async: false,
+					data: {
+						"token": token,
+						"orderid": orderid
+					},
+					dataType: "json",
+					timeout: 1000,
+					success: function(data) {
+						/*后台没有数据  进行初始化*/
+						if(data.status == 1){
+							chushihua();
+						}
+						if(data.status == 0) {
+							if(data.data.invoice == "1") { //普通发票
+								console.log(data.data.invoiceType)
+								if(data.data.invoiceType == "1") { //普通发票 个人
+									mui("#ptfp")[0].classList.add("active");
+									mui("#zzsfp")[0].classList.remove("active");
+									huixian("gr",data);
+								}else if(data.data.invoiceType == 2) {//普通发票 单位
+									huixian("dw",data);
+								}
+								
+							}
+							if(data.data.invoice == "2") { //增值税发票
+								mui(".zengzhi")[0].style.display = "block";
+								mui(".putong")[0].style.display = "none";
+								huixian("z",data);
+								
+								/*获取地区*/
+								mui.ajax({
+										url: WEB_HOST+"/userCenter/diqu", 
+										type: "get",
+										async: false,
+										data: {
+											"token":localStorage.getItem("token")
+										},
+										dataType: "json",
+										timeout: 1000,
+										success: function(data) {
+											getcity(data.data);
+										},
+										error:function(a){
+											mui.toast(a.status);
+										}
+									});
+							}
+						}
+					},
+					error: function(a) {
+						mui.toast("服务器未响应，请稍后重试");
+					}
+				});
+				
+
+				/*点击 发票类型  显示界面进行切换  */
+				mui(".type_info").on("tap", "span", function() {
+					$(this).addClass("active").siblings().removeClass("active");
+					//			      	判断点击的 发票类型(普通 增值)
+					if($(this).data("name") == "zzsfp") {
+						invoice = 2;
+						mui(".putong")[0].style.display = "none";
+						mui(".zengzhi")[0].style.display = "block";
+					} else if($(this).data("name") == "ptfp") {
+						invoice = 1;
+						mui(".putong")[0].style.display = "block";
+						mui(".zengzhi")[0].style.display = "none";
+					}
+					//			      	判断是否是 发票种类(个人 单位)
+					if($(this).data("name") == "gr") {
+						invoiceType = 1;
+						$("#shibiecode").css("display", "none");
+					} else if($(this).data("name") == "dw") {
+						invoiceType = 2;
+						$("#shibiecode").css("display", "block");
+					}
+					//判断是否是 发票内容(商品明细 商品类别)
+					if($(this).data("name") == "goods1") {
+						contents = "商品明细"
+					} else if($(this).data("name") == "goods2") {
+						contents = "商品类别"
+					}
+				})
+				
+				//		      	 点击 确定按钮 后 提交信息
+				document.getElementById("qd").addEventListener("tap", function() {
+					/*发送类型区分 (普通 增值)*/
+					if(invoice == "1") {
+						/*类型区分(个人 单位)*/
+						if(invoiceType == "1") {
+							if(yanzheng("pg")){
+								param = {
+									"token": token,
+									"orderid": orderid,
+									"invoice": invoice,
+									"invoiceType": invoiceType,
+									"companyname": mui("#companyname")[0].value,
+									"contents": contents
+								}
+								fasong();
+							}
+							
+						}
+						if(invoiceType == "2") {
+							if(yanzheng("pd")){
+								param = {
+									"token": token,
+									"orderid": orderid,
+									"invoice": invoice,
+									"invoiceType": invoiceType,
+									"companyname": mui("#companyname")[0].value,
+									"shibiecode": mui("#shibiecode")[0].value,
+									"contents": contents
+								}
+								fasong();
+							}
+							
+						}
+					}
+					if(invoice == "2") {
+						
+						if(yanzheng("z")){
+							param = {
+								"token": token,
+								"orderid": orderid,
+								"invoice": invoice,
+								"companyname": mui("#companyname1")[0].value,
+								"shibiecode": mui("#shibiecode1")[0].value,
+								"address": mui("#address")[0].value,
+								"telephone": mui("#telephone")[0].value,
+								"khbank": mui("#khbank")[0].value,
+								"bankAccount": mui("#bankAccount")[0].value,
+								"spname": mui("#spname")[0].value,
+								"sptelephone": mui("#sptelephone")[0].value,
+								"spaddress": $("#cityResult3").html(),
+								"addressId ": mui("#addressId")[0].value,
+								"apaddress2": mui("#apaddress2")[0].value
+							}
+							fasong();
+						}
+						
+					}
+					console.log("param===>"+JSON.stringify(param));
+					function fasong(){
+						mui.ajax({ /*发送 发票信息*/
+							url: WEB_HOST + "/invoice/save",
+							type: "post",
+							async: false,
+							data: param,
+							dataType: "json",
+							timeout: 1000,
+							success: function(data) {
+								mui.toast(data.message);
+								var wobj = plus.webview.getWebviewById("order");
+								wobj.reload(true);
+							},
+							error: function(a) {
+								mui.toast("服务器未响应，请稍后重试");
+							}
+						});
+					}
+					
+				});
+
+				/*验证填写*/
+				function yanzheng(a) {
+					/*普通发票 个人 (基础验证)*/
+					if(a == "pg"){
+						if(mui("#companyname")[0].value == "" || mui("#companyname")[0].value == "undefined") {
+							mui.toast("单位(个人)名称不能为空");
+							return false;
+						}
+					}
+					
+					/*普通发票 单位验证(基础+纳税人识别码)*/
+					if(a == "pd") {
+						if(mui("#companyname")[0].value == "" || mui("#companyname")[0].value == "undefined") {
+							mui.toast("单位(个人)名称不能为空");
+							return false;
+						}
+						if(mui("#shibiecode")[0].value == "" || mui("#shibiecode")[0].value == "undefined") {
+							mui.toast("纳税人识别码不能为空");
+							return false;
+						}
+					}
+
+					/*增值税发票验证(基础+纳税人识别码+..*/
+					if(a == "z") {
+						console.log(mui("#companyname1")[0].value)
+						if(mui("#companyname")[0].value == "" || mui("#companyname1")[0].value == "undefined") {
+							mui.toast("单位(个人)名称不能为空");
+							return false;
+						}
+						
+						if(mui("#shibiecode1")[0].value == "" || mui("#shibiecode1")[0].value == "undefined") {
+							mui.toast("纳税人识别码不能为空");
+							return false;
+						}
+						if(mui("#address")[0].value == "" || mui("#address")[0].value == "undefined") {
+							mui.toast("注册地址不能为空");
+							return false;
+						}
+						if(mui("#telephone")[0].value == "" || mui("#telephone")[0].value == "undefined") {
+							mui.toast("注册电话不能为空");
+							return false;
+						}
+						if(mui("#khbank")[0].value == "" || mui("#khbank")[0].value == "undefined") {
+							mui.toast("开户银行不能为空");
+							return false;
+						}
+						if(mui("#bankAccount")[0].value == "" || mui("#bankAccount")[0].value == "undefined") {
+							mui.toast("银行账户不能为空");
+							return false;
+						}
+						if(mui("#spname")[0].value == "" || mui("#spname")[0].value == "undefined") {
+							mui.toast("收票人姓名不能为空");
+							return false;
+						}
+						if(mui("#sptelephone")[0].value == "" || mui("#sptelephone")[0].value == "undefined") {
+							mui.toast("收票人电话不能为空");
+							return false;
+						}
+						if(mui("#apaddress2")[0].value == "" || mui("#apaddress2")[0].value == "undefined") {
+							mui.toast("收票人详细地址不能为空");
+							return false;
+						}
+					}
+					return true;
+				}
+				/*第一次填写 信息 初始化*/
+				function chushihua() {
+					mui("#ptfp")[0].classList.add("active");
+					mui("#zzsfp")[0].classList.remove("active");
+
+					mui("#gr")[0].classList.add("active");
+					mui("#dw")[0].classList.remove("active");
+
+					mui("#goods1")[0].classList.add("active");
+					mui("#goods2")[0].classList.remove("active");
+					
+				}
+				/*信息 回显*/
+				function huixian(a,data) {
+					invoice = data.data.invoice;
+					invoiceType = data.data.invoiceType;
+					contents = data.data.contents;
+					
+					if(invoice == 1){
+						mui("#ptfp")[0].classList.add("active");
+						mui("#zzsfp")[0].classList.remove("active");
+					}else{
+						mui("#zzsfp")[0].classList.add("active");
+						mui("#ptfp")[0].classList.remove("active");
+					}
+					if(invoiceType == 1){
+						mui("#gr")[0].classList.add("active");
+						mui("#dw")[0].classList.remove("active");
+					}else{
+						mui("#dw")[0].classList.add("active");
+						mui("#gr")[0].classList.remove("active");
+						mui("#shibiecode")[0].style.display = "block";
+						mui("#companyname")[0].value = data.data.companyname;
+					}
+					if(contents == "商品明细"){
+						mui("#goods1")[0].classList.add("active");
+						mui("#goods2")[0].classList.remove("active");
+					}else{
+						mui("#goods2")[0].classList.add("active");
+						mui("#goods1")[0].classList.remove("active");
+					}
+					if(a == "gr") {
+						$("#companyname").val(data.data.companyname);
+					}
+					if(a == "dw") {
+//						$("#contents").val(data.data.contents);
+						$("#companyname").val(data.data.companyname);
+						$("#shibiecode").val (data.data.shibiecode);
+					}
+					
+					if(a == 'z') {
+						console.log("data.data.companyname=====>"+data.data.companyname+"shibiecode"+data.data.shibiecode)
+						$("#shibiecode1").val (data.data.shibiecode);
+						$("#companyname1").val(data.data.companyname);
+						
+						
+						
+						$("#apaddress2").val(data.data.apaddress2);
+						$("#addressId").val(data.data.addressId);
+						$("#cityResult3").html(data.data.spaddress);
+						$("#sptelephone").val(data.data.sptelephone);
+						$("#spname").val(data.data.spname);
+						$("#bankAccount").val(data.data.bankAccount);
+						$("#khbank").val(data.data.khbank);
+						$("#telephone").val(data.data.telephone);
+						$("#address").val(data.data.address);
+						
+					}
+				}
+			 	function getcity(citydata) {
+					var cityPicker3 = new mui.PopPicker({
+						layer: 3
+					});
+					cityPicker3.setData(citydata);
+					document.getElementById('showCityPicker3').addEventListener('tap', function(event) {
+						cityPicker3.show(function(items) {
+							document.getElementById('cityResult3').innerText = (items[0] || {}).text + "/" + (items[1] || {}).text + "/" + (items[2] || {}).text;
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+							document.getElementById('addressId').value = (items[0] || {}).value + "/" + (items[1] || {}).value + "/" + (items[2] || {}).value;
+						});
+					}, false);
+				}
+			})
+		</script>
+	</body>
+
+</html>

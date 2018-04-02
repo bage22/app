@@ -1,0 +1,353 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+		<style type="text/css">
+			/*.wypj{
+				position: absolute;
+				right: 10px;
+				top: 3px;
+				color: orange;
+			}*/
+			#wypj{
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body id="activity_info">
+		<header class="mui-bar mui-bar-nav head_bg">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left color_f"></a>
+			<h1 class="mui-title color_f">
+				活动详情
+			</h1>
+		</header>	
+		<div class="mui-content">
+		     <div id="hot_travel">
+	     	    <div class="hot_activity">
+			          <div class="hot_activity_img">
+			              <img src=""/>
+			              <p class="hot_activity_tit"><span class="fl"></span><span class="fr">&yen;<span class="price"></span></span></p>
+			          </div>
+			          <div class="hot_activity_info">
+			          	  <p style="color: #333;" class="subtitle"></p>
+			          	  <p class="biaoqian"><span class="fl"><a href="javascript:void(0)"></a><a href="javascript:void(0)" class="endtime">2017年12月12日</a></span><span class="fr"><span class="fr_people">120</span>人已体验</span></p>
+			          </div>
+			     </div>
+			     <div class="travel_agency">
+			          <!--<div class="travel_agency_name fl"><span><img class="tr_avatar" src="../img/01home_17.png"/></span><span class="tr_name">中国某某某旅行社</span></div>-->
+			          <div class="travel_agency_name fl"><span class="tr_name"></span></div>
+			          <p class="travel_agency_phone fr" id="tel"><span class="mui-icon mui-icon-phone"></span>电话咨询</p>
+			          <input type="hidden" name="tr_phone" id="tr_phone" value="" />
+			     </div>
+		     </div>
+		     <div id="segmentedControl" class="mui-segmented-control">
+				<a class="mui-control-item mui-active" href="#hdxq" data-id="0">
+				     活动详情
+				</a>
+				<a class="mui-control-item" href="#pj" data-id="1" id="tab_pj">
+					评价
+				</a>
+				<a class="mui-control-item" href="#hdxz" data-id ="2" id="tab_hdxz">
+					活动须知
+				</a>
+			</div>
+			<div class="hot_activity_text">
+			    <div class="mui-control-content mui-active hot_activity_panel" id="hdxq">
+				     <div class="panel_tit"><h4><span></span>活动详情</h4></div>
+				     <div class="panel_text">
+				          <!--<div class="panel_user">
+				               <span class="user_img"><img class="image" src="../img/01home_28.png"/></span></span>
+				               <span class="user_name">小猪快跑</span>
+				          </div>-->
+				          <div class="panel_info">
+				               <ul class="hot_list">
+				                   <li><span class="item_span"></span></li>				                   
+				               </ul>
+						  </div>
+				     </div>
+				</div>
+				<div class="mui-control-content hot_activity_panel" id="pj">
+				     <div class="panel_tit" style="position: relative;"><h4><span></span>评价</h4></div>
+				     <div class="panel_text">
+				          <div id="panel_text">
+					          	
+				          </div>
+				          <script type="text/html" id="paneltemp">
+				          	{{each data as value i}}       
+				          	    <div class="pjlist">
+					          		<div class="panel_user">
+						            <span class="user_img"><img src="{{value.avatar}}"/></span></span>
+						            <span class="user_name">{{value.nickname}}</span>
+							        </div>
+							        <div class="panel_info">
+							            {{value.content}}
+									</div>
+									<p class="panel_time">{{value.time}}</p>
+								</div>
+							{{/each}}
+				          </script>
+						  <div class="panel_btn">
+						        <button type="button" id="lookWhole" class="mui-btn mui-btn-warning mui-btn-outlined">
+									查看全部评价
+								</button>
+								<button type="button" id="wypj" class="mui-btn mui-btn-warning">
+									我要评价
+								</button>
+						  </div>
+				     </div>
+				</div>
+				<div class="mui-control-content" id="hdxz">
+					<div class="hot_activity_panel">
+					     <div class="panel_tit"><h4><span></span>活动须知</h4></div>
+					     <div class="panel_text">
+					          <div class="panel_info" id="hdxz_info">
+					          	    <p></p>
+					                <!--<p class="block">***卖家的服务态度挺好的，我买了之后还提醒我，认真检查下商品。真的不错，下次还在这买。</p>
+					                <p class="block">服务态度挺好的，我买了之后还提醒我，认真检查下商品。真的不错，下次还在这买。</p>
+					                <p>***卖家的服务态度挺好的，我买了之后还提醒我，认真检查下商品。真的不错，下次还在这买。</p>
+					                <p>服务态度挺好的，我买了之后还提醒我，认真检查下商品。真的不错，下次还在这买。</p>
+					                <p>***卖家的服务态度挺好的，我买了之后还提醒我，认真检查下商品。真的不错，下次还在这买。</p>
+					                <p>服务态度挺好的，我买了之后还提醒我，认真检查下商品。真的不错，下次还在这买。</p>-->
+							  </div>
+							   <!--<div class="look_gd" id="lookGd"><span class="look_gd_text">查看更多</span><span class="mui-icon mui-icon-arrowright"></span></div>-->
+					     </div>
+					</div>
+					<div class="hot_activity_panel">
+					     <div class="panel_tit"><h4><span></span>退改规则</h4></div>
+					     <div class="panel_text">
+					          <div class="panel_info_txt">
+					                <p></p>
+							  </div>
+					     </div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer">
+		     <!--<div class="footer_count"><span class="times">2</span>期剩余<span class="chances">123</span>人次</div>-->
+		     <div class="footer_btn" id="enrolls" style="text-align: center;width: 100%;">
+		         <span class="btn_bm" style="width: 96%;">立即报名</span>
+		     </div>
+		</div>
+		<script src="../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/template.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/sub.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+//			点击调到指定位置
+//		   $(".menu_item").click(function(){
+//		       $(this).find('a').addClass("active").parent().siblings().find("a").removeClass("active");
+//		       console.log($(this).index());
+//		       var top=$(".hot_activity_panel").eq($(this).index()).offset().top;
+//		       document.body.scrollTop = top-50;
+//		   })
+            var hdid;
+            var hdmc;
+            var hdnr;
+            var flag;
+            var gname;
+            var gprice;
+            var gimg;
+		    mui.init();
+		    mui.plusReady(function(){
+		    	var self = plus.webview.currentWebview(); 
+			    var listid = self.listid;//获得列表页传过来的id
+			    hdid=listid;
+//			    mui.toast(listid);
+               //活动详情接口
+			   mui.ajax({
+					url: WEB_HOST+"/activity/hddetail", 
+					type: "get",
+					async: false,
+					data: {
+						"activityid":listid,
+						"token":localStorage.getItem("token")
+					},
+					dataType: "json",
+					timeout: 1000,
+					success: function(data) {
+//						mui.toast(JSON.stringify(data));
+						if(data.status == 0){
+							flag=data.message;
+							if(flag=="已报名"){
+								$("#wypj").css("display","inline-block");
+							}
+//							mui.toast(data.data.image);
+                            gimg=data.data.image;
+                            gname=data.data.title;
+                            gprice=data.data.price;
+							$(".hot_activity_img img").attr("src",data.data.image);
+							$(".hot_activity_tit .fl").html(data.data.title);
+							hdmc=data.data.title;
+							$(".hot_activity_tit .price").html(data.data.price);
+							$(".fr_people").html(data.data.people);
+							$(".subtitle").html(data.data.subtitle);
+							$(".endtime").html(data.data.endtime);
+//							$(".tr_avatar").attr("src",data.data.image);
+							$(".tr_name").html(data.data.name);
+							$("#tr_phone").val(data.data.phone);
+//							$(".user_img .image").attr("src",data.data.data.business.avatar);
+//							$(".user_name").html(data.data.data.business.name);
+							$(".item_span").html(data.data.description); 
+							hdnr=data.data.description;
+							$(".footer_count .times").html(data.data.times);
+							$(".footer_count .chances").html(data.data.chances);
+						}
+				    },
+				    error:function(a){
+						mui.toast("服务器未响应，请稍后重试");
+					}
+				});
+//				评价
+				document.getElementById("tab_pj").addEventListener("tap",function(){
+					mui.ajax({
+						url: WEB_HOST+"/activity/comments", 
+						type: "get",
+						async: false,
+						data: {
+							"activityid":listid,
+							"token":localStorage.getItem("token")
+						},
+						dataType: "json",
+						timeout: 1000,
+						success: function(data) {
+							if(data.status == 0){
+								document.getElementById("panel_text").innerHTML=template("paneltemp",data);
+							}
+							//				控制评价显示条数
+	                         $(".pjlist").eq(0).addClass("block");
+	                         $(".pjlist").eq(1).addClass("block");
+	                         document.getElementById("lookWhole").addEventListener("tap",function(){
+	                         	$(".pjlist").addClass("block"); 
+	                         	$("#lookWhole").fadeOut();
+	                         })
+					    },
+					    error:function(a){
+							mui.toast("服务器未响应，请稍后重试");
+						}
+					});
+				})
+//				活动须知
+				document.getElementById("tab_hdxz").addEventListener("tap",function(){
+					mui.ajax({
+						url:WEB_HOST+"/activity/hdxz", 
+						type: "get",
+						async: false,
+						data: {
+							"activityid":listid,
+							"token":localStorage.getItem("token")
+						},
+						dataType: "json",
+						timeout: 1000,
+						success: function(data) {
+							if(data.status == 0){
+								$("#hdxz_info p").html(data.data.hdxz);
+								$(".panel_info_txt p").html(data.data.tggz)
+							}
+					    },
+					    error:function(a){
+							mui.toast("服务器未响应，请稍后重试");
+						}
+					});
+				})
+			    document.getElementById("tel").addEventListener('tap', function() {
+				    plus.device.dial($("#tr_phone").val());
+			    });
+//		        document.getElementById("lookWhole").addEventListener('tap',function(){
+//		           mui.openWindow({
+//		               url:"evaluate.html",
+//		               id:"evaluate"
+//	       			});
+//		        });
+                document.getElementById("wypj").addEventListener("tap",function(){
+                	if(localStorage.getItem("token")){
+                		mui.openWindow({
+			               url:"hdpj.html",
+			               id:"hdpj",
+			               createNew:true,
+			               extras:{
+			               	 hdid:hdid,
+					         gname:gname,
+					         gprice:gprice,
+					         gimg:gimg
+					       }
+		       			});
+                	}else{
+                		var btnArray = ['是', '否'];
+						mui.confirm("未登录，现在是否去登陆", function(e) {
+							if (e.index == 0) {
+								mui.openWindow({
+									url: "login-mode.html",
+									id: "login-mode",
+									createNew:true,
+									waiting: {
+										autoShow: true
+									},show: {
+										aniShow: 'none'
+									}
+								});
+							}
+						})
+                   }
+                })
+		        document.getElementById("enrolls").addEventListener('tap',function(){
+		        	if(localStorage.getItem("token")){
+                		if(flag=="未报名"){
+			        		mui.openWindow({
+				               url:"enroll.html",
+				               id:"enroll",
+				               createNew:true,
+				               extras:{
+						         hdid:hdid,
+						         hdmc:hdmc,
+						         hdnr:hdnr
+						       }
+			       			});
+			        	}else{
+			        		mui.toast(flag);
+			        	}
+                	}else{
+                		var btnArray = ['是', '否'];
+						mui.confirm("未登录，现在是否去登陆", function(e) {
+							if (e.index == 0) {
+								mui.openWindow({
+									url: "login-mode.html",
+									id: "login-mode",
+									createNew:true,
+									waiting: {
+										autoShow: true
+									},show: {
+										aniShow: 'none'
+									}
+								});
+							}
+						})
+                    }
+		        });
+		    })
+		   //活动通知点击状态
+//		   var open=true;
+//		   $("#lookGd").click(function(){
+//		   	   if(open==true){
+////			   	   	$(".panel_info p").addClass("block");
+//			   	    $(".look_gd_text").html("点击收起");
+//			   	    open=false;
+//		   	   }else{
+////		   	   	    $(".panel_info p").removeClass("block");
+////		   	   	    $(".panel_info p").eq(0).addClass("block");
+////		   	   	    $(".panel_info p").eq(1).addClass("block");
+//			   	    $(".look_gd_text").html("查看更多");
+//			   	    open=true;
+//		   	   }
+//		   })
+	   </script>
+	</body>
+
+</html>

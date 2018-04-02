@@ -1,0 +1,61 @@
+{
+    "code": 0,
+    "msg": "",
+    "count": 1000,
+    "data": [
+        {
+            "id": 101,
+            "nicheng": "旅游",
+            "title": "秋风起，秋风落。在这最美丽的秋季，去寻找一个最接近自然的地区",
+            "imgPath": "../img/01home_28.png",
+            "llcount":"55",
+            "dzcount":"66",
+            "state":"0"
+        },
+        {
+            "id": 102,
+            "nicheng": "度假",
+            "title": "幸福自由行幸福自由行幸福自由行幸福自由行幸福",
+            "imgPath": "../img/01home_29.png",
+            "llcount":"55",
+            "dzcount":"16",
+            "state":"1"
+        },
+        {
+            "id": 103,
+            "title": "CBD",
+            "title": "粉红色的回忆CBD粉红色的回忆CBD粉红色的回忆",
+            "imgPath": "../img/cbd.jpg",
+             "llcount":"23",
+            "dzcount":"43",
+            "state":"0"
+        },
+        {
+            "id": 104,
+            "nicheng": "木屋",
+            "title": "安静的木屋安静的木屋安静的木屋安静的木屋安静的木屋",
+            "imgPath": "../img/muwu.jpg",
+             "llcount":"24",
+            "dzcount":"31",
+            "state":"0"
+        },
+        {
+            "id": 105,
+            "nicheng": "睡觉",
+            "title": "一觉睡到天荒地老一觉睡到天荒地老一觉睡到天荒地老",
+            "imgPath": "../img/shuijiao.jpg",
+             "llcount":"21",
+            "dzcount":"33",
+            "state":"0"
+        },
+        {
+            "id": 106,
+            "nicheng": "远眺",
+            "title": "秋风起，秋风落。在这最美丽的秋季，去接近自然的地区东三省",
+            "imgPath": "../img/yuantiao.jpg",
+             "llcount":"34",
+            "dzcount":"34",
+            "state":"1"
+        }
+    ]
+}

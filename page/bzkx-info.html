@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+	</head>
+
+	<body id="bzflash">
+		<header class="mui-bar mui-bar-nav head_bg">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left color_f"></a>
+			<h1 class="mui-title color_f">
+				北中快讯
+			</h1>
+		</header>	
+		<div class="mui-content">
+		   <ul class="bzkx_list" id="bzkx_list">
+		   	  <!--<li class="bzkx_item">
+		   	  	 	<div class="bzkx_info fl">
+			   	  	 	<h4>秋风起，秋风落。在这最美丽的秋季，去寻找一个最接近自然的地区</h4>
+			   	  	 	<p>
+			   	  	 		<span class="fl"><img src="../img/01home_28.png"/>伴侣</span>
+			   	  	 		<span class="fr">
+			   	  	 			<a><img src="../img/eye.png"/>3.2万</a>
+			   	  	 			<a><img src="../img/fab.png"/>20</a>
+			   	  	 		</span>
+			   	  	 	</p>
+			   	  	 </div>
+			   	  	 <div class="bzkx_img fr">
+			   	  	 	<img src="../img/01home_29.png" />
+			   	  	 </div>
+		   	  </li>-->
+		   </ul>
+		   <script type="text/html" id="bzkxtemp">
+		   	{{each data as value i}}
+		   	 <li class="bzkx_item" data-id="{{value.ID}}">
+		   	  	 	<div class="bzkx_info fl">
+			   	  	 	<h4>{{value.TITLE}}</h4>
+			   	  	 	<p>
+			   	  	 		<span class="fl">{{value.nickname}}</span>
+			   	  	 		<span class="fr">
+			   	  	 			{{value.time}}
+			   	  	 		</span>
+			   	  	 	</p>
+			   	  	 </div>
+			   	  	 <div class="bzkx_img fr">
+			   	  	 	<img src="{{value.image}}"/>
+			   	  	 </div>
+		   	  </li>
+		   	  {{/each}}
+		   </script>
+		</div>
+		<script src="../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/template.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/sub.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			//热门活动列表接口
+			   mui.ajax({
+					url:WEB_HOST+"/index/newsList", 
+					type: "get",
+					async: false,
+					data: {
+						"token":localStorage.getItem("token")
+					},
+					dataType: "json",
+					timeout: 1000,
+					success: function(data) {
+//						mui.toast(JSON.stringify(data)); 
+//                      mui.toast(data.message);
+                        if(data.data.length>0){
+						   document.getElementById("bzkx_list").innerHTML=template("bzkxtemp",data);
+						}else{
+						   document.getElementById("bzkx_list").innerHTML="<li>没有相关数据</li>";	
+						}
+					},
+					error:function(a){
+						mui.toast("服务器未响应，请稍后重试");
+					}
+				});
+			//			列表渲染js
+//              mui.ajax({
+//						url: "bzkx.json",
+//						type: "get",
+//						async: false,
+//						data:"",
+//						dataType: "json",
+//						timeout: 1000,
+//						success: function(data) {
+//							document.getElementById("bzkx_list").innerHTML=template("bzkxtemp",data);
+//						}
+//				});
+		    var itemlen=document.getElementsByClassName("bzkx_item").length;
+		    for(var i=0;i<itemlen;i++){
+		    	document.getElementsByClassName("bzkx_item")[i].addEventListener("tap",function(){
+		    		var listid=$(this).data("id");
+		            mui.openWindow({
+		               url:"kx-info.html",
+		               id:"kx-info",
+		               createNew:true,
+		               extras:{
+					        listid:listid
+					        }
+	       			});
+		    	})
+		    }
+ 		</script>
+</body>
+</html>

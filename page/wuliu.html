@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/app.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/wuliu.css"/>
+	</head>
+
+	<body id="wuliu">
+	<header class="mui-bar mui-bar-nav header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left "></a>
+			<h1 class="mui-title ">
+				物流详情
+			</h1>
+	</header>
+	<div id="box" class="mui-content content">
+        <script id="test" type="text/html">
+        	<div class="dingdan">
+				<img class="dingdan_tu" src="../img/muwu.jpg"/>
+				<p class="dingdan_gongsi">物流公司：<span>{{Data[0].ShipperCode}}</span></p>
+				<p class="dingdan_hao">快递单号：<span>{{Data[0].LogisticCode}}</span></p>
+			</div>
+	        <ul >
+        	{{each Data[0].Traces as value}}
+        		<li>
+	        		<div class="first_div"><p class="first_p">{{value.AcceptTime.substring(5,10)}}</p><p class="last_p">{{value.AcceptTime.substring(11,16)}}</p></div>
+	        		<div class="last_div"><p class="content_p">{{value.AcceptStation}}</p></div>
+	        	</li>
+    		{{/each}}
+    		</ul>
+    	</script>
+	</div>
+		<script src="../js/template.js"></script>
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			var orderid = null;//商品id
+			mui.init();
+			mui.plusReady(function () {
+			    var self = plus.webview.currentWebview();
+			    var orderid = self.orderid;//获得商品id
+			});
+			console.log(orderid);
+				mui.ajax('wuliu.json',{
+					data:{
+						"ShipperCode": "QFKD",
+    					"LogisticCode": "390141793061",
+    					"orderid" : orderid
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'get',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success:function(data){
+						document.querySelector("#box").innerHTML = template("test", data);
+					},
+					error:function(xhr,type,errorThrown){
+						mui.toast(type);
+					}
+				});
+		</script>
+	</body>
+</html>

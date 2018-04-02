@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+	</head>
+
+	<body id="activity">
+		<header class="mui-bar mui-bar-nav head_bg">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left color_f"></a>
+			<h1 class="mui-title color_f">
+				报名活动
+			</h1>
+		</header>	
+		<div class="mui-content">
+		     <div class="tw_list" style="padding:0px 10px;">
+		     	<ul class="mui-table-view" style="background: transparent;" id="bmlist">
+	
+				</ul>
+		    </div>		
+		</div>
+		
+		<!--活动列表渲染-->		
+		<script type="text/html" id="activitys">
+		    {{each data as value i}}
+			<li class="mui-table-view-cell mui-media hd_item" data-id="{{value.id}}">
+				<a href="javascript:;">
+					<img class="mui-media-object mui-pull-left" src="{{value.image}}">
+					<div class="mui-media-body">
+						<span class="list_tit">{{value.title}}</span>
+						<p class="mui-ellipsis">{{value.published_at}}</p>
+					</div>
+					<!--{{if value.star=="0"}}
+					<span class="mui-icon-extra mui-icon-extra-heart-filled"></span>
+					{{else if value.star=="1"}}
+					<span class="mui-icon-extra mui-icon-extra-heart-filled xh"></span>
+					{{/if}}-->
+				</a>
+			</li>
+			{{/each}}
+		</script>
+
+		<script src="../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/template.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/sub.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+//			列表渲染js
+                mui.ajax({
+						url: WEB_HOST+"/index/myhdlist", 
+						type: "get",
+						async: false,
+						data:{"token":localStorage.getItem("token")},
+						dataType: "json",
+						timeout: 1000,
+						success: function(data) {
+//							alert(JSON.stringify(data));
+                            if(data.data.length>0){
+							   document.getElementById("bmlist").innerHTML=template("activitys",data);
+							}else{
+							   document.getElementById("bmlist").innerHTML="<li>没有相关数据</li>";	
+							}
+						},error:function(a){
+							mui.toast("服务器未响应，请稍后重试");
+						}
+				});
+		  //		     热门活动		
+				var hd_item=document.getElementsByClassName("hd_item").length;
+				for(var i=0;i<hd_item;i++){
+					document.getElementsByClassName("hd_item")[i].addEventListener("tap",function(){
+						var listid=$(this).data("id");
+						 mui.openWindow({
+			               url:"activity-info.html",
+			               id:"activity-info",
+			               createNew:true,
+			               extras:{
+					        listid:listid
+					        }
+		       			});
+					})
+				}
+			  
+ 		</script>
+	</body>
+
+</html>

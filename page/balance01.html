@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/mui.picker.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/mui.poppicker.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/global.css"/>
+		<link href="../css/app.css" rel="stylesheet" />
+	</head>
+
+	<body id="balance01">
+	<header class="mui-bar mui-bar-nav" style="background: #000;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left color_f"></a>
+			<h1 class="mui-title color_f">
+				支付订单
+			</h1>
+	</header>
+		<div class="mui-content">
+            <ul class="mui-table-view balance1">
+				<li class="mui-table-view-cell">	
+					<span class="fl" id="goodstitle"></span>
+				</li>
+				<li class="mui-table-view-cell">
+					<span class="fl">数量</span>
+					<span class="fr goods_count"></span>
+				</li>
+				<li class="mui-table-view-cell">	
+					<span class="fl">小计</span><span class="fr">&yen; <span id="total_fee"></span></span>
+				</li>
+			</ul>
+				<ul class="mui-table-view balance1 mart10">
+					<li class="mui-table-view-cell takeUser">	
+						<div class="mui-input-row">
+							<label>收货人</label>
+							<input name="takeUser" id="username" disabled="disabled" type="text" class="mui-input-clear mui-input" placeholder="">
+						</div>
+					</li>
+					<li class="mui-table-view-cell takeUser">	
+						<div class="mui-input-row">
+							<label>联系电话</label>
+							<input name="phone" id="telephone" disabled="disabled" type="text" class="mui-input-clear mui-input" placeholder="">
+						</div>
+					</li>
+					<li class="mui-table-view-cell takeUser">
+						<textarea style="padding: 10px;" id="address" class="form" rows="2" placeholder="请写详细地址不少于5个字"></textarea>
+					</li>
+				</ul>
+			
+			<div class="balance01_foot">
+				<button id="zhifu" class="mui-btn mui-btn-block color_f f16">确认支付</button>
+			</div>
+		</div>
+		<!--支付弹框-->
+		<div id="zf_model">
+			<div class="zfmodel">
+		         <div class="model_head">
+		         	请选择支付方式
+		         	<span class="mui-icon mui-icon-closeempty" id="close"></span>
+		         </div>
+		         <div class="model_body">
+		         	<ul class="mui-table-view balance1">
+						<li class="mui-table-view-cell">
+							<div class="mui-input-row mui-radio">
+								<label><span><img src="../img/zfb.png"/></span>支付宝</label>
+								<input name="radio" class="payment_type" checked="checked" value="alipay" type="radio">
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-input-row mui-radio">
+								<label><span><img src="../img/wx.png"/></span>微信</label>
+								<input name="radio" class="payment_type" type="radio" value="wxpay">
+							</div>
+						</li>
+						<!--<li class="mui-table-view-cell">
+							<div class="mui-input-row mui-radio">
+								<label><span><img src="../img/yl.png"/></span>银联</label>
+								<input name="radio" class="payment_type" value="unionpay" type="radio">
+							</div>
+						</li>-->
+					</ul>
+		         </div>
+		         <div class="model_foot">
+		         	<button type="button" id="mmzf" class="mui-btn mui-btn-primary mui-btn-block">支付</button>
+		         </div>
+			</div>
+		</div>
+		<script src="../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.picker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/city.data.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/payment.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+		//支付遮罩层
+		$("#zhifu").click(function(){
+			$("#zf_model").fadeIn();
+		})
+		$("#mmzf").click(function(){
+			$("#zf_model").fadeOut();
+		})
+		$("#close").click(function(){
+			$("#zf_model").fadeOut();
+		})
+		mui.init({
+			swipeBack:true //启用右滑关闭功能
+		});
+	  
+//	    document.getElementById("mmzf").addEventListener("tap",function(){
+//			 mui.openWindow({
+//             url:"payment-completion.html",
+//             id:"payment-completion"
+// 			});
+//	    })
+	    
+			
+	//支付
+	        var wxChannel = null; // 微信支付  
+            var aliChannel = null; // 支付宝支付  
+            var channel = null;   //支付通道 
+            var valtype=null;
+            var vals=null;
+            //传参参数定义
+            var tokens=localStorage.getItem("token");
+            var orderIds;
+            var totalFees;
+            var titles;
+//          获取本机ip
+            var Ip=returnCitySN.cip;
+            mui.init({  
+                swipeBack:true //启用右滑关闭功能  
+            });  
+             
+        mui.plusReady(function() { 
+        	var self = plus.webview.currentWebview(); 
+			var orderid = self.orderid;//获得列表页传过来的id
+			orderIds=orderid;
+			console.log("订单id"+orderIds)
+        	mui.ajax({
+				url: WEB_HOST+"/userCenter/orderDetail",
+				type: "get",
+				async: false,
+				data:{
+					"token":localStorage.getItem("token"),
+					"orderId":orderid
+				},
+				dataType: "json",
+				timeout: 1000,
+				success: function(data) {
+//					alert(JSON.stringify(data));
+                    if(data.status==0){
+//                  	商品数量
+                        $("#goodstitle").html(data.data.title);
+                        titles=data.data.title;
+                        $(".goods_count").html(data.data.num);
+                    	$("#total_fee").html(data.data.total_fee);
+                    	totalFees=data.data.total_fee;
+                    	$("#username").val(data.data.username);
+                    	$("#telephone").val(data.data.telephone);
+//                  	所在地区
+                        $("#city").val(data.data.city);
+                        $("#address").html(data.data.address);
+                     }
+				}
+			});
+            // 获取支付通道  
+            plus.payment.getChannels(function(channels){  
+            for (var i in channels) { 
+                    if (channels[i].id == "wxpay") { 
+                         wxChannel=channels[i];  
+                    }else{ 
+                        aliChannel=channels[i];  
+                    } 
+                }     
+            },function(e){  
+             mui.toast("获取支付通道失败："+e.message);  
+            });  
+        })  
+        $("#mmzf").click(function(){
+        	var paytype=document.getElementsByClassName("payment_type");
+        	var len=paytype.length;
+        	for (var i=0;i<len;i++) {
+        		valtype =paytype[i].checked;
+        		if(valtype==true){
+        			types=paytype[i].value;
+//      			mui.toast(vals);
+        		}
+        	}
+        	pay(types,tokens,orderIds,totalFees,titles,Ip);
+        	$("#zf_model").fadeOut();
+		})  
+		</script>
+	</body>
+</html>

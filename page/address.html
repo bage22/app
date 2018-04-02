@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+	</head>
+	<body id="address">
+	<header class="mui-bar mui-bar-nav" style="background: #000;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left color_f"></a>
+			<h1 class="mui-title color_f">
+			       收货地址
+			</h1>
+	</header>
+		<div class="mui-content">
+              <div class="address_list" id="address_list" style="margin-bottom: 50px;">
+              	   
+              </div>
+              <script type="text/html" id="addressTemp">
+                {{each data as value i}}
+              	   <div class="address_item" data-id="{{value.id}}">
+              	   	    <div class="address_user">
+              	   	    	<span class="fl">{{value.username}}</span>
+              	   	    	<span class="fr">{{value.telephone}}</span>
+              	   	    </div>
+              	   	   <div class="address_info">
+              	   	   	   {{value.city}}{{value.address}}
+              	   	   </div>
+              	   	   <div class="address_handle">
+              	   	   	  <div class="hymr">
+              	   	   	  	{{if value.del_log==2}}
+              	   	   	  	<input type="radio" class="radios" checked="checked" data-id="{{value.id}}" name="check" value="" />
+              	   	   	  	{{else}}
+              	   	   	  	<input type="radio" class="radios" data-id="{{value.id}}" name="check" value="" />
+              	   	   	  	{{/if}}
+              	   	   	  	<label>设置默认</label>
+              	   	   	  </div>
+              	   	   	  <div class="edit_del">
+              	   	   	  	<!--<div class="edit_btn"  data-id="{{value.id}}">
+              	   	   	  		<span class="mui-icon mui-icon-compose"></span>编辑
+              	   	   	  	</div>-->
+              	   	   	  	<div class="del_btn" id="address{{value.id}}"  data-id="{{value.id}}">
+              	   	   	  		<span class="mui-icon mui-icon-trash"></span>删除
+              	   	   	  	</div>
+              	   	   	  </div>
+              	   	   </div>
+              	   </div>
+              	{{/each}}
+              </script>
+		</div>
+		<div id="add_address">
+			<button class="mui-btn">添加地址</button>
+		</div>
+		<script src="../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/template.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+		 
+//		   document.getElementById("myaddress").addEventListener("tap",function(){
+//	        	url:"addresss.html",
+//	            id:"addresss",
+//	            createNew:true
+//	        })
+         mui.init();
+         mui.plusReady(function(){
+              mui.ajax({
+				url: WEB_HOST+"/userCenter/myShipAdr", 
+				type: "get",
+				async: false,
+				data: {
+					"token":localStorage.getItem("token")
+				},
+				dataType: "json",
+				timeout: 1000,
+				success: function(data) {
+					document.getElementById("address_list").innerHTML=template("addressTemp",data);
+//					编辑
+//                 var edit_len=document.getElementsByClassName("edit_btn").length;
+//						for(var i=0;i<edit_len;i++){
+//							document.getElementsByClassName("edit_btn")[i].addEventListener("tap",function(){
+//								var addressid=$(this).data("id");
+//								 mui.openWindow({
+//					               url:"edit_address.html",
+//					               id:"edit_address",
+//					               createNew:true,
+//					               extras:{
+//							        addressid:addressid
+//							       }
+//				       			});
+//							})
+//						}
+//					删除
+                   var del_len=document.getElementsByClassName("del_btn").length;
+						for(var i=0;i<del_len;i++){
+							document.getElementsByClassName("del_btn")[i].addEventListener("tap",function(){
+								var addressid=$(this).data("id");
+								var btnArray = ['是', '否'];
+								mui.confirm("是否删除该收货地址", function(e) {
+									if (e.index == 0) {
+									   del_address(addressid);
+								       $("#address"+addressid).parents(".address_item").remove();
+									}
+								})
+								
+							})
+						}
+//					设置默认地址radios
+                  var radios_len=document.getElementsByClassName("radios").length;
+						for(var i=0;i<radios_len;i++){
+							document.getElementsByClassName("radios")[i].addEventListener("change",function(){
+								if($(this).is(':checked')) {
+								  var addressid=$(this).data("id");
+								  set_address(addressid);
+								}
+							})
+						}
+				},error:function(a){
+					mui.toast("服务器未响应，请稍后重试");
+				}
+			});
+			document.getElementById("add_address").addEventListener("tap",function(){
+				mui.openWindow({
+	               url:"add_address.html",
+	               id:"add_address",
+	               createNew:true,
+	               extras:{
+			          type:"address"
+			       }
+       			});
+			})
+         })
+         function del_address(id){
+			mui.ajax({
+				url: WEB_HOST+"/userCenter/deladdress", 
+				type: "get",
+				async: false,
+				data: {
+					"token":localStorage.getItem("token"),
+					"id":id
+				},
+				dataType: "json",
+				timeout: 1000,
+				success: function(data) {
+					mui.toast(data.message);
+				},
+				error:function(a){
+					mui.toast("服务器未响应，请稍后重试");
+				}
+			});
+         }
+         function set_address(id){
+         	mui.ajax({
+				url: WEB_HOST+"/userCenter/defaultAddress", 
+				type: "get",
+				async: false,
+				data: {
+					"token":localStorage.getItem("token"),
+					"id":id
+				},
+				dataType: "json",
+				timeout: 1000,
+				success: function(data) {
+					mui.toast(data.message);
+				},
+				error:function(a){
+					mui.toast("服务器未响应，请稍后重试");
+				}
+			});
+         }
+		</script>
+	</body>
+</html>

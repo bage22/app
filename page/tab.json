@@ -1,0 +1,49 @@
+{
+    "code": 0,
+    "msg": "",
+    "count": 1000,
+    "data": [
+        {
+            "id": 101,
+            "title": "旅游",
+            "info": "来一场自由的旅行",
+            "imgPath": "../img/01home_28.png",
+            "state":"0"
+        },
+        {
+            "id": 102,
+            "title": "度假",
+            "info": "幸福自由行",
+            "imgPath": "../img/01home_29.png",
+            "state":"1"
+        },
+        {
+            "id": 103,
+            "title": "CBD",
+            "info": "粉红色的回忆CBD",
+            "imgPath": "../img/cbd.jpg",
+            "state":"0"
+        },
+        {
+            "id": 104,
+            "title": "木屋",
+            "info": "安静的木屋",
+            "imgPath": "../img/muwu.jpg",
+            "state":"0"
+        },
+        {
+            "id": 105,
+            "title": "睡觉",
+            "info": "一觉睡到天荒地老",
+            "imgPath": "../img/shuijiao.jpg",
+            "state":"0"
+        },
+        {
+            "id": 106,
+            "title": "远眺",
+            "info": "站在山上眺望远方",
+            "imgPath": "../img/yuantiao.jpg",
+            "state":"1"
+        }
+    ]
+}

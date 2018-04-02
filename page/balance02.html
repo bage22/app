@@ -1,0 +1,191 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/mui.picker.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/mui.poppicker.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/global.css"/>
+		<link href="../css/app.css" rel="stylesheet" />
+	</head>
+
+	<body id="balance01">
+	<header class="mui-bar mui-bar-nav" style="background: #000;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left color_f"></a>
+			<h1 class="mui-title color_f">
+				支付订单
+			</h1>
+	</header>
+		<div class="mui-content">
+            <ul class="mui-table-view balance1">
+				<li class="mui-table-view-cell">	
+					<span class="fl goodsnames"></span><span class="fr">&yen;<span class="goodsprices"></span></span>
+				</li>
+				<li class="mui-table-view-cell">
+					<span class="fl">数量</span>
+					<span class="fr" style="margin-top: -2px;">
+						<div class="mui-numbox" data-numbox-min="1">
+							<button class="mui-btn mui-btn-numbox-minus" type="button" disabled="">-</button>
+							<input id="count" class="mui-input-numbox" type="number" value="1">
+							<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+						</div>
+					</span>
+				</li>
+				<li class="mui-table-view-cell">	
+					<span class="fl">小计</span><span class="fr">&yen; <span class="sumprice"></span></span>
+				</li>
+			</ul>
+		     <div class="address_list" id="address_list" style="margin-bottom: 50px;margin-top: 10px;">
+              	   
+              </div>
+              <script type="text/html" id="addressTemp">
+              	<div class="select_address"><span class="fl">地址选择</span><span class="fr" id="address">新增收货地址</span></div>
+                {{each data as value i}}
+              	   <div class="address_item" data-id="{{value.id}}">
+              	   	    <div class="address_user">
+              	   	    	<span class="fl">{{value.username}}</span>
+              	   	    	<span class="fr">{{value.telephone}}</span>
+              	   	    </div>
+              	   	   <div class="address_info">
+              	   	   	   {{value.city}}{{value.address}}
+              	   	   </div>
+              	   	   <div class="address_handle">
+              	   	   	  <div class="hymr">
+              	   	   	  	{{if value.del_log==2}}
+              	   	   	  	<input type="radio" class="radios" checked="checked" data-id="{{value.id}}" name="check" value="{{value.id}}" />
+              	   	   	  	{{else}}
+              	   	   	  	<input type="radio" class="radios" data-id="{{value.id}}" name="check" value="{{value.id}}" />
+              	   	   	  	{{/if}}
+              	   	   	  	<label>选择收货地址</label>
+              	   	   	  </div>
+              	   	   	  <div class="edit_del">
+              	   	   	  	<!--<div class="edit_btn"  data-id="{{value.id}}">
+              	   	   	  		<span class="mui-icon mui-icon-compose"></span>编辑
+              	   	   	  	</div>-->
+              	   	   	  	<!--<div class="del_btn"  data-id="{{value.id}}">
+              	   	   	  		<span class="mui-icon mui-icon-trash"></span>删除
+              	   	   	  	</div>-->
+              	   	   	  </div>
+              	   	   </div>
+              	   </div>
+              	{{/each}}
+              </script>
+			<div class="balance01_foot">
+				<button id="zhifu" class="mui-btn mui-btn-block color_f f16">提交订单 </button>
+			</div>
+		</div>
+		</div>
+		<script src="../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/template.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.picker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+		mui.init({
+			swipeBack:true //启用右滑关闭功能
+		});
+	       var count;
+	       var moneyall;
+	       var addressid;
+            mui.init({  
+                swipeBack:true //启用右滑关闭功能  
+            });  
+        mui.plusReady(function() { 
+        	 mui.ajax({
+				url: WEB_HOST+"/userCenter/myShipAdr", 
+				type: "get",
+				async: false,
+				data: {
+					"token":localStorage.getItem("token")
+				},
+				dataType: "json",
+				timeout: 1000,
+				success: function(data) {
+					document.getElementById("address_list").innerHTML=template("addressTemp",data);
+//					设置默认地址radios
+                var radios_len=document.getElementsByClassName("radios").length;
+				for(var i=0;i<radios_len;i++){
+					var chex=$(".radios").eq(i).is(':checked');
+					if(chex){
+						addressid=$(".radios").eq(i).data("id");
+					}
+					document.getElementsByClassName("radios")[i].addEventListener("change",function(){
+						if($(this).is(':checked')) {
+						  addressid=$(this).data("id");
+						}
+					})
+				}
+				},error:function(a){
+					mui.toast("服务器未响应，请稍后重试");
+				}
+			});
+        	var self = plus.webview.currentWebview(); 
+			var listid = self.listid;//获得列表页传过来的id
+			var goodsName=self.goodsName;
+			var goodsPrice=self.goodsPrice;
+			document.getElementsByClassName("goodsnames")[0].innerHTML=goodsName;
+			document.getElementsByClassName("goodsprices")[0].innerHTML=goodsPrice;
+//			随着数量增加的总价
+            moneyall=$("#count").val()*goodsPrice;
+            document.getElementsByClassName("sumprice")[0].innerHTML=moneyall;
+            document.getElementById("count").addEventListener("change",function(){
+            	count=this.value;
+            	moneyall=count*goodsPrice*10000/10000;
+            	document.getElementsByClassName("sumprice")[0].innerHTML=moneyall.toFixed(2);
+            })
+            document.getElementById("address").addEventListener("tap",function(){
+            	mui.openWindow({
+	               url:"add_address.html",
+	               id:"add_address",
+	               createNew:true,
+	               extras:{
+			          type:"zf02"
+			       }
+       			});
+            })
+            document.getElementById("zhifu").addEventListener("tap",function(){
+            	var val=$('input:radio:checked').val();
+            	if(val==null){
+	               mui.toast("请选择一个收货地址");
+	            }
+	            else{
+	            	var params=listid+":"+$("#count").val();
+	            	console.log(localStorage.getItem("token")+""+params+""+moneyall+""+addressid);
+	            	mui.ajax({
+						url: WEB_HOST+"/index/orderSubmitMobile",
+						type: "post",
+						async: false,
+						data:{
+							"token":localStorage.getItem("token"),
+							"param":params,
+							"moneyall":moneyall,
+							"orderinfoid":addressid
+						},
+						dataType: "json",
+						timeout: 1000,
+						success: function(data) {		
+		                    console.log(JSON.stringify(data));
+		                    mui.toast(data.message);
+	                        mui.openWindow({
+				               url:"order.html",
+				               id:"order",
+				               createNew:true
+			       			});
+						},
+					    error:function(a){
+							mui.toast("服务器未响应，请稍后重试");
+						}
+					});
+	            }
+            	
+            })
+        	
+           
+        })  
+		</script>
+	</body>
+
+</html>

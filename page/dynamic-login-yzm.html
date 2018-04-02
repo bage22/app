@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/global.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/login.css"/>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-lef color_b"></a>
+			<h1 class="mui-title">动态密码登录</h1>
+		</header>
+		<div class="mui-content">
+			<div class="login_yzm_phone"><span>您的手机号为：+86</span><span id="phone">15713168848</span></span></div>
+			<div class="dynamic-yzm">请输入您收到的短信验证码</div>
+			<form id='login_yzm' class="mui-input-group">
+				<div class="mui-input-row">
+					<label><span class="mui-icon mui-icon-paperplane"></span></label>
+					<input id='code' type="text" class="mui-input-clear mui-input" placeholder="">
+				</div>
+			</form>
+			<div class="dynamic-yzm_cxfs"><span id="djs">00:59后 重新发送</span></div>
+			<div class="mui-content-padded">
+                 <button id="login" class="mui-btn mui-btn-block mui-btn-zdy">登录</button>
+			</div>
+		</div>
+		<script src="../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			var phone;
+			mui.plusReady(function(){
+				var self = plus.webview.currentWebview();
+		        phone = self.phone;    //从上一个页面接收过来的值
+		        console.log(phone);
+		        $("#phone").html(phone);
+				document.getElementById("login").addEventListener('tap',function(){
+					mui.ajax({
+						url: WEB_HOST+"/auth/code/verify", 
+						type: "post",
+						async: false,
+						data: {
+							"phone":phone,
+							"code":$("#code").val()
+						},
+						dataType: "json",
+						timeout: 1000,
+						success: function(data) {
+//							alert(JSON.stringify(data));
+							if(data.status == 0){
+								localStorage.setItem("token",data.data.token);
+								localStorage.setItem("phone",phone);
+								mui.openWindow({
+									url: "login-successful.html",
+									id: "login-successful",
+									createNew:true,
+									waiting: {
+										autoShow: true
+									},show: {
+										aniShow: 'none'
+									}
+								});
+							}else{
+								mui.toast(data.message);
+							}
+						},error:function(a){
+							mui.toast("服务器未响应，请稍后重试");
+						}
+					});
+		        });
+			})   
+			
+//			倒计时代码
+		    function retrieve(){
+			 	 var clock = '';
+				 var nums = 59;
+				 clock = setInterval(doLoop, 1000); //一秒执行一次
+				function doLoop(){
+					nums--;
+					if(nums > 0){
+					   if(nums<10){
+					   	 document.getElementById("djs").innerHTML="00:0"+nums+'后 重新发送';
+					   }else if(nums>10){
+					   	document.getElementById("djs").innerHTML="00:"+nums+'后 重新发送';
+					   }
+					}else{
+					  clearInterval(clock); //清除js定时器
+					  document.getElementById("djs").innerHTML='<a onclick="cxhq();" href="javascript:void(0)">重新获取</a>';
+					  nums = 59; //重置时间
+					}
+				 }
+			}
+		    retrieve();
+//			 重新获取并发送验证码
+             function cxhq(){
+             	mui.ajax({
+						url: WEB_HOST+"/auth/code/send", 
+						type: "post",
+						async: false,
+						data: {
+							"phone":phone
+						},
+						dataType: "json",
+						timeout: 1000,
+						success: function(data) {
+                              mui.toast(data.message);
+						}
+					});
+             	retrieve();
+             }
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,258 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+	</head>
+
+	<body id="activity">
+		<header class="mui-bar mui-bar-nav head_bg">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left color_f"></a>
+			<h1 class="mui-title color_f">
+				活动
+			</h1>
+			<a id="search_input" class="mui-icon mui-icon-search mui-pull-right color_f"></a>
+		</header>	
+		<div class="mui-content">
+			<!--选项卡-->
+			<div id="segmentedControl" class="mui-segmented-control">
+				<a class="mui-control-item mui-active" href="#quanbu">
+				           全部
+				</a>
+				<a class="mui-control-item" href="#remen">
+					热门
+				</a>
+			</div>
+			<div class="tab_item">
+				<div id="quanbu" class="mui-control-content mui-active">
+				     <div id="qb_list">
+				     	<!--<div class="hot_activity" id="hot">
+					          <div class="hot_activity_img">
+					              <img src="../img/01_02.png"/>
+					              <p class="hot_activity_tit"><span class="fl">欢乐一夏，畅游日韩</span><span class="fr">&yen;2999</span></p>
+					          </div>
+					          <div class="hot_activity_info">
+					          	  <p style="color: #333;">6天5晚自由行，管吃包住省心出发</p>
+					          	  <p class="biaoqian"><span class="fl"><a href="">北京出发</a><a href="">免签</a></span><span class="fr">120人已体验</span></p>
+					          </div>
+					     </div>-->
+				     </div>
+				     
+				     <!--置顶的热门活动-->
+				     <script type="text/html" id="qbtemp">
+							    <div class="hot_activity" data-id="{{data.list[2].id}}">
+							          <div class="hot_activity_img">
+							              <img src="{{data.list[2].image}}"/>
+							              <p class="hot_activity_tit"><span class="fl">{{data.list[2].title}}</span><span class="fr">&yen;{{data.list[2].price}}</span></p>
+							          </div>
+							          <div class="hot_activity_info">
+							          	  <p style="color: #333;">{{data.list[2].subtitle}}</p>
+							          	  <p class="biaoqian">
+							          	  
+							          	  	<span class="fr">120人已体验</span></p>
+							          </div>
+							     </div>
+				     </script>
+				     
+				     <div class="tw_list">
+				     	<ul class="mui-table-view" id="wholelist">
+							<!--<li class="mui-table-view-cell mui-media hd_list">
+								<a href="javascript:;">
+									<img class="mui-media-object mui-pull-left" src="../img/cbd.jpg">
+									<div class="mui-media-body">
+										<span class="list_tit">能和心爱的人一起睡觉，是件幸福的事情</span>
+										<p class="mui-ellipsis">20mins ago&nbsp;|&nbsp;I like</p>
+									</div>
+									<span class="mui-icon-extra mui-icon-extra-heart-filled"></span>
+								</a>
+							</li>-->
+						</ul>
+						
+						<!--全部活动列表渲染-->		
+						<script type="text/html" id="wholeactivity">
+						    {{each data.list as value i}}
+							<li class="mui-table-view-cell mui-media hd_item" data-id="{{value.id}}">
+								<a href="javascript:;">
+									<img class="mui-media-object mui-pull-left" src="{{value.image}}">
+									<div class="mui-media-body">
+										<span class="list_tit">{{value.title}}</span>
+										<p class="mui-ellipsis">活动开始日期：{{value.published_at}}</p>
+									</div>
+									<!--{{if value.star=="0"}}
+									<span class="mui-icon-extra mui-icon-extra-heart-filled"></span>
+									{{else if value.star=="1"}}
+									<span class="mui-icon-extra mui-icon-extra-heart-filled xh"></span>
+									{{/if}}-->
+								</a>
+							</li>
+							{{/each}}
+						</script>
+						
+				     </div>
+				</div>
+				<div id="remen" class="mui-control-content">
+				     <div id="hot_list">
+				     	
+				     </div>
+				     <script type="text/html" id="hottemp">
+						    {{each data.recommend as value i}}
+							    <div class="hot_activity" data-id="{{value.id}}">
+							          <div class="hot_activity_img">
+							              <img src="{{value.image}}"/>
+							              <p class="hot_activity_tit"><span class="fl">{{value.title}}</span><span class="fr">&yen;{{value.price}}</span></p>
+							          </div>
+							          <div class="hot_activity_info">
+							          	  <p style="color: #333;">{{value.subtitle}}</p>
+							          	  <p class="biaoqian">
+							          	  	<span class="fl">
+							          	  		{{each value.tags as tag i}}
+							          	  		     <a href="">{{tag}}</a>
+							          	  		{{/each}}
+							          	  	</span>
+							          	  	<span class="fr">120人已体验</span></p>
+							          </div>
+							     </div>
+							{{/each}}
+				     </script>
+				     <div class="tw_list">
+				     	<ul class="mui-table-view" id="hotlist">
+							
+						</ul>
+						
+						<!--全部活动列表渲染-->		
+						<script type="text/html" id="hotactivity">
+						    {{each data.list as value i}}
+							<li class="mui-table-view-cell mui-media hd_item" data-id="{{value.id}}">
+								<a href="javascript:;">
+									<img class="mui-media-object mui-pull-left" src="{{value.image}}">
+									<div class="mui-media-body">
+										<span class="list_tit">{{value.title}}</span>
+										<p class="mui-ellipsis">活动开始日期：{{value.published_at}}</p>
+									</div>
+								</a>
+							</li>
+							{{/each}}
+						</script>
+						
+				     </div>
+				</div>
+
+			</div>
+		</div>
+		
+		<script src="../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/template.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/sub.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+				//			全部列表渲染js
+                mui.ajax({
+						url: WEB_HOST+"/index/allhdlist", 
+						type: "get",
+						async: false,
+						data: {
+							"token":localStorage.getItem("token")
+						},
+						dataType: "json",
+						timeout: 1000,
+						success: function(data) {
+//							mui.toast(JSON.stringify(data));
+							if(data.data.recommend.length>0){
+							   document.getElementById("qb_list").innerHTML=template("qbtemp",data);
+							}else{
+							   document.getElementById("qb_list").innerHTML="<div>没有相关数据</div>";	
+							}
+							if(data.data.list.length>0){
+							   document.getElementById("wholelist").innerHTML=template("wholeactivity",data);
+							}else{
+							   document.getElementById("wholelist").innerHTML="<li>没有相关数据</li>";	
+							}
+							
+						},
+						error:function(a){
+							mui.toast("服务器未响应，请稍后重试");
+						}
+				});
+////				热门活动
+				 mui.ajax({
+						url: WEB_HOST+"/index/rmhdlist2", 
+						type: "get",
+						async: false,
+						data: {
+							"token":localStorage.getItem("token")
+						},
+						dataType: "json",
+						timeout: 1000,
+						success: function(data) {
+//							alert(JSON.stringify(data));
+                            if(data.data.recommend.length>0){
+							   document.getElementById("hot_list").innerHTML=template("hottemp",data);
+							}else{
+							   document.getElementById("hot_list").innerHTML="<div>没有相关数据</div>";	
+							}
+							if(data.data.list.length>0){
+							   document.getElementById("hotlist").innerHTML=template("hotactivity",data);
+							}else{
+							   document.getElementById("hotlist").innerHTML="<li>没有相关数据</li>";	
+							}
+						},
+						error:function(a){
+							mui.toast("服务器未响应，请稍后重试");
+						}
+				});
+		      mui.init();
+		      mui.plusReady(function(){
+		      
+
+               //		     热门活动卡片跳转详情页传参		
+				var hot_list=document.getElementsByClassName("hot_activity").length;
+				for(var i=0;i<hot_list;i++){
+					document.getElementsByClassName("hot_activity")[i].addEventListener("tap",function(){
+						var listid=$(this).data("id");
+						 mui.openWindow({
+			               url:"activity-info.html",
+			               id:"activity-info",
+			               createNew:true,
+			               extras:{
+					        listid:listid
+					         }
+		       			});
+					})
+				}
+		        //		     热门活动列表跳转详情页传参			
+				var hd_list=document.getElementsByClassName("hd_item").length;
+				for(var i=0;i<hd_list;i++){
+					document.getElementsByClassName("hd_item")[i].addEventListener("tap",function(){
+						var listid=$(this).data("id");
+						 mui.openWindow({
+			               url:"activity-info.html",
+			               id:"activity-info",
+			               createNew:true,
+			               extras:{
+					        listid:listid
+					         }
+		       			});
+					})
+				}
+		      })
+		      
+		      // 打开搜索界面
+				document.querySelector('#search_input').addEventListener('tap', function () {
+					mui.openWindow({
+						url:"search.html",
+						id:"search",
+						createNew:true,
+						 extras:{
+					    	name:'huodong'
+					    },//在这里添加要传递的参数
+					});
+				})
+ 		</script>
+	</body>
+
+</html>

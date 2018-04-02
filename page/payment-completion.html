@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/global.css"/>
+		<link href="../css/app.css" rel="stylesheet" />
+	</head>
+
+	<body id="payment_completion" class="bgf">
+	<header class="mui-bar mui-bar-nav" style="background: #000;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left color_f"></a>
+			<h1 class="mui-title color_f">
+				支付完成
+			</h1>
+	</header>
+		<div class="mui-content bgf">
+              <div class="zfcg_img">
+              	  <img src="../img/js03_03.png"/>
+              	  <h4>支付成功</h4>
+              	  <p>我们将尽快为您安排</p>
+              </div>
+              <div class="zf_info">
+              	<div class="order_info">
+              	   <p><span class="fl">订单编号</span><span class="fr">210021231231212</span></p>
+              	   <p><span class="fl">支付方式</span><span class="fr">货到付款</span></p>
+              	   <p><span class="fl">收件人</span><span class="fr">张三</span></p>
+              	   <p><span class="fl">联系电话</span><span class="fr">18874141545</span></p>
+              	   <p><span class="fl">收货地址</span><span class="fr">河北石家庄</span></p>
+              	   <p><span class="fl">订单金额</span><span class="fr">&yen;8888</span></p>
+                </div>
+              </div>
+              <div class="xzbtn">
+              	<button class="mui-btn" id="zgg">再逛逛</button>
+              	<button class="mui-btn" id="back">返回</button>
+              </div>
+		</div>
+		<script src="../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/sub.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			document.getElementById("zgg").addEventListener('tap',function(){
+	           mui.openWindow({
+	               url:"serve.html",
+	               id:"serve",
+	               createNew:true
+       			});
+	        });
+            document.getElementById("back").addEventListener('tap',function(){
+//	           var wobj = plus.webview.getWebviewById("balance01");//注意 HBuilder 是   1.html 的 ID  你如果1.html 有ID   要替换掉HBuilder，  
+//              wobj.reload(true);  
+               mui.back();
+	        });
+		</script>
+	</body>
+
+</html>

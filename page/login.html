@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/global.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/login.css"/>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-lef color_b"></a>
+			<h1 class="mui-title">登录</h1>
+		</header>
+		<div class="mui-content">
+			<form id='login-form' class="mui-input-group">
+				<div class="mui-input-row">
+					<label>账号</label>
+					<input id='username' type="text" class="mui-input-clear mui-input" placeholder="请输入账号">
+				</div>
+				<div class="mui-input-row">
+					<label>密码</label>
+					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
+				</div>
+			</form>
+			<div class="mui-content-padded">
+				<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
+				<div class="link-area"><a href="javascript:void(0)" id='reg'>会员注册</a> <span class="spliter">|</span> <a href="javascript:void(0)" id='forgetPassword'>忘记密码</a>
+				</div>
+			</div>
+			<div class="mui-content-padded oauth-area">
+
+			</div>
+		</div>
+		<script src="../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+		<script>
+		      mui.init();
+		      mui.plusReady(function(){
+//		      	登录请求
+		      	 document.getElementById("login").addEventListener("tap",function(){
+//		      	 	if(ENV == 'debug'){
+//		      	 		mui.toast(WEB_HOST+"/auth/login");
+//		      	 		mui.toast($("#username").val());
+//		      	 		mui.toast($("#password").val());
+//		      	 	}
+                    var username=$("#username").val();
+                    var pass=$("#password").val();
+                    if(username==""){
+                    	mui.toast("请输入帐号")
+                    	$("#username").focus();
+                    }
+                    if(pass==""){
+                    	mui.toast("请输入密码")
+                    	$("#password").focus();
+                    }
+                    if(username!=""&&pass!=""){
+                    	mui.ajax({
+							url: WEB_HOST+"/auth/login", 
+							type: "post",
+							async: false,
+							data: {
+								"username":username,
+							    "password":pass
+							},
+							dataType: "json", 
+							timeout: 1000,
+							success: function(data) {
+	//							mui.toast(JSON.stringify(data));
+								if(data.status == 0){
+									localStorage.setItem("token",data.data.token);
+									localStorage.setItem("phone",username);
+									mui.openWindow({
+										url: "login-successful.html",
+										id: "login-successful",
+										createNew:true,
+										waiting: {
+											autoShow: true
+										},show: {
+											aniShow: 'none'
+										}
+									}); 
+								}else{
+									mui.toast(data.message);
+								}
+							},
+							error:function(a){
+								mui.toast("服务器未响应，请稍后重试");
+							}
+						});
+                    }
+					
+				}); 
+//				跳转注册页面
+		        document.getElementById("reg").addEventListener('tap',function(){
+		           mui.openWindow({
+		               url:"register.html",
+		               id:"register",
+		               createNew:true
+	       			});
+		        });
+		        
+//		        验证用户名是否存在
+		        　document.getElementById('forgetPassword').addEventListener('tap', function() {
+		        	if($("#username").val()==""){
+		        		mui.toast("账号不能为空");
+		        		$("#username").focus();
+		        	}else{
+		        		mui.ajax({
+							url: WEB_HOST+"/auth/yanzhenguser", 
+							type: "post",
+							async: false,
+							data: {
+								"telephone":$("#username").val()
+							},
+							dataType: "json",
+							timeout: 1000,
+							success: function(data) {
+								if(data.message=="用户不存在"){
+									mui.toast(data.message);
+								}
+								if(data.status == 0){
+									if (mui.os.plus) { 
+							　　　　　　var a = [{ 
+							　　　　　　　　title: "短信验证码登录"          //这些都是可以点击的选项的内容
+							　　　　　　}, { 
+							　　　　　　　　title: "找回密码" 
+							　　　　　　}]; 
+							　　　　　　plus.nativeUI.actionSheet({ 
+							　　　　　　　　title: "请选择登录方式",           //这里就是这个弹窗的title
+							　　　　　　　　cancel: "取消",                     //取消按钮
+							　　　　　　　　buttons: a 
+							　　　　　　}, function(b) { /*actionSheet 按钮点击事件*/ 
+							　　　　　　　　//这里面就是触发的事件，比如想做一个选择性别的弹窗，就可以通过a[b.index].title来获取当前点击了男还是女，注意，此处的b.index是从1开始的。要从0开始的话，要记得减1.
+							            var tit=a[b.index-1].title;
+							            if(tit=="短信验证码登录"){
+							            	mui.openWindow({
+								               url:"dynamic-login.html",
+								               id:"dynamic-login",
+								                createNew:true
+							       			});
+							            }else if(tit=="找回密码"){
+							            	mui.openWindow({
+								               url:"forgot-password.html",
+								               id:"forgot-password",
+								               createNew:true
+							       			});
+							            }
+							　　　　　　}) 
+							　　　　} 
+								}
+							},error:function(a){
+								mui.toast("服务器未响应，请稍后重试");
+							}
+						});　　
+		        	}
+		        	
+				　　}, false);
+		      })
+ 		</script>
+	</body>
+
+</html>

@@ -1,0 +1,278 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+	</head>
+
+	<body id="activity_info">
+		<header class="mui-bar mui-bar-nav head_bg">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left color_f"></a>
+			<h1 class="mui-title color_f">
+				详情
+			</h1>
+		</header>	
+		<div class="mui-content">
+		     <div id="hot_travel">
+	     	    <div class="hot_activity">
+			          <div class="hot_activity_img">
+			              <img src=""/>
+			          </div>
+			          <div class="hot_activity_info">
+			          	  <p style="color: #333;overflow: hidden;" class="subtitle"><span class="fl"></span><span class="fr">&yen;<span class="price"></span></span></p>
+			          	  <!--<p class="biaoqian"><span class="fl"><a href="javascript:void(0)">截止日期</a><a href="javascript:void(0)" class="endtime">2017年12月12日</a></span><span class="fr"><span class="fr_people">120</span>人已体验</span></p>-->
+			          	  <p class="biaoqian"><span class="fr_people"></span>人已体验</span></p>
+			          </div>
+			     </div>
+		     </div>
+		     <div id="segmentedControl" class="mui-segmented-control">
+				<a class="mui-control-item mui-active" href="#hdxq" data-id="0">
+				      详情
+				</a>
+				<a class="mui-control-item" href="#pj" data-id="1" id="tab_pj">
+					评价
+				</a>
+				<!--<a class="mui-control-item" href="#hdxz" data-id ="2" id="tab_hdxz">
+					服务须知
+				</a>-->
+			</div>
+			<div class="hot_activity_text">
+			    <div class="mui-control-content mui-active hot_activity_panel" id="hdxq">
+				     <div class="panel_tit"><h4><span></span>详情</h4></div>
+				     <div class="panel_text">
+				          <!--<div class="panel_user">
+				               <span class="user_img"><img class="image" src="../img/01home_28.png"/></span></span>
+				               <span class="user_name">小猪快跑</span>
+				          </div>-->
+				          <div class="panel_info">
+				               <ul class="hot_list">
+				                   <li><span class="mui-icon mui-icon-star"></span><span class="item_span"></span></li>				                   
+				               </ul>
+						  </div>
+				     </div>
+				</div>
+				<div class="mui-control-content hot_activity_panel" id="pj">
+				     <div class="panel_tit"><h4><span></span>评价</h4></div>
+				     <div class="panel_text">
+				          <div id="panel_text">
+					          	
+				          </div>
+				          <script type="text/html" id="paneltemp">
+				          	{{each data as value i}}
+				          	<div class="pjlist">
+					          	<div class="panel_user">
+						            <span class="user_img"><img src="{{value.avatar}}"/></span></span>
+						            <span class="user_name">{{value.nickname}}</span>
+						        </div>
+						        <div class="panel_info">
+						            {{value.content}}
+								</div>
+								<p class="panel_time">{{value.time}}</p>
+							</div>
+							{{/each}}
+				          </script>
+						  <div class="panel_btn">
+						        <button type="button" id="lookWhole" class="mui-btn mui-btn-warning mui-btn-outlined">
+									查看全部评价
+								</button>
+						  </div>
+				     </div>
+				</div>
+			</div>
+		</div>
+		<div class="jrgwc_model">
+			<div class="jrgwc">
+				<div class="goodsName">商品名称: <span>dassadsa</span></div>
+				<div class="buy_counts">
+					<span class="fl">购买数量:</span>
+					<span style="margin-top: -2px;margin-left: 12px;">
+						<div class="mui-numbox" data-numbox-min="0">
+							<button class="mui-btn mui-btn-numbox-minus" type="button" disabled="">-</button>
+							<input id="buycount" class="mui-input-numbox" type="number" value="1">
+							<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+						</div>
+					</span>
+				</div>
+				<div class="qrbtn">确认</div>
+			</div>
+		</div>
+		<div class="footer">
+		     <div class="footer_btn servers">
+		     	 <span class="btn_bm buycar">加入购物车</span>
+		         <span class="btn_bm promptly">立即购买</span>
+		     </div>
+		</div>
+		<script src="../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/template.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/sub.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+//			点击调到指定位置
+//		   $(".menu_item").click(function(){
+//		       $(this).find('a').addClass("active").parent().siblings().find("a").removeClass("active");
+//		       console.log($(this).index());
+//		       var top=$(".hot_activity_panel").eq($(this).index()).offset().top;
+//		       document.body.scrollTop = top-50;
+//		   })
+            var goodsId;//商品id
+            var goods_price;
+            var buyCount;
+            var goodsName;
+		    mui.init();
+		    mui.plusReady(function(){
+		    	var self = plus.webview.currentWebview(); 
+			    var listid = self.listid;//获得列表页传过来的id
+			    goodsId=listid;
+               //服务详情接口
+			   mui.ajax({
+					url:WEB_HOST+"/index/servicedetail", 
+					type: "get",
+					async: false,
+					data: {
+						"serviceid":listid,
+						"token":localStorage.getItem("token")
+					},
+					dataType: "json",
+					timeout: 1000,
+					success: function(data) {
+//						alert(JSON.stringify(data));
+						if(data.status == 0){
+							$(".hot_activity_img img").attr("src",data.data.image);
+							$(".subtitle .fl").html(data.data.title);
+							goodsName=data.data.title;
+							$(".goodsName span").html(data.data.title);
+							$(".subtitle .price").html(data.data.price);
+							goods_price=data.data.price;
+							$(".fr_people").html(data.data.people);
+//							$(".subtitle").html(data.data.subtitle);
+//							$(".endtime").html(data.data.endtime);
+//							$(".tr_avatar").attr("src",data.data.image);
+//							$(".tr_name").html(data.data.name);
+//							$("#tr_phone").val(data.data.phone);
+							$(".item_span").html(data.data.description);
+						}
+				    },
+				    error:function(a){
+						mui.toast("服务器未响应，请稍后重试");
+					}
+				});
+//				评价
+				document.getElementById("tab_pj").addEventListener("tap",function(){
+					mui.ajax({
+						url: WEB_HOST+"/index/servicecomments", 
+						type: "get",
+						async: false,
+						data: {
+							"serviceid":listid,
+							"token":localStorage.getItem("token")
+						},
+						dataType: "json",
+						timeout: 1000,
+						success: function(data) {
+//							alert(JSON.stringify(data));
+							if(data.status == 0){
+								document.getElementById("panel_text").innerHTML=template("paneltemp",data);
+							}
+							//				控制评价显示条数
+	                         $(".pjlist").eq(0).addClass("block");
+	                         $(".pjlist").eq(1).addClass("block");
+	                         document.getElementById("lookWhole").addEventListener("tap",function(){
+	                         	$(".pjlist").addClass("block"); 
+	                         	$("#lookWhole").fadeOut();
+	                         })
+					    },
+					    error:function(a){
+							mui.toast("服务器未响应，请稍后重试");
+						}
+					});
+				})
+
+		        document.getElementsByClassName("promptly")[0].addEventListener('tap',function(){
+		        	if(localStorage.getItem("token")){
+                		mui.openWindow({
+			               url:"balance02.html",
+			               id:"balance02",
+			               createNew:true,
+			               extras:{
+					          listid:listid,
+					          goodsName:goodsName,
+					          goodsPrice:goods_price
+					        }
+		       			});
+                	}else{
+                		var btnArray = ['是', '否'];
+						mui.confirm("未登录，现在是否去登陆", function(e) {
+							if (e.index == 0) {
+								mui.openWindow({
+									url: "login-mode.html",
+									id: "login-mode",
+									createNew:true,
+									waiting: {
+										autoShow: true
+									},show: {
+										aniShow: 'none'
+									}
+								});
+							}
+						})
+                    }
+		        });
+//		        加入购物车事件
+                $(".buycar").click(function(){
+                	if(localStorage.getItem("token")){
+                		$(".jrgwc_model").fadeIn();
+                	}else{
+                		var btnArray = ['是', '否'];
+						mui.confirm("未登录，现在是否去登陆", function(e) {
+							if (e.index == 0) {
+								mui.openWindow({
+									url: "login-mode.html",
+									id: "login-mode",
+									createNew:true,
+									waiting: {
+										autoShow: true
+									},show: {
+										aniShow: 'none'
+									}
+								});
+							}
+						})
+                	}
+                	
+                })
+                document.getElementsByClassName("qrbtn")[0].addEventListener("tap",function(){
+                	buyCount=$("#buycount").val();
+                	mui.ajax({
+						url:WEB_HOST+"/index/addShopCart", 
+						type: "get",
+						async: false,
+						data: {
+							"token":localStorage.getItem("token"),
+							"proid":goodsId,
+							"proprice":goods_price,
+							"procount":buyCount
+						},
+						dataType: "json",
+						timeout: 1000,
+						success: function(data) {
+//							console.log(JSON.stringify(data));
+							mui.toast(data.message);
+							$(".jrgwc_model").fadeOut();
+	                    	var wobj = plus.webview.getWebviewById("main");//注意 HBuilder 是   1.html 的 ID  你如果1.html 有ID   要替换掉HBuilder，  
+                         	wobj.reload(true);  
+					    },
+					    error:function(a){
+							mui.toast("服务器未响应，请稍后重试");
+						}
+					});
+                })
+		    })
+	  </script>
+	</body>
+
+</html>

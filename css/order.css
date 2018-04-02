@@ -1,0 +1,12 @@
+.mui-btn{
+	padding: 3px 5px;
+	font-size:13px;
+}
+#order .tk_btn{
+	border-color:#8f8f94 ;
+	color: #8f8f94;
+}
+#order .tt_btn,#order .tg_btn{
+	border-color:#f0ad4e ;
+	color: #f0ad4e;
+}

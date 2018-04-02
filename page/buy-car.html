@@ -1,0 +1,322 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/app.css" rel="stylesheet" />
+	</head>
+
+	<body id="buyCar">
+	<div class="mui-content" style="padding-bottom: 50px;">
+		<ul class="buyCar_list" id="buyCar_list">
+			<!--<li class="buy_item">
+				<div class="goods">
+					<div class="mui-input-row mui-checkbox mui-left fl">
+		                <input name="checkbox" class="listCheckBox listCheck1" data-num="1" value="Item 1" type="checkbox">
+		            </div>
+					<div class="goods_name fl">
+						<h4>茶艺居</h4>
+						<p>商品优惠：<span>满30减5元</span></p>
+					</div>
+					<div class="del fr">
+						<span class="mui-icon mui-icon-trash"></span>
+					</div>
+				</div>
+				<div class="goods_info">
+					<div class="mui-input-row mui-checkbox mui-left fl">
+		                <input name="checkbox" class="listCheckBox listCheck1" data-num="1" value="Item 2" type="checkbox">
+		            </div>
+					<div class="goods_img fl">
+						<img src="../img/foot.jpg" />
+					</div>
+					<div class="goos_name_count fl">
+						<div class="name_price">
+							<div class="g_name fl">
+								佳佳都可大卡司运动鞋
+							</div>
+							<div class="g_price fr">
+								<p style="text-decoration: line-through;">&yen;199</p>
+								<p>&yen;99</p>
+							</div>
+						</div>
+						<p>颜色：<span>斑马条黑纹</span></p>
+						<p>尺码：<span>38尺码</span></p>
+						<div class="mui-numbox" data-numbox-min="0">
+							<button class="mui-btn mui-btn-numbox-minus" type="button" disabled="">-</button>
+							<input id="test" class="mui-input-numbox" type="number" value="1">
+							<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+						</div>
+					</div>
+				</div>
+			</li>-->
+		</ul>
+		<script type="text/html" id="buyCartemp">
+			{{each data as value i}}
+			<li class="buy_item" data-id="{{value.id}}">
+				<div class="goods">
+					<div class="mui-input-row mui-checkbox mui-left fl">
+		                <input name="checkbox" class="listCheckBox listCheck{{value.id}}" data-num="{{value.id}}" value="Item{{value.id}}" type="checkbox">
+		            </div>
+					<div class="goods_name fl">
+						<h4>{{value.proname}}</h4>
+					</div>
+					<div class="del fr" id="goods{{value.id}}" data-id="{{value.id}}">
+						<span class="mui-icon mui-icon-trash"></span>
+					</div>
+				</div>
+				<div class="goods_info">
+					<div class="mui-input-row mui-checkbox mui-left fl">
+		                <input name="checkbox" class="listCheckBox listCheck{{value.id}}" data-num="{{value.id}}" value="Item{{value.id}}" type="checkbox">
+		            </div>
+					<div class="goods_img fl">
+						<img src="{{value.PICPATH}}" />
+					</div>
+					<div class="goos_name_count fl">
+						<div class="name_price">
+							<div class="g_name fl">
+								{{value.proname}}
+							</div>
+							<div class="g_price fr">
+								<!--<p class="oldprices" style="text-decoration: line-through;">&yen;{{value.oldprice}}</p>-->
+								<p class="newprices">&yen;{{value.mprice}}</p>
+								<!--新的价格-->
+								<input type="hidden" name="newprice" class="newpric" id="newprice{{value.id}}" value="{{value.mprice}}" />
+							</div>
+						</div>
+						<p class="prodetail">{{value.PRODETAIL}}</p>
+						<!--<p>尺码：<span>{{value.chima}}</span></p>-->
+						<div class="mui-numbox" data-numbox-min="0">
+							<button class="mui-btn mui-btn-numbox-minus" type="button" disabled="">-</button>
+							<input id="count{{value.id}}" class="mui-input-numbox" data-name="{{value.proname}}" data-gid="{{value.pid}}" data-id="{{value.id}}" type="number" value="{{value.procount}}">
+							<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+						</div>
+					</div>
+				</div>
+				<!--单个商品的总价格-->
+				<input type="hidden" name="sumprice" class="sumprice" id="sumprice{{value.id}}" value="{{value.mprice}}" />
+			</li>
+			{{/each}}
+		</script>
+	</div>
+	<!--全选代码-->
+	<div class="foot_js">
+	    <div class="mui-input-row mui-checkbox mui-left fl">
+             <input id="checkAll" type="checkbox">
+             <label id="label" for="checkAll">全选</label>
+        </div>
+        <div class="foot_jsbtn fr" id="jiesuan">结算</div>
+        <div class="foot_hj fr">合计：<span>&yen;<span id="total">0</span></span></div>
+	</div>
+	
+	<!--<div class="balance01_foot">
+		<button id="login" class="mui-btn mui-btn-block color_f f16">结算</button>
+	</div>-->
+	<script src="../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/template.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/sub.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+//			购物车列表渲染js
+//console.log(WEB_HOST+"/index/myShopcartMobile?token="+localStorage.getItem("token"));
+        mui.ajax({
+				url:WEB_HOST+"/index/myShopcartMobile",
+				type: "get",
+				async: false,
+				data:{
+					"token":localStorage.getItem("token")
+				},
+				dataType: "json",
+				timeout: 1000,
+				success: function(data) {
+					console.log("购物车"+JSON.stringify(data));
+					document.getElementById("buyCar_list").innerHTML=template("buyCartemp",data);
+				}
+		});
+        mui.init();
+//       document.getElementById("jiesuan").addEventListener('tap',function(){
+//	           mui.openWindow({
+//	               url:"balance.html",
+//	               id:"balance"
+//	   			});
+//	      });
+        (function (m) {
+        	var proids;
+//          function deldata(){
+        		//					删除商品
+                var del_len=document.getElementsByClassName("del").length;
+                for(var i=0;i<del_len;i++){
+                	document.getElementsByClassName("del")[i].addEventListener("tap",function(){
+                		var proid=$(this).data("id");
+                		var flag=$(this).parent().siblings().find(".listCheckBox").is(':checked');
+                		if(flag){
+                			var btnArray = ['是', '否'];
+							mui.confirm("是否删除该商品", function(e) {
+								if (e.index == 0) {
+									$("#goods"+proid).parents(".buy_item").remove();
+			              		    mui.ajax({
+											url:WEB_HOST+"/index/deleteShopCartMobile",
+											type: "get",
+											async: false,
+											data:{
+												"token":localStorage.getItem("token"),
+												"proids":proid
+											},
+											dataType: "json",
+											timeout: 1000,
+											success: function(data) {
+						                       mui.toast(data.message);
+											}
+									});
+								}
+							})	
+                		}else{
+                			mui.toast("请先选中商品");
+                		}
+                	})
+                }
+//          }
+        	//	          将对应id存入数组就可以根据id计算价格总和
+	        	var arrprice=new Array();
+	        	var arr=new Array();
+	        	var countarr=new Array();
+	        	var gnamearr=new Array();
+	        	var gid=new Array();
+	        //数组去重复的方法，因为全选每次会存入两个一样的数组，所以需要去重
+        	function toRepeat(args){
+		        for(i=0;i<args.length;i++){
+		            if(arrprice.indexOf(args[i])<0){
+		                arrprice.push(args[i])
+		            }
+		        }
+		        return arrprice;
+		    }
+        	function toCancel(args){
+		        for(i=0;i<args.length;i++){
+	                arrprice.pop(args[i]);
+		        }
+		        return arrprice;
+		    }
+        	//       实现全选功能
+            document.getElementById('checkAll').addEventListener('change',function(e) {
+	            var listBox = m('.listCheckBox');
+	            if (e.target.checked) {
+	                listBox.each(function() {
+	                    var ele = this;
+	                    ele.checked=true;
+	                    var num=$(this).data("num");
+	                    arr.push(num);
+	                    toRepeat(arr);
+	                    many();
+	                })
+	            } else {
+	                listBox.each(function() {
+	                    var ele = this;
+	                    ele.checked=false
+	                    var num=$(this).data("num");
+	                    arr.push(num);
+	                    toCancel(arr);
+	                    many();
+	                })
+	            }
+	        });
+	        //实现对应双选
+	        var checklen=document.getElementsByClassName('listCheckBox').length;
+	        for(var i=0;i<checklen;i++){
+	        	document.getElementsByClassName('listCheckBox')[i].addEventListener('change',function(e) {
+	        		//实现对应双选
+	        		var num=$(this).data("num");
+		            var listBox = m('.listCheck'+num);
+		            if (e.target.checked) {
+		                listBox.each(function() {
+		                    var ele = this;
+		                    ele.checked=true;
+		                })
+		                arrprice.push($(this).data("num"));
+		            } else {
+		                listBox.each(function() {
+		                    var ele = this;
+		                    ele.checked=false;
+		                })
+		                arrprice.pop($(this).data("num"));
+		            }
+		        });
+	        }
+	        var total=0; 
+		    var idnum=0,idprice=0,sumprice=0;
+	        //实现单个价格总和
+	        function single(){
+	            var inputnumbox=document.getElementsByClassName("mui-input-numbox").length;
+		        var sum=0,num=0;
+		        var count=new Array();
+		        var price=new Array();
+		        for(var i=0;i<inputnumbox;i++){
+		        	count[i]=$(".mui-input-numbox").eq(i).val();
+		        	price[i]=$(".newpric").eq(i).val();
+		        	num[i]=i;
+//		        	console.log("数组"+count);
+		        	document.getElementsByClassName('mui-input-numbox')[i].addEventListener('change',function() {
+		        		num=$(this).data("id");
+		        		count[i]=$("#count"+num).val();
+		        		price[i]=$("#newprice"+num).val();
+		        		sum=count[i]*price[i]*10000/10000;
+		        		$("#sumprice"+num).val(sum.toFixed(2));
+		        		console.log("单个总价为"+$("#sumprice"+num).val())
+		        		many();
+		        	})
+//		        	console.log("数量"+count[i]);
+//		        	console.log("价格"+count[i]);
+		        	sum=count[i]*price[i]*10000/10000;
+//		        	console.log("单个总价"+sum);
+	        		$(".sumprice").eq(i).val(sum.toFixed(2));
+	        		console.log("单个总价de"+$(".sumprice").eq(i).val())
+	        		//是否取消选中状态后的价格
+		        }
+	        }
+	        single();
+	        //选中多个商品的总价
+	        function many(){
+			        for(var i=0;i<arrprice.length;i++){
+		        		idnum=arrprice[i];
+		        		countarr[i]=$("#count"+idnum).val();
+		        		gnamearr[i]=$("#count"+idnum).data("name");
+		        		gid[i]=$("#count"+idnum).data("gid");
+	//		        	   根据id获取相应的价格
+		        	    idprice=$("#sumprice"+idnum).val();
+		        	    console.log("根据id获取的相应价格"+idprice)
+		        	    total+=parseFloat(idprice);
+		        	    console.log("总价"+total.toFixed(2));
+		            }
+			        sumprice=total;
+			         document.getElementById("total").innerHTML=total.toFixed(2);
+			         total=0;
+		       };
+		    //根据选中取消复选框的个数增加和减少总价
+	        $(".listCheckBox").change(function(){
+	        	single();
+	        	many();
+	        });
+	        document.getElementById("jiesuan").addEventListener('tap',function(){
+	            if(arrprice.length!=0){
+	            	mui.openWindow({
+		               url:"balance.html",
+		               id:"balance",
+		               createNew:true,
+		               extras:{
+				        arrid:gid,
+				        arrname:gnamearr,
+				        arrcount:countarr,
+				        sumprice:sumprice
+				       }
+		   			});
+	            }else{
+	            	mui.toast("至少选择一个商品");
+	            }
+	        });
+
+      })(mui)
+	</script>
+	</body>
+</html>

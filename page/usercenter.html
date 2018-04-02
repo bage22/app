@@ -1,0 +1,348 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/app.css" rel="stylesheet" />
+	</head>
+
+	<body id="usercenter">
+	<!--<header class="mui-bar mui-bar-nav head_bg">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left color_f"></a>
+			<h1 class="mui-title">
+				
+			</h1>
+			<a class="mui-icon mui-icon-chatbubble mui-pull-right color_f"></a>
+	</header>-->
+		<div class="mui-content">
+			<ul class="mui-table-view" >
+				<li class="mui-table-view-cell mui-media head_bg">
+					<a class="" href="javascript:;">
+						<img id="profile" class="mui-pull-left" src="../img/zwtx.jpg">
+						<div class="mui-media-body" style="overflow: hidden;">
+							<div class="user_names">
+								<span id="nickname" style="margin-top: 2px;display: block;width: 100px;overflow: hidden;">未登录</span>
+								<span class="hy" id="hydj">未登录</span>
+							</div>
+							<div class="user_jf">
+							    <span>积分</span>
+								<span class="f16" id="jfcount"></span>
+							</div>
+							<!--<div class="user_sc">
+							    <div class="sc_bg">
+							         <span>收藏</span>
+								     <span id="sccount">0</span>
+							    </div>
+							</div>-->
+						</div>
+					</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view mui-grid-view mui-grid-9">
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4" id="order_goods">
+				    <a href="javascript:void(0)">
+				        <!--<span class="mui-icon" id="ddcount">0</span>-->
+				        <div class="mui-media-body">订单</div>
+				    </a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4" id="bmhd">
+				    <a href="javascript:void(0)">
+				        <!--<span class="mui-icon" id="bmhdcount">0</span>-->
+				        <div class="mui-media-body">报名活动</div>
+				    </a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4" id="dqfu">
+				    <a href="javascript:void(0)">
+				        <!--<span class="mui-icon" id="dqfwcount">0</span>-->
+				        <div class="mui-media-body">服务列表</div>
+				    </a>
+				</li>
+			</ul>
+			<ul class="mui-table-view" style="margin-top: 30px;">
+				<li class="mui-table-view-cell" id="myaddress">
+					<a class="mui-navigate-right f14" href="javascript:void(0)">
+						<span class="mui-icon mui-icon-map f22 mar_rig5"></span>我的收货地址
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right f14">
+						<span class="mui-icon mui-icon-gear f22 mar_rig5"></span>设置
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right f14">
+						<span class="mui-icon mui-icon-info f22 mar_rig5"></span>关于
+					</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view" style="margin-top: 30px;">
+				<li class="mui-table-view-cell f14" id="logoff" style="text-align: center;">退出登录</li>
+				<li class="mui-table-view-cell f14" id="li_ji_deng_lu" style="text-align: center;">立即登录</li>
+			</ul>
+		</div>
+		<script src="../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/sub.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			/*模拟token 测试显下边 登陆 和退出 按钮的显示*/
+//			localStorage.setItem("token","123");
+//			localStorage.removeItem("token");
+			/*如果有token显示 退出 按钮 , 没有token显示 登陆 按钮*/
+			if(localStorage.getItem("token")==null){
+				document.querySelector("#logoff").style.display = "none";
+				document.querySelector("#li_ji_deng_lu").style.display = "block";
+			}else{
+				document.querySelector("#logoff").style.display = "block";
+				document.querySelector("#li_ji_deng_lu").style.display = "none";
+			}
+			
+			
+			
+		      mui.init();
+		      mui.plusReady(function(){
+				/*点击登陆 打开登陆页面*/
+		      	document.querySelector("#li_ji_deng_lu").addEventListener("tap",function(){
+		      		mui.openWindow({
+						url: "login-mode.html",
+						id: "login-mode",
+						createNew:true,
+						waiting: {
+							autoShow: true
+						},show: {
+							aniShow: 'none'
+						}
+					});
+		      	});
+		      	
+		      	function getinfo(e){   
+                    var avatar=e.detail.avatar;
+                    var nickname=e.detail.nickname;
+                    //						头像
+                    $("#profile").attr("src",avatar);
+                    console.log("头像"+avatar)
+//                      昵称
+                    $("#nickname").html(nickname);
+                }
+                //自定义窗体事件  doit 要和b页面定义的 事件名称一致   
+                window.addEventListener('doit',getinfo); 
+		   //用户中心接口
+		   mui.ajax({
+				url: WEB_HOST+"/userCenter/profile", 
+				type: "get",
+				async: false,
+				data: {
+					"token":localStorage.getItem("token")
+				},
+				dataType: "json",
+				timeout: 1000,
+				success: function(data) {
+//					console.log(JSON.stringify(data));
+					if(data.status == 0){
+//						console.log(data.data.avatar);
+//						头像
+                        $("#profile").attr("src",data.data.avatar);
+//                      昵称
+                        $("#nickname").html(data.data.nickname);
+//                      会员等级
+                        $("#hydj").html(data.data.level+"会员");
+//                      积分
+                        $("#jfcount").html(data.data.points);
+//                      收藏
+                        $("#sccount").html(data.data.stars);
+//                      订单					}
+//                      $("#ddcount").html(data.data.orders);
+//                      报名活动
+//                      $("#bmhdcount").html(data.data.activities);
+//                      当前服务
+//                      $("#dqfwcount").html(data.data.services);
+				   }
+				}
+			});
+		        document.getElementById("profile").addEventListener('tap',function(){
+		        	if(localStorage.getItem("token")){
+                		 mui.openWindow({
+			               url:"my-profile.html",
+			               id:"my-profile",
+			               createNew:true
+		       			});
+                	}else{
+                		var btnArray = ['是', '否'];
+						mui.confirm("未登录，现在是否去登陆", function(e) {
+							if (e.index == 0) {
+								mui.openWindow({
+									url: "login-mode.html",
+									id: "login-mode",
+									createNew:true,
+									waiting: {
+										autoShow: true
+									},show: {
+										aniShow: 'none'
+									}
+								});
+							}
+						})
+                    }
+		        })
+	
+		        //订单
+		        document.getElementById("order_goods").addEventListener('tap',function(){
+		            if(localStorage.getItem("token")){
+                		mui.openWindow({
+			               url:"order.html",
+			               id:"order"
+		       			});
+                	}else{
+                		var btnArray = ['是', '否'];
+						mui.confirm("未登录，现在是否去登陆", function(e) {
+							if (e.index == 0) {
+								mui.openWindow({
+									url: "login-mode.html",
+									id: "login-mode",
+									createNew:true,
+									waiting: {
+										autoShow: true
+									},show: {
+										aniShow: 'none'
+									}
+								});
+							}
+						})
+                    }
+		        });
+//		        报名活动
+		        document.getElementById("bmhd").addEventListener('tap',function(){
+		           if(localStorage.getItem("token")){
+                		mui.openWindow({
+			               url:"registration-activities.html",
+			               id:"registration-activities"
+		       			});
+                	}else{
+                		var btnArray = ['是', '否'];
+						mui.confirm("未登录，现在是否去登陆", function(e) {
+							if (e.index == 0) {
+								mui.openWindow({
+									url: "login-mode.html",
+									id: "login-mode",
+									createNew:true,
+									waiting: {
+										autoShow: true
+									},show: {
+										aniShow: 'none'
+									}
+								});
+							}
+						})
+                   }
+		           
+		        });
+//		        当前服务
+		        document.getElementById("dqfu").addEventListener('tap',function(){
+		        	if(localStorage.getItem("token")){
+                		mui.openWindow({
+			               url:"current-service.html",
+			               id:"current-service"
+		       			});
+                	}else{
+                		var btnArray = ['是', '否'];
+						mui.confirm("未登录，现在是否去登陆", function(e) {
+							if (e.index == 0) {
+								mui.openWindow({
+									url: "login-mode.html",
+									id: "login-mode",
+									createNew:true,
+									waiting: {
+										autoShow: true
+									},show: {
+										aniShow: 'none'
+									}
+								});
+							}
+						})
+                   }
+		            
+		        });
+		        document.getElementById("logoff").addEventListener("tap",function(){
+		        	if(localStorage.getItem("token")){
+                		var btnArray = ['是', '否'];
+						mui.confirm("是否退出登录", function(e) {
+							if (e.index == 0) { 
+								mui.ajax({
+									url:WEB_HOST+"/auth/logout", 
+									type: "post",
+									async: false,
+									data: {
+										"token":localStorage.getItem("token")
+									},
+									dataType: "json",
+									timeout: 1000,
+									success: function(data) {
+										localStorage.removeItem("token");
+										mui.openWindow({
+											url: "main.html",
+											id: "main",
+											createNew:true,
+											waiting: {
+												autoShow: true
+											},show: {
+												aniShow: 'none'
+											}
+										});
+									}
+								});
+							} else {
+								
+							}
+						})
+                	}else{
+                		var btnArray = ['是', '否'];
+						mui.confirm("未登录，现在是否去登陆", function(e) {
+							if (e.index == 0) {
+								mui.openWindow({
+									url: "login-mode.html",
+									id: "login-mode",
+									createNew:true,
+									waiting: {
+										autoShow: true
+									},show: {
+										aniShow: 'none'
+									}
+								});
+							}
+						})
+                   }
+		        	
+		        })
+		        document.getElementById("myaddress").addEventListener("tap",function(){
+		        	if(localStorage.getItem("token")){
+                		mui.openWindow({
+			        		url:"address.html",
+			        		id:"address",
+			        		createNew:true
+			        	})
+                	}else{
+                		var btnArray = ['是', '否'];
+						mui.confirm("未登录，现在是否去登陆", function(e) {
+							if (e.index == 0) {
+								mui.openWindow({
+									url: "login-mode.html",
+									id: "login-mode",
+									createNew:true,
+									waiting: {
+										autoShow: true
+									},show: {
+										aniShow: 'none'
+									}
+								});
+							}
+						})
+                   }
+		        	
+		        })
+		      })
+ 		</script>
+	</body>
+
+</html>

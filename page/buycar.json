@@ -1,0 +1,79 @@
+{
+    "code": 0,
+    "msg": "",
+    "count": 1000,
+    "data": [
+        {
+            "id": 101,
+            "title": "茶艺居",
+            "yh": "满30减5元",
+            "imgPath": "../img/01home_28.png",
+            "goodsname":"佳佳都可大卡司运动鞋",
+            "color":"斑马条黑纹",
+            "chima":"38尺码",
+            "oldprice":"199",
+            "newprice":"66",
+            "state":"0"
+        },
+        {
+            "id": 102,
+            "title": "电风扇",
+            "yh": "满40减15元",
+            "imgPath": "../img/01home_29.png",
+            "goodsname":"佳佳都可大卡司运动鞋",
+            "color":"斑马条黑纹",
+            "chima":"38尺码",
+            "oldprice":"199",
+            "newprice":"66",
+            "state":"0"
+        },
+        {
+            "id": 103,
+           "title": "大师傅",
+            "yh": "满20减5元",
+            "imgPath": "../img/cbd.jpg",
+            "goodsname":"佳佳都可大卡司运动鞋",
+            "color":"斑马条黑纹",
+            "chima":"38尺码",
+            "oldprice":"199",
+            "newprice":"66",
+            "state":"0"
+        },
+        {
+            "id": 104,
+            "title": "奥术大师",
+            "yh": "满100减20元",
+            "imgPath": "../img/muwu.jpg",
+            "goodsname":"佳佳都可大卡司运动鞋",
+            "color":"斑马条黑纹",
+            "chima":"38尺码",
+            "oldprice":"199",
+            "newprice":"66",
+            "state":"0"
+        },
+        {
+            "id": 105,
+            "title": "港福蛋糕坊",
+            "yh": "满70减5元",
+            "imgPath": "../img/shuijiao.jpg",
+            "goodsname":"佳佳都可大卡司运动鞋",
+            "color":"斑马条黑纹",
+            "chima":"38尺码",
+            "oldprice":"199",
+            "newprice":"66",
+            "state":"0"
+        },
+        {
+            "id": 106,
+            "title": "史蒂芬孙",
+            "yh": "满50减5元",
+            "imgPath": "../img/yuantiao.jpg",
+            "goodsname":"佳佳都可大卡司运动鞋",
+            "color":"斑马条黑纹",
+            "chima":"38尺码",
+            "oldprice":"199",
+            "newprice":"66",
+            "state":"0"
+        }
+    ]
+}

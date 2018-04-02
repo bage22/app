@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/global.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/login.css"/>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-lef color_b"></a>
+			<h1 class="mui-title">动态密码登录</h1>
+		</header>
+		<div class="mui-content">
+			<form id='login-form' class="mui-input-group">
+				<div class="mui-input-row">
+					<label>+86</label>
+					<input id='phone' type="text" class="mui-input-clear mui-input" placeholder="请输入手机号">
+				</div>
+			</form>
+			<div class="dynamic-yzm">我们将会向你们的手机发送动态验证码</div>
+			
+			<div class="mui-content-padded">
+				<button type="button" class="mui-btn mui-btn-royal mui-btn-block" id="fs_yzm">发送验证码</button>
+			</div>
+			<div class="mui-content-padded oauth-area">
+
+			</div>
+		</div>
+		<script src="../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+		<script>
+		      mui.init();
+		      mui.plusReady(function(){
+		        document.getElementById("fs_yzm").addEventListener('tap',function(){
+		        	mui.ajax({
+						url: WEB_HOST+"/auth/code/send", 
+						type: "post",
+						async: false,
+						data: {
+							"phone":$("#phone").val()
+						},
+						dataType: "json",
+						timeout: 1000,
+						success: function(data) {
+							if(data.status == 0){
+								 mui.toast(data.message);
+								mui.openWindow({
+									url: "dynamic-login-yzm.html",
+									id: "dynamic-login-yzm",
+									createNew:true,
+									waiting: {
+										autoShow: true
+									},show: {
+										aniShow: 'none'
+									},extras: {
+										phone: $("#phone").val()  //往下一个页面传值
+									}
+								});
+							}else{
+								mui.toast(data.message);
+							}
+						},error:function(a){
+							mui.toast("服务器未响应，请稍后重试");
+						}
+					});
+		        });
+		      })
+ 		</script>
+	</body>
+
+</html>

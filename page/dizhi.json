@@ -1,0 +1,11 @@
+{
+    "status":0,
+    "message":"成功",
+    
+    "data":{
+    "returnPerson":"收货人",
+    "returnPhone":"收货人电话",
+    "returnCode":"邮政编码",
+    "returnAddr":"收货地址"
+    }
+}

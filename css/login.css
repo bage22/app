@@ -1,0 +1,257 @@
+.bgf{
+	background: #fff;
+}
+/*loggin-mode页面*/
+  #loggin-mode{
+	background: #fff;
+}
+#loggin-mode .mui-bar{
+	background: #fff;
+}
+#loggin-mode .mui-bar-nav{
+	box-shadow: 0 1px 6px #fff;
+}
+#loggin-mode .mui-content{
+	background: #fff;
+	height: 100%;
+}
+.logMode_img{
+	padding:20px 10px;
+}
+.logMode_img img{
+	width: 100%;
+	height: 100px;
+}
+.logMode_btn{
+	padding:0px 10px;
+}
+.logMode_btn .mui-btn-block{
+	padding: 10px 0px;
+	font-size: 14px;
+}
+.logMode_btn .mar_top{
+	margin-top: 10%;
+	border-radius: 7px;
+}
+#login{
+	background: url(../img/btn01@3X.png) no-repeat;
+	background-size: 100% 100%;
+	border: none;
+}
+#dt_login{
+	background: url(../img/btn02@3X.png) no-repeat;
+	background-size: 100% 100%;
+	border: none;
+}
+
+
+
+  /*login页面*/
+         .area {
+				margin: 20px auto 0px auto;
+			}
+			
+			
+			.mui-input-group:first-child {
+			    margin: 20px 10px;
+			    margin-bottom: 0px;
+			    border: 1px solid #c8c7cc;
+			    border-radius: 6px;
+			}
+			.mui-input-group:before,.mui-input-group:after{
+				height: 0px;
+			}
+			.mui-input-group label {
+				width: 22%;
+			}
+			.mui-input-row{
+				font-size: 14px;
+			}
+			.mui-input-group .mui-input-row:after{
+				left: 0px;
+			}
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 78%;
+				font-size: 14px;
+			}
+			
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				top: 6px;
+			}
+			
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			
+			.mui-btn {
+				padding: 10px;
+			}
+			
+			.link-area {
+				display: block;
+				margin-top: 20px;
+				text-align: center;
+			}
+			.link-area a{
+				font-size: 14px;
+			}
+			.spliter {
+				color: #bbb;
+				padding: 0px 8px;
+			}
+			
+			.oauth-area {
+				position: absolute;
+				bottom: 20px;
+				left: 0px;
+				text-align: center;
+				width: 100%;
+				padding: 0px;
+				margin: 0px;
+			}
+			
+			.oauth-area .oauth-btn {
+				display: inline-block;
+				width: 50px;
+				height: 50px;
+				background-size: 30px 30px;
+				background-position: center center;
+				background-repeat: no-repeat;
+				margin: 0px 20px;
+				/*-webkit-filter: grayscale(100%); */
+				border: solid 1px #ddd;
+				border-radius: 25px;
+			}
+			
+			.oauth-area .oauth-btn:active {
+				border: solid 1px #aaa;
+			}
+			
+			.oauth-area .oauth-btn.disabled {
+				background-color: #ddd;
+			}
+			.mui-bar{
+				background: #fff;
+			}
+			.dynamic-yzm{
+				font-size: 12px;
+				color: #939592;
+				padding: 3px 10px;
+			}
+			
+.forgetPassword_type{
+	position: fixed;
+	bottom: 0px;
+	width: 100%;
+	background: #efeff4;
+	text-align: center;
+	font-size: 14px;
+}
+.forgetPassword_type ul{
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	margin-bottom: 10px;
+	background: #fff;
+}
+.forgetPassword_type ul li{
+	height: 40px;
+	line-height: 40px;
+	border-bottom: 1px solid #ddd;
+}
+.forgetPassword_type .cancel{
+	height: 40px;
+	line-height: 40px;
+	background: #fff;
+}
+/*dynamic-login-yzm.html*/
+#login_yzm.mui-input-group{
+	margin: 0px 10px;
+	border: 1px solid #c8c7cc;
+	border-radius: 6px;
+}
+#login_yzm.mui-input-group label{
+	width:12%;
+	text-align: center;
+    padding: 9px 0px;
+}
+#login_yzm .mui-input-row input{
+	width: 88%;
+}
+.login_yzm_phone{
+	padding: 15px 10px;
+	padding-bottom: 0px;
+	font-size: 14px;
+}
+.dynamic-yzm_cxfs{
+	color:#333 ;
+	font-size: 12px;
+	text-align: center;
+	padding: 5px 0px;
+}
+.dynamic-yzm_cxfs span{
+	color: #939592;
+	margin-right: 5px;
+}
+.mui-btn-zdy{
+	background: #BBBBBB;
+	color: #fff;
+}
+
+/*login-successful.html*/
+#login_success{
+ width: 100%;
+ padding: 0px 10px;
+}
+.login_success_img{
+	width: 100%;
+	margin: 20px 0px;
+	text-align: center;
+}
+.login_success_img img{
+	width: 95%;
+}
+.login_success_gifimg{
+	text-align: center;
+}
+.login_success_gifimg img{
+	width: 85%;
+}
+#login_success .squer_primary{
+	background:  #007aff;
+	width: 50px;
+	height: 30px;
+	margin:0px auto;
+	margin-top: 50px;
+}
+#login_success .loading{
+	text-align: center;
+	font-size: 16px;
+	color: #bbb;
+	margin-top: 40px;
+}
+
+
+/*load_fale*/
+#login_fale{
+	padding:50px 10px;
+	text-align: center;
+}
+#login_fale h3{
+	
+}
+#login_fale p{
+font-size: 12px;
+}
+#login_fale img{
+	width: 95%;
+}
+.cxjz{
+	text-align: center;
+}
+.cxjz a{
+	font-size: 14px;
+}

@@ -1,0 +1,15 @@
+#search .mui-content .mui-segmented-control{
+	border-color: transparent;
+}
+
+#search .mui-content .mui-segmented-control .mui-control-item{
+	border-color:transparent;
+	color: #5C5C5C;
+}
+
+#search .mui-content .mui-segmented-control .mui-active{
+	border-bottom: 2px solid #FEC80F;
+	color: #5C5C5C;
+	background-color: transparent;
+}
+

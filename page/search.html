@@ -1,0 +1,318 @@
+
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/mui.picker.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/mui.poppicker.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/seacher.css"/>
+	</head>
+
+	<body id="search">
+		<header class="mui-bar mui-bar-nav head_bg">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left color_f"></a>
+			<h1 class="mui-title" style="right: 60px;">
+				<div class="mui-input-row mui-search">
+				    <input type="search" id="seach_tj" class="mui-input-clear" placeholder="请输入你要查询的商品">
+				</div>
+			</h1>
+			<a class="mui-pull-right"><button id="seach" type="button" class="mui-btn" style="padding: 5px 8px;">搜素</button></a>
+		</header>
+		<div class="mui-content" >
+			<!--顶部选项卡-->
+			<div class="mui-slider">
+			    <div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+			        <a class="mui-control-item mui-active" href="#item1">产品</a>
+			        <a class="mui-control-item hd" href="#item2">活动</a>
+			    </div>
+			    <div class="mui-slider-group">
+			        <div id="item1" class="mui-slider-item mui-control-content mui-active">
+			            <!--<ul class="mui-table-view">-->
+			                <ul class="search_list" id="search_list">
+		   	
+							</ul>
+							<!--商品模板-->
+							<script type="text/html" id="spTemp">
+							    {{each data as value i}}
+									<li class="search_item" data-id = "{{value.id}}">
+								   	  	<div class="search_img fl">
+									   	  	 	<img src="{{value. PICPATH}}" />
+									   	  	 	<!--<div class="ly_type">自由行</div>-->
+									   	 </div>
+								   	  	 	<div class="search_info fr">
+									   	  	 	<h4>{{value.proname}}</h4>
+									   	  	 	<p class="searchinfos">{{value.PRODETAIL}}</p>
+									   	  	 	<p>
+									   	  	 		<!--<span class="fl">月售1212笔|324条评价</span>-->
+									   	  	 		<span class="fr"><b>&yen;{{value.mprice}}</b></span>
+									   	  	 	</p>
+									   	  	 </div>
+								   	 </li>
+							   	 {{/each}}
+							</script>
+							<!--活动模板-->
+							<script type="text/html" id="hdTemp">
+							    {{each data as value i}}
+									<li class="search_item" data-id = "{{value.id}}">
+								   	  	<div class="search_img fl">
+									   	  	 	<img src="{{value.image}}" />
+									   	  	 	<!--<div class="ly_type">自由行</div>-->
+									   	 </div>
+								   	  	 	<div class="search_info fr">
+									   	  	 	<h4>{{value.title}}</h4>
+									   	  	 	<p class="searchinfos">{{value.published_at}}</p>
+									   	  	 	<p>
+									   	  	 		<!--<span class="fl">月售1212笔|324条评价</span>-->
+									   	  	 		<span class="fr"><b>{{value.star}}人参加</b></span>
+									   	  	 	</p>
+									   	  	 </div>
+								   	 </li>
+							   	 {{/each}}
+							</script>
+							<!--服务模板-->
+							<script type="text/html" id="fwTemp">
+							    {{each data as value i}}
+									<li class="search_item" data-id = "{{value.id}}">
+								   	  	<div class="search_img fl">
+									   	  	 	<img src="{{value.image}}" />
+									   	  	 	<!--<div class="ly_type">自由行</div>-->
+									   	 </div>
+								   	  	 	<div class="search_info fr">
+									   	  	 	<h4>{{value.title}}</h4>
+									   	  	 	<p class="searchinfos">{{value.comment}}</p>
+									   	  	 	<p>
+									   	  	 		<!--<span class="fl">月售1212笔|324条评价</span>-->
+									   	  	 		<span class="fr"><b>&yen;{{value.price}}</b></span>
+									   	  	 	</p>
+									   	  	 </div>
+								   	 </li>
+							   	 {{/each}}
+							</script>
+							
+			            <!--</ul>-->
+			        </div>
+			        <div id="item2" class="mui-slider-item mui-control-content">
+			            <!--<ul class="mui-table-view">-->
+			            	<ul class="search_list" id="hd_list">
+		   	
+							</ul>
+							<!--活动模板-->
+							<script type="text/html" id="hdTemp">
+							    {{each data as value i}}
+									<li class="search_item" data-id = "{{value.id}}">
+								   	  	<div class="search_img fl">
+									   	  	 	<img src="{{value.image}}" />
+									   	  	 	<!--<div class="ly_type">自由行</div>-->
+									   	 </div>
+								   	  	 	<div class="search_info fr">
+									   	  	 	<h4>{{value.title}}</h4>
+									   	  	 	<p class="searchinfos">{{value.published_at}}</p>
+									   	  	 	<p>
+									   	  	 		<!--<span class="fl">月售1212笔|324条评价</span>-->
+									   	  	 		<span class="fr"><b>{{value.star}}人参加</b></span>
+									   	  	 	</p>
+									   	  	 </div>
+								   	 </li>
+							   	 {{/each}}
+							</script>
+			                <!--<li class="mui-table-view-cell">第2个选项卡子项</li>
+			                <li class="mui-table-view-cell">第2个选项卡子项</li>-->
+			            <!--</ul>-->
+			        </div>
+			    </div>
+			</div>
+			
+			
+			<!--<ul class="search_bar">
+				<li id="palce">出发地<img src="../img/xiala.png"/></li>
+				<li id="destination">目的地<img src="../img/xiala.png"/></li>
+				<li id="price" class="price_qj">价格区间<img src="../img/xiala.png"/></li>
+				<li id="shaixuan" class="sx">筛选<img src="../img/shaixuan.png"/></li>
+			</ul>-->
+				<!--<div class="tab_item">
+					<div id="cp" class="mui-control-content mui-active">
+						
+					</div>
+				</div>-->
+				
+				
+		<!--隐藏获取值的块-->
+		<div id="palce1" style="display: none;"></div>
+		<div id="destination1" style="display: none;"></div>
+		<div id="price1" style="display: none;">
+			<input type="hidden" name="" id="star_price1" value="" />
+			<input type="hidden" name="" id="end_price1" value="" />
+		</div>
+		<!--底部弹出-->
+		<div class="mui-poppicker" id="jgqj"> 
+		   <div class="mui-poppicker-header"> 
+			    <button class="mui-btn mui-poppicker-btn-cancel" id="cancel">取消</button> 
+			    <button class="mui-btn mui-btn-blue mui-poppicker-btn-ok" id="confirm">确定</button> 
+			    <div class="mui-poppicker-clear"></div> 
+		   </div> 
+		   <div class="mui-poppicker-body" style="text-align: center;"> 
+		       <div class="mart10"><input type="text" id="star_price" class="prices"> <b style="color:#888;">——</b> <input type="text" id="end_price" class="prices"></div>
+		   </div> 
+		</div>
+		<!--筛选弹出-->
+		<div id="filter">
+			<div class="filter_box">
+				<div class="filter_head">筛选条件</div>
+				<div class="filter_body">
+					<p>价格</p>
+					<div class="mart10"><input type="text" id="star_prices" class="prices"> <b style="color:#888;">——</b> <input type="text" id="end_prices" class="prices"></div>
+				    <p>类别</p>
+				    <div class="filter_type">
+				    	<ul class="filter_type_list">
+				    		<li class="active">自由行</li>
+				    		<li>跟团游</li>
+				    	</ul>
+				    </div>
+				</div>
+				<div class="filter_foot">
+					<button id="finish" class="mui-btn mui-btn-block">完成</button>
+				</div>
+			</div>
+		</div>
+		<div class="mui-backdrop" style="opacity:1;display: none;"></div>
+		<script src="../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/template.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/sub.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.picker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/city.data.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			document.querySelector(".mui-segmented-control").style.display = "none";
+			document.querySelector("#seach_tj").placeholder = "";
+			document.querySelector(".mui-slider .hd").addEventListener("tap",function(){
+				/*点击切换tab后  就会搜索   解注下边 得再点击搜索按钮后才会搜索*/
+	         	document.getElementById("seach").addEventListener("tap",function(){
+	         		var tj=$("#seach_tj").val();
+	             	search(tj,"searchhdlist");
+
+	         	})
+			})
+			
+           	mui.init();
+           	mui.plusReady(function(){
+           	
+           	var self = plus.webview.currentWebview();
+			var name = self.name;//获得参数
+			
+			
+
+				
+			if(name=="fuwu"){
+				document.querySelector("#seach_tj").placeholder = "请输入你要查询的服务"
+				/*搜素*/
+	         	document.getElementById("seach").addEventListener("tap",function(){
+	         		var tj=$("#seach_tj").val();
+	             	search(tj,"serviceSearch");
+	         	})
+			}else if(name=="huodong"){
+				document.querySelector("#seach_tj").placeholder = "请输入你要查询的活动"
+				/*搜素*/
+	         	document.getElementById("seach").addEventListener("tap",function(){
+	         		var tj=$("#seach_tj").val();
+	             	search(tj,"searchhdlist");
+	         	})
+			}else if(name == "chanpin"){
+				document.querySelector("#seach_tj").placeholder = "请输入你要查询的产品"
+				/*搜素*/
+	         	document.getElementById("seach").addEventListener("tap",function(){
+	         		var tj=$("#seach_tj").val();
+	             	search(tj,"search");
+	         	})
+			}else{
+				document.querySelector(".mui-segmented-control").style.display = "block";
+				document.querySelector("#seach_tj").placeholder="请输入你要查询的产品"
+				/*搜素*/
+	         	document.getElementById("seach").addEventListener("tap",function(){
+	         		var tj=$("#seach_tj").val();
+	             	search(tj,"search");
+	         	})
+			}
+			
+            $("#seach_tj").focus();
+            
+            
+          	
+             
+             
+           	//返回并刷新页面
+//          mui.back=function(){
+//          	var wobj = plus.webview.getWebviewById("main");
+//              wobj.reload(true);
+//          }
+
+//          document.addEventListener('keydown', function(evt) {
+//				if(evt.keyCode==13){
+//					var tj=$("#seach_tj").val();
+//           	    search(tj);
+//				}
+//			})
+          });
+          
+          function search(date,cl){
+            	mui.ajax({
+						url: WEB_HOST+"/index/"+cl,
+						type: "post",
+						async: false,
+						data:{
+							"token":localStorage.getItem("token"),
+							"name":date
+							},
+						dataType: "json",
+						timeout: 1000,
+						success: function(data) {
+							 console.log(JSON.stringify(data));
+                            if(data.status==0){
+                            	if(data.types == "1"){
+                        		 	document.getElementById("search_list").innerHTML=template("spTemp",data);
+                            	}else if(data.types == "2"){
+                            		if(document.querySelector(".mui-segmented-control").style.display == "none"){
+                            			document.getElementById("search_list").innerHTML=template("hdTemp",data);
+                            		}
+                            		document.getElementById("hd_list").innerHTML=template("hdTemp",data);
+                            	}else if(data.types == "3"){
+                            		document.getElementById("search_list").innerHTML=template("fwTemp",data);
+                            	}
+							  
+							}else{
+							   document.getElementById("search_list").innerHTML="<li style='text-align: center;'>没有相关数据</li>";	
+							}
+							//跳转详情页  
+				            var search_len=document.getElementsByClassName("search_item").length;
+								for(var i=0;i<search_len;i++){
+									document.getElementsByClassName("search_item")[i].addEventListener("tap",function(){
+										var listid=$(this).data("id");
+										mui.openWindow({
+							               url:"server-info.html",
+							               id:"server-info",
+							               createNew:true,
+							               extras:{
+									          listid:listid
+									        }
+						       			});
+									})
+								}
+							
+						},error:function(a){
+						   mui.toast("服务器未响应，请稍后重试");
+						}
+				});
+            }
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/tuikuan.css"/>
+		<style type="text/css">
+			input[type="text"]{
+				text-indent: 0px;				
+			}
+		</style>
+	</head>
+
+	<body style="padding: 0 10px;">
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">退货信息</h1>
+			<button id="fasong" type="button" class="mui-btn mui-btn-blue mui-pull-right">发送</button>
+		</header>
+		<div class="mui-content">
+			<div id="xinxi">
+				
+			</div>
+			<script type="text/html" id="moban">
+			 	<p>收货人</p>
+			    <input type="text" readonly="readonly" name="" id="" value="{{data.returnPerson}}" />
+			    <p>收货人电话</p>
+			    <input type="text" readonly="readonly" name="" id="" value="{{data.returnPhone}}" />
+			    <p>邮政编码</p>
+			    <input type="text" readonly="readonly" name="" id="" value="{{data.returnCode}}" />
+			    <p>收货地址</p>
+			    <input type="text" readonly="readonly" name="" id="" value="{{data.returnAddr}}" />
+			</script>
+			<p>退货物品是否寄出</p>
+			<select id="jichu">
+				<option value="0">没有</option>
+				<option value="1">已经寄出</option>
+			</select>
+		   </div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/template.js"></script>
+		<script src="../js/request.js"></script>
+		
+		<script type="text/javascript">
+			var returnid;
+			var refunds;
+			mui.init();
+		    var fs_btn = document.querySelector("#fasong");
+			mui.plusReady(function () {
+				var self = plus.webview.currentWebview();
+			    returnid = self.returnid;
+				console.log(localStorage.getItem("token")+"==="+returnid);
+				mui.ajax({
+					url: WEB_HOST+'/userCenter/returnSuccess',
+					type: "post",
+					async: true,
+					data:{
+						"token":localStorage.getItem("token"),
+						"returnId":returnid
+					},
+					dataType: "json",
+					timeout: 1000,
+					success: function(data) {
+						if(data.status == "0"){
+							document.querySelector("#xinxi").innerHTML = template("moban",data);
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						console.log(errorThrown);
+					}
+				});
+				
+				
+				
+				
+				
+			   
+				//点击发送后 提交 用户ID，商品ID，退款原因， 退款金额
+				fs_btn.addEventListener("tap",function(){
+					zhifu();
+					if(refunds == 1){
+						console.log("往后台发数据");
+						
+						mui.ajax({
+							url:WEB_HOST+'/userCenter/returnUGoods',
+							data:{
+								"token":localStorage.getItem("token"),//用户令牌
+								"returnId":returnid
+							},
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							timeout:10000,//超时时间设置为10秒；
+							success:function(data){
+		                            var detailPage = mui.preload({url:'order.html',id:'order'});
+									mui.fire(detailPage,'shuaxin');
+									mui.openWindow({id:'order'});
+//		                            mui.toast("发送成功")
+							},
+							error:function(xhr,type,errorThrown){
+									console.log(xhr);
+		                            mui.toast("失败")
+									
+							}
+						});
+					}else{
+						console.log("不发数据");
+					}
+				})
+			})
+			function zhifu(){
+				var obj = document.getElementById("jichu"); //定位id
+			    var index = obj.selectedIndex; // 选中索引
+				refunds = obj.options[index].value; // 选中值
+			}
+			zhifu();
+		</script>
+	</body>
+
+</html>

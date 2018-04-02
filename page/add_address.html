@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/mui.picker.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/mui.poppicker.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/global.css"/>
+		<link href="../css/app.css" rel="stylesheet" />
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #000;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left color_f"></a>
+			<h1 class="mui-title color_f">
+			       添加收货地址
+			</h1>
+			<a id="save" href="javascript:void(0);" class="mui-pull-right color_f f16" style="line-height: 45px;">保存</a>
+		</header>
+		<div class="mui-content">
+			<ul class="mui-table-view balance1">
+				<li class="mui-table-view-cell takeUser">	
+					<div class="mui-input-row">
+						<label>收货人</label>
+						<input name="takeUser" id="username"  type="text" class="mui-input-clear mui-input" placeholder="">
+					</div>
+				</li>
+				<li class="mui-table-view-cell takeUser">	
+					<div class="mui-input-row">
+						<label>联系电话</label>
+						<input name="phone" id="telephone"  type="text" class="mui-input-clear mui-input" placeholder="">
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" id="showCityPicker3">
+						<span class="fl">所在地区：</span><span class="fl" id="cityResult3"></span><span  class="fr mar_rig20 color_b">请选择</span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell takeUser">
+					<textarea rows="2" id="addressInfo" placeholder="请写详细地址不少于5个字" style="padding:10px;"></textarea>
+				</li>
+			</ul>
+			<div class="szmr">
+			    <div class="hymr">
+          	   	   	<label>设置默认</label>
+          	   	   	<input type="checkbox" id="check" checked="checked" name="check" value="" />
+          	   	</div>
+			</div>
+		</div>
+		<script src="../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.picker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="../js/city.data-3.js" type="text/javascript" charset="utf-8"></script>-->
+		<script type="text/javascript">
+			var phone=localStorage.getItem("phone");
+		   	$("#telephone").val(phone);
+		   mui.init();
+		   mui.plusReady(function(){
+
+//		   	添加地址增加验证：收件人不能为空，联系电话不能为空，所在地区不能为空，详细地址不能为空。
+                var self = plus.webview.currentWebview();
+        	    types=self.type;
+                $("#username").blur(function(){
+                	var username=$("#username").val();
+                	if(username==""){
+                		mui.toast("收件人不能为空");
+                		$("#username").focus();
+                	}
+                })
+                $("#telephone").blur(function(){
+                	var telephone=$("#telephone").val();
+                	if(telephone==""){
+                		mui.toast("联系电话不能为空");
+                		$("#telephone").focus();
+                	}
+                })
+		   	   mui.ajax({
+					url: WEB_HOST+"/userCenter/diqu", 
+					type: "get",
+					async: false,
+					data: {
+						"token":localStorage.getItem("token")
+					},
+					dataType: "json",
+					timeout: 1000,
+					success: function(data) {
+						getcity(data.data);
+					},
+					error:function(a){
+						mui.toast("服务器未响应，请稍后重试");
+					}
+				});
+				var checknum=1;
+			    document.getElementById("check").addEventListener("change",function(){
+			    	if(this.checked==true){
+			    		checknum=1;
+			    	}else{
+			    		checknum=0;
+			    	}
+			    })
+				document.getElementById("save").addEventListener("tap",function(){
+					var username=$("#username").val();
+					var telephone=$("#telephone").val();
+					if(telephone==""){
+                		mui.toast("联系电话不能为空");
+                		$("#telephone").focus();
+                	}
+					if(username==""){
+                		mui.toast("收件人不能为空");
+                		$("#username").focus();
+                	}
+					if(username!=""&&telephone!=""){
+						mui.ajax({
+							url: WEB_HOST+"/userCenter/addressone", 
+							type: "post",
+							async: false,
+							data: {
+								"token":localStorage.getItem("token"),
+								"citys":$("#cityResult3").html(),
+								"address":$("#addressInfo").val(),
+								"username":$("#username").val(),
+								"telephone":$("#telephone").val(),
+								"default":checknum
+							},
+							dataType: "json",
+							timeout: 1000,
+							success: function(data) {
+								mui.toast(data.message);
+								if(types=="zf"){
+									var wobj = plus.webview.getWebviewById("balance");//注意 HBuilder 是   1.html 的 ID  你如果1.html 有ID   要替换掉HBuilder，  
+	                                wobj.reload(true);  
+								}else if(types=="zf02"){
+									var wobj = plus.webview.getWebviewById("balance02");//注意 HBuilder 是   1.html 的 ID  你如果1.html 有ID   要替换掉HBuilder，  
+	                                wobj.reload(true);  
+								}else if(types=="address"){
+									var wobj = plus.webview.getWebviewById("address");//注意 HBuilder 是   1.html 的 ID  你如果1.html 有ID   要替换掉HBuilder，  
+	                                wobj.reload(true); 
+								}
+								
+							},
+							error:function(a){
+								mui.toast("服务器未响应，请稍后重试");
+							}
+						});
+					}
+				})
+		   	  
+		   })
+		   function getcity(citydata){
+			//					//级联示例
+				var cityPicker3 = new mui.PopPicker({
+					layer: 3
+				});
+				cityPicker3.setData(citydata);
+				var showCityPickerButton = document.getElementById('showCityPicker3');
+				var cityResult3 = document.getElementById('cityResult3');
+				showCityPickerButton.addEventListener('tap', function(event) {
+					cityPicker3.show(function(items) {
+						cityResult3.innerText = (items[0] || {}).text + "/" + (items[1] || {}).text + "/" + (items[2] || {}).text;
+						//返回 false 可以阻止选择框的关闭
+						//return false;
+					});
+				}, false);
+		   }
+		
+		</script>
+	</body>
+</html>

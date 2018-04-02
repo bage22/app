@@ -1,0 +1,81 @@
+ p{
+	margin: 0;
+	line-height: 25px;
+	color: #8a8a8a;
+}
+
+.dingdan{
+	padding: 10px 15px;
+	width: 100%;
+	background: white;
+	overflow: hidden;
+}
+.dingdan_tu{
+	display: block;
+	float: left;
+	width: 50px;
+	height: 50px;
+	margin-right: 10px;
+}
+.dingdan p span{
+	color: black;
+}
+ul{
+	width: 100%;
+	margin: 5px auto;
+	padding: 15px 20px;
+	list-style: none;
+	background: white;
+}
+li{
+	background: white;
+	position: relative;
+	overflow: hidden;
+}
+.first_div{
+	position: absolute;
+	width: 60px;
+	padding: 10px 0;
+}
+li:after{
+	position: absolute;
+	top: 0;
+	left: 51px;
+	content: "";
+	display: block;
+	width: 3px;
+	height: 500px;
+	background:#D9D9D9;
+}
+.first_p{
+	margin-top: 4px;
+	font-size: 16px;
+}
+.last_p{
+	font-size: 12px;
+	line-height: 10px;
+	margin-left: 9px;
+}
+.last_div{
+	margin-left: 60px;
+	min-height: 50px;
+	padding-top: 10px;
+}
+li:before{
+	position: absolute;
+	left: 45px;
+	bottom: 0;
+	z-index: 9;
+	content: "";
+	display: block;
+	width: 15px;
+	height: 15px;
+	
+	background:white url(../img/wuliu_bottom.svg);
+	background-size: 100% 100%;
+	border-radius:10px;
+}
+.content_p{
+	font-size: 12px;
+	margin-left: 10px;
+}

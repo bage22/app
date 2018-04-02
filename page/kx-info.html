@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+		<style type="text/css">
+			.kx_content{
+				width: 100%;
+				overflow: hidden;
+			}
+			.kx_content img{
+				width: 80%;
+			}
+		</style>
+	</head>
+
+	<body id="kx_info">
+		<header class="mui-bar mui-bar-nav head_bg">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left color_f"></a>
+			<h1 class="mui-title color_f">
+				北中快讯详情
+			</h1>
+		</header>	
+		<div class="mui-content bgf">
+            <div style="padding: 10px;">
+             	<div class="kx_head">
+	             	<h4></h4>
+	             	<p class="gly"></p>
+	                <p class="kx_time"></p>
+	             </div>
+	             <div class="kx_content">
+	             	<p></p>
+	             </div>
+            </div>
+		</div>
+		<script src="../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/sub.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+		    mui.plusReady(function(){
+			    var self = plus.webview.currentWebview(); 
+			    var listid = self.listid;//获得参数
+//			    mui.toast(listid);
+			    			//热门活动列表接口
+			   mui.ajax({
+					url: WEB_HOST+"/index/newsdetail", 
+					type: "get",
+					async: false,
+					data: {
+						"token":localStorage.getItem("token"),
+						"kxid":listid
+					},
+					dataType: "json", 
+					timeout: 1000,
+					success: function(data) {
+//						mui.toast(JSON.stringify(data));
+						$(".kx_head h4").html(data.data.title);
+						$(".gly").html("发布人："+data.data.publisher);
+						$(".kx_time").html(data.data.published_at);
+						$(".kx_content p").html(data.data.content);
+					},
+					error:function(a){
+						mui.toast("服务器未响应，请稍后重试");
+					}
+				});
+			});
+ 		</script>
+	</body>
+</html>

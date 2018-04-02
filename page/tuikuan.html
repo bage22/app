@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/tuikuan.css"/>
+	</head>
+
+	<body id="tuikuan">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left color_f"></a>
+			<h1 class="mui-title color_f">退款</h1>
+			<button id="fasong" type="button" class="mui-btn mui-btn-blue mui-pull-right">发送</button>
+		</header>
+		<div class="mui-content content" >
+			<p class="jine">退款金额：（<span>扣除运费后的金额</span>）</p>
+		    <input type="number" disabled="disabled" id="qianshu" />
+		    <p>退款原因：</p>
+		    <textarea  id="yuanyin"></textarea>
+		   	<p>可选  微信/支付宝</p>
+		   	<select id="leibie">
+			  <option value ="2">微信</option>
+			  <option value ="1">支付宝</option>
+			</select>
+			<p>退款账户</p>
+			<input type="text" name="" id="zhanghu" value="" />
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/template.js"></script>
+		<script src="../js/request.js"></script>
+		
+		<script type="text/javascript">
+			
+			function $(el){
+				var obj = document.querySelector(el);
+				return obj;
+			}
+			mui.init();
+			var refunds;
+			function zhifu(){
+				var obj = document.getElementById("leibie"); //定位id
+			    var index = obj.selectedIndex; // 选中索引
+				refunds = obj.options[index].value; // 选中值
+			}
+			var refundsAccount = document.querySelector("#zhanghu");
+			var orderid;
+			var mdid;
+			mui.plusReady(function () {
+			    var self = plus.webview.currentWebview();
+			    orderid = self.orderid;
+				mdid = self.mdid;
+				$("#qianshu").value = self.returnmoney
+			
+			var fs_btn = document.querySelector("#fasong");
+			var yy = document.querySelector("#yuanyin");
+			//点击发送后 提交 用户ID，商品ID，退款原因， 退款金额
+			fs_btn.addEventListener("tap",function(){
+				zhifu();
+				if(yy.value !== "" && yy.value!==null && refundsAccount.value !== ""){
+					mui.ajax({
+						url:WEB_HOST+'/userCenter/returnSGoods',
+//						url:"tuikuan.json",
+						data:{
+							"token":localStorage.getItem("token"),//用户令牌
+							"orderid":orderid,//订单ID
+							"refunds":refunds,//支付类型(1.支付宝2.微信)
+							"refundsAccount":zhanghu.value,//账号
+							"mdId":mdid,//门店ID
+							"returnText":yy.value//原因
+						},
+						dataType:'json',//服务器返回json格式数据
+						type:'post',//HTTP请求类型
+						timeout:10000,//超时时间设置为10秒；
+						success:function(data){
+							var detailPage = mui.preload({url:'order.html',id:'order'});
+								mui.fire(detailPage,'shuaxin');
+								mui.openWindow({id:'order'});
+						},
+						error:function(xhr,type,errorThrown){
+							mui.toast("服务器未响应，请稍后重试");
+						}
+					});
+				}else{
+					mui.toast("信息不完整");
+				}
+				
+			})
+		})
+		</script>
+	</body>
+
+</html>

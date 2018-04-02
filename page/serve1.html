@@ -1,0 +1,133 @@
+
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+	</head>
+
+	<body id="serve">
+		<header class="mui-bar mui-bar-nav head_bg">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left color_f"></a>
+			<h1 class="mui-title color_f">
+				服务
+			</h1>
+			<a id="search_input" class="mui-icon mui-icon-search mui-pull-right color_f"></a>
+		</header>	
+		<div class="mui-content">
+	
+			<div class="tab_item">
+				<div id="quanbu" class="mui-control-content mui-active">
+					<ul class="mui-table-view mui-grid-view" id="qblist">
+					    
+					</ul>
+					
+					<!--全部服务列表渲染-->		
+					<script type="text/html" id="qbserve">
+					    {{each data as value i}}
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 fw_item" data-id="{{value.id}}">
+					        <div class="bgf pbottom10">
+					        	<a href="javascript:void(0)">
+						            <img class="mui-media-object" src="{{value.image}}">
+						            <div class="object-info">{{value.title}}</div>
+						            <div class="buy_count borbottom1">
+						            	<span class="fl color_red f16"> &yen;{{value.price}}</span>
+						            	<span class="fr color_b">{{value.people}}人购买</span>
+						            </div>
+						            <div class="user-rating"><span>[用户评价]</span>{{value.comment}}</div>
+						        </a>
+					        </div>
+					    </li>
+						{{/each}}
+					</script>
+				</div>
+				<!--<div id="jinpai" class="mui-control-content">
+					<ul class="mui-table-view mui-grid-view" id="jplist">
+					   
+					</ul>
+					
+					<script type="text/html" id="jpserve">
+					    {{each data as value i}}
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 fw_item" data-id="{{value.id}}">
+					        <div class="bgf pbottom10">
+					        	<a href="javascript:void(0)">
+						            <img class="mui-media-object" src="{{value.image}}">
+						            <div class="object-info">{{value.title}}</div>
+						            <div class="buy_count borbottom1">
+						            	<span class="fl color_red f16"> &yen;{{value.price}}</span>
+						            	<span class="fr color_b">{{value.people}}人购买</span>
+						            </div>
+						            <div class="user-rating"><span>[用户评价]</span>{{value.comment}}</div>
+						        </a>
+					        </div>
+					    </li>
+						{{/each}}
+					</script>
+				</div>-->
+			</div>
+		</div>
+		<script src="../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/template.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/sub.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+
+		     	//			全部列表渲染js
+                mui.ajax({
+						url: WEB_HOST+"/index/services",
+						type: "get",
+						async: false,
+						data:{"token":localStorage.getItem("token")},
+						dataType: "json",
+						timeout: 1000,
+						success: function(data) {
+//							alert(JSON.stringify(data));
+							if(data.data.length>0){
+							   document.getElementById("qblist").innerHTML=template("qbserve",data);
+							}else{
+							   document.getElementById("qblist").innerHTML="<li>没有相关数据</li>";	
+							}
+						},error:function(a){
+//							alert(a.status);
+						}
+				});
+				
+				
+				//		  服务
+				var hd_list=document.getElementsByClassName("fw_item").length;
+				for(var i=0;i<hd_list;i++){
+					document.getElementsByClassName("fw_item")[i].addEventListener("tap",function(){
+						var listid=$(this).data("id");
+						 mui.openWindow({
+			               url:"server-info.html",
+			               id:"server-info",
+			               createNew:true,
+			               extras:{
+					          listid:listid
+					        }
+		       			});
+					})
+				}
+
+                // 打开搜索界面
+                document.querySelector('#search_input').addEventListener('tap', function () {
+                    mui.openWindow({
+                        url:"search.html",
+                        id:"search",
+                        createNew:true,
+                        extras:{
+					    	name:'fuwu'
+					    },//在这里添加要传递的参数
+                    });
+                })
+		        
+		</script>
+	</body>
+
+</html>
