@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="../css/app.css" />
+		<style type="text/css">
+			.btn1 {
+				position: fixed;
+				bottom: 0px;
+				border-top: 1px solid #ddd;
+				background: #EFEFF4;
+				padding: 5px 0;
+				width: 100%;
+			}
+			.btn1 .tianjia{
+				display: block;
+				margin: 0 auto;
+				width: 80%;
+			}
+			button {
+				margin: 0 5%;
+				width: 40%;
+				height: 40px;
+			}
+			
+			
+			.hide{
+				display: none;
+			}
+			
+			.sc {
+				background: #fff;
+			}
+			
+			.sc_p {
+				padding: 7px;
+				margin-bottom: 0px;
+			}
+			.mui-content{
+				margin-bottom: 60px;
+			}
+		</style>
+	</head>
+
+	<body id="address">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left "></a>
+			<h1 class="mui-title ">
+			    常用联系人
+			</h1>
+		</header>
+		<div class="mui-content">
+			<div class="address_list" id="address_list">
+				<!--<div class="address_item" data-id="3">
+					<div class="address_user">
+						<span class="fl">王二狗</span>
+						<span class="fr">17323894904</span>
+					</div>
+					<div class="address_info">
+						1321189438938430985
+					</div>
+					<div class="address_handle">
+						<span class="fr hide"><input type="checkbox" name="lianxiren" id="" value="" /></span>
+						<div class="edit_del" onclick="del_box(3)">
+							<div class="del_btn" id="address{{value.id}}" data-id="{{value.id}}">
+								<span class="mui-icon mui-icon-trash"></span>删除
+							</div>
+						</div>
+					</div>
+				</div>-->
+			</div>
+			<div class="sc hide didian">
+				<p class="sc_p">请选择上车地点</p>
+				<ul class="mui-table-view mui-table-view-radio" id="jihedi">
+					<!--<li class="mui-table-view-cell">
+						<a class="mui-navigate-right">Item 1</a>
+					</li>
+					<li class="mui-table-view-cell mui-selected">
+						<a class="mui-navigate-right">Item 2</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right">Item 3</a>
+					</li>-->
+				</ul>
+			</div>
+
+			<script type="text/html" id="lianxirentemp">
+				{{each data as value}}
+				<div class="address_item" data-id="{{value.id}}">
+					<div class="address_user">
+						<span class="fl">{{value.username}}</span>
+						<span class="fr">{{value.telephone}}</span>
+					</div>
+					<div class="address_info">
+						{{value.idcard}}
+					</div>
+					<div class="address_handle">
+						<span class="fr hide xuanzekuang"><input type="checkbox" name="lianxiren" id="{{value.id}}" value="" /></span>
+						<div class="edit_del hide" onclick="del_box('{{value.id}}')">
+							<div class="del_btn">
+								<span class="mui-icon mui-icon-trash"></span>删除
+							</div>
+						</div>
+					</div>
+				</div>
+				{{/each}}
+			</script>
+		</div>
+		<div id="" class="hide btn1 queding">
+			<button class="mui-btn mui-btn-danger fl" onclick="tijiao()">确定</button>
+			<button class="mui-btn mui-btn-primary fr " onclick="add_lianxiren()">添加联系人</button>
+		</div>
+		<div id="" onclick="add_lianxiren()" class="hide btn1">
+			<button class="mui-btn mui-btn-primary tianjia">添加联系人</button>
+		</div>
+		<script src="../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/tokenyanzheng.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/template.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			window.addEventListener('shuaxin', function(e) {
+				peoplenum = e.detail.peoplenum;
+				fj = e.detail.fj;
+				getlxr();
+				getdizhi(self.hdId);
+				if(fj === "baoming"){
+					fj = 'baoming';
+					$('.didian').css({
+						'display': 'block'
+					});
+					$('.xuanzekuang').css({
+						'display': 'block'
+					});
+					$('.queding').css({
+						'display': 'block'
+					});
+				}else{
+					fj = '';
+					$('.edit_del').css({
+						'display': 'block'
+					});
+					$('.btn1').css({
+						'display': 'block'
+					});
+				}
+			})
+			var didian;
+			var hdid;
+			var peoplenum;
+			var people;
+			
+			var fj;
+			mui.init();
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview();
+				hdid = self.hdId;
+				peoplenum = self.peoplenum;
+				people = self.people;
+					getlxr();
+					getdizhi(self.hdId);
+				if(self.name === 'baoming') {
+					fj = 'baoming';
+					$('.didian').css({
+						'display': 'block'
+					});
+					$('.xuanzekuang').css({
+						'display': 'block'
+					});
+					$('.queding').css({
+						'display': 'block'
+					});
+					// didian xuanzekuang edit_del (queding lianxiren)
+				}else{
+					fj = '';
+					$('.edit_del').css({
+						'display': 'block'
+					});
+					$('.btn1').css({
+						'display': 'block'
+					});
+				}
+			})
+
+			function getlxr() {
+				mui.ajax({
+					url: WEB_HOST + "/userCenter/getlxr",
+					type: "get",
+					async: false,
+					data: {
+						"token": localStorage.getItem("token")
+					},
+					dataType: "json",
+					timeout: 1000,
+					success: function(data) {
+						console.log(data.data[0]);
+						console.log(JSON.stringify(data));
+						$("#address_list").html(template("lianxirentemp", data));
+					},
+					error: function(a) {
+						mui.toast("服务器未响应，请稍后重试");
+					}
+				});
+			}
+
+			function del_box(id) {
+				mui.ajax({
+					url: WEB_HOST + "/userCenter/dellxr",
+					data: {
+						'token': localStorage.getItem("token"),
+						'id': id
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						//			console.log(JSON.stringify(data));
+						mui.toast(data.message);
+					},
+					error: function(xhr, type, errorThrown) {}
+				});
+				$('[data-id="' + id + '"]').remove();
+			}
+
+			function getdizhi(id) {
+				mui.ajax({
+					url: WEB_HOST + "/activity/hdAddressList",
+					data: {
+						'hdId': id
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						console.log(JSON.stringify(data));
+						var da = data.data
+						for(var i = 0; i < da.length; i++) {
+							$('#jihedi').append('<li class="mui-table-view-cell" onclick="xuan(\'' + da[i][0] + '\')"><a class="mui-navigate-right">' + da[i][2] + '</a></li>');
+							
+						}
+					},
+					error: function(xhr, type, errorThrown) {}
+				});
+			}
+			function xuan(obj){
+				didian = obj;
+			}
+			function add_lianxiren() {
+				mui.openWindow({
+					url: "add_lianxiren.html",
+					id: "add_lianxiren",
+					createNew: true,
+					extras: {
+						name: "lianxiren",
+						fj:fj,
+					}
+				});
+			}
+
+			function tijiao() {
+				var listid=[];
+				var arr = $('input[type="checkbox"]');
+				for (var i=0;i<arr.length;i++) {
+					if(arr[i].checked){
+						listid.push(arr[i].id);
+					}
+				}
+				if( peoplenum - people < listid.length){
+					mui.toast('人数达上限');
+				}else{
+				var li = listid.join(',');
+				if(li !== '' && didian !== undefined){
+					mui.ajax({
+								url: WEB_HOST + "/activity/bmActivity",
+								type: "post",
+								async: false,
+								data: {
+									"token": localStorage.getItem("token"),
+									"hdid": hdid,
+									"status": 2,
+									"users": li,
+									"address":didian//取消报名=2 立即报名=1
+								},
+								dataType: "json",
+								timeout: 1000,
+								success: function(data) {
+									mui.toast(data.message);
+									mui.back();
+								},
+								error: function(a) {
+									mui.toast("服务器未响应，请稍后重试");
+								}
+							});
+				 
+				 	var list = plus.webview.currentWebview().opener();
+					mui.fire(list,'fanhui');
+					mui.back();
+				}else{
+					mui.toast('请检查是否有漏选');
+				}
+				       
+
+				}
+			}
+		</script>
+	</body>
+
+</html>

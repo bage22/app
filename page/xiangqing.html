@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/wuliu.css" />
+		<style type="text/css">
+			#list {
+				width: 100%;
+				height: 130px;
+				overflow: hidden;
+				padding: 0 10px;
+			}
+			
+			#list .item_head {
+				width: 100%;
+				font-size: 15px;
+				padding: 10px 0;
+			}
+			
+			#list .item_content {
+				margin-top: 10px;
+				height: 100px;
+				float: left;
+			}
+			
+			#list .con_img {
+				float: left;
+				width: 20%;
+			}
+			
+			#list .con_info {
+				width: 80%;
+				float: left;
+			}
+			
+			#list .con_img img {
+				width: 50px;
+				height: 50px;
+			}
+			
+			#list .info_tit {
+				width: 100%;
+				float: right;
+			}
+			
+			#list .info_tit span {
+				font-size: 14px;
+				padding: 2px 0px;
+			}
+			
+			span {
+				color: black;
+			}
+			
+			#list .con_info p {
+				float: left;
+				line-height: 16px;
+				margin: 3px 0;
+			}
+			
+			.fl {
+				float: left;
+			}
+			
+			.fr {
+				float: right;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">订单详情</h1>
+		</header>
+
+		<div class="mui-content">
+			<ul class="mui-table-view" id="list">
+			</ul>
+			<script type="text/html" id="moban">
+				<div class="item_head">
+					<div class="fl">{{dep}}</div>
+				</div>
+				<div class="item_content">
+					<div class="con_img"><img src="{{src}}" /></div>
+					<div class="con_info">
+						<div class="info_tit">
+							<span class="fl">{{pro}}</span>
+							<span class="fr">&yen;{{mpr}}</span>
+						</div>
+						<p>订单创建时间：&nbsp; <span>{{cre}}</span></p>
+						<p>订单id：&nbsp; <span>{{orderid}}</span></p>
+						<p>快递费：{{kdf}}</p>
+					</div>
+				</div>
+			</script>
+
+			<div id="box" class="mui-content content">
+
+			</div>
+			<script id="test" type="text/html">
+				<div class="dingdan">
+					<!--<img class="dingdan_tu" src="../img/muwu.jpg"/>-->
+					<p class="dingdan_gongsi">物流公司：<span id="wl"></span></p>
+					<p class="dingdan_hao">快递单号：<span>{{wuliu.LogisticCode}}</span></p>
+				</div>
+				<ul>
+					{{each wuliu.Traces as value}}
+					<li>
+						<div class="first_div">
+							<p class="first_p">{{value.AcceptTime.substring(5,10)}}</p>
+							<p class="last_p">{{value.AcceptTime.substring(11,16)}}</p>
+						</div>
+						<div class="last_div">
+							<p class="content_p">{{value.AcceptStation}}</p>
+						</div>
+					</li>
+					{{/each}}
+				</ul>
+			</script>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/request.js" type="text/javascript"></script>
+		<script src="../js/template.js" type="text/javascript"></script>
+		<script src="../js/jiazai.js" type="text/javascript"></script>
+
+		<script type="text/javascript">
+			var self; //商品id
+			var mask = mui.createMask(); //遮罩层
+			mui.init()
+			mui.plusReady(function() {
+				self = plus.webview.currentWebview();
+				console.log("====>" + self.kdnames);
+
+				document.querySelector("#list").innerHTML = template("moban", self);
+				mui.ajax({
+					url: WEB_HOST + "/index/wuLiu",
+					data: {
+						"kdname": self.kdname,
+						"kdid": self.kdid,
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					beforeSend: function() {
+						plus.nativeUI.showWaiting("加载中");
+						mask.show(); //显示遮罩层
+					},
+					complete: function() {
+						plus.nativeUI.closeWaiting();
+						mask.close(); //关闭遮罩层
+					},
+					success: function(data) {
+						console.log(JSON.stringify(data));
+						document.getElementById("box").innerHTML = template("test", data);
+						document.getElementById("wl").innerHTML = self.kdnames;
+					},
+					error: function(xhr, type, errorThrown) {
+						mui.toast(type);
+					}
+				});
+			})
+		</script>
+	</body>
+
+</html>

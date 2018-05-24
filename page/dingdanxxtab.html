@@ -1,0 +1,201 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/wuliu.css" />
+		<style type="text/css">
+			#list {
+				width: 100%;
+			}
+			.mui-table-view{
+				margin-top: 5px;
+			}
+			#list .item_head {
+				width: 100%;
+				font-size: 15px;
+			}
+			
+			#list .item_content {
+				margin-top: 10px;
+				height: 60px;
+			}
+			#list .con_img {
+				float: left;
+				width: 15%;
+			}
+			
+			#list .con_info {
+				width: 85%;
+				height: 50px;
+				float: right;
+			}
+			
+			#list .con_img img {
+				width: 50px;
+				height: 50px;
+			}
+			
+			#list .info_tit {
+				width: 100%;
+				float: right;
+			}
+			#list .title{
+				float: left;
+				width: 75%;
+				margin-left: 5px;
+				height: 40px;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 2;
+				overflow: hidden;
+			}
+			#list .yuan{
+				width: 20%;
+				margin-left: 5px;
+				float: left;
+			}
+			#list .info_tit span {
+				font-size: 14px;
+				padding: 2px 0px;
+			}
+			#list .con_info p {
+				float: left;
+				line-height: 16px;
+				margin: 3px 0;
+			}
+			.mui-table-view1 p{
+				font-size:11px;
+			}
+			#thxx{
+				margin-top: 10px;
+				padding:10px;
+				background: white;
+				overflow: hidden;
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">订单详情</h1>
+		</header>
+
+		<div class="mui-content" id="list">
+			<!--<ul class="">
+				<div class="item_head">
+					<div class="fl">崇焕的店</div>
+				</div>
+				<div class="item_content">
+					<div class="con_img"><img src="https://img-blog.csdn.net/20170511110149163?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbTBfMzgwODI3ODM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" /></div>
+					<div class="con_info">
+						<div class="info_tit">
+							<span class="title">【狂欢价】买一送一妥协女及但是犯得上反对买一送一妥协女及但是犯得上反对买一送一妥协女及但是犯得上反对买一送一妥协女及但是犯得上反对买一送一妥协女及但是犯得上反对</span>
+							<span class="yuan">&yen;14.80</span>
+						</div>
+					</div>
+				</div>
+			</ul>
+			<ul class="">
+				<p>订单编号：74857394839843948</p>
+				<p>订单创建时间：&nbsp; 2018-04-23</p>
+				<p>快递费：&yen;6.0</p>
+			</ul>-->
+			
+			<script type="text/html" id="moban">
+				<ul class="mui-table-view1" onclick="xiangqing('{{proid}}')">
+					<div class="item_head">
+						<div class="fl">{{dep}}</div>
+					</div>
+					<div class="item_content">
+						<div class="con_img"><img src="{{src}}" /></div>
+						<div class="con_info">
+							<div class="info_tit">
+								<span class="title">{{pro}}</span>
+								<span class="yuan">&yen;{{mpr}}</span>
+							</div>
+						</div>
+					</div>
+				</ul>
+				
+				<ul class="mui-table-view1">
+					<p>订单编号：{{orderid}}</p>
+					<p>订单创建时间：{{cre}}</p>
+					<p>快递费：&yen;{{kdf}}</p>
+				</ul>
+			</script>	
+	           
+			 
+		</div>
+		<ul class="mui-table-view1"  id="thxx" >
+                <p class="fl">退货状态：<span id="zhuangtai"></span></p>
+                <p class="fr">退货人：<span id="xingming"></span></p>
+                <p class="fl">退款账户：<span id='zhanghu'></span></p>
+                <p class="fr">退款银行：<span id="yinhang"></span></p>
+                <p class="fl">退货原因：</p>
+                <p class="fl" style="text-indent: 2em; padding-left: 10px;width: 100%;"><span id="yuanyin"></span></p>
+                <p class="fl">反馈描述：</p>
+                <p class="fl" style="text-indent: 2em; padding-left: 10px;width: 100%;"><span id="weitongguo"></span></p>
+            </ul>
+            
+			
+			<p style="text-align: center;line-height: 60px;">暂无物流信息...</p>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/request.js" type="text/javascript"></script>
+		<script src="../js/template.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			function xiangqing(id){
+				mui.openWindow({
+	               url:"server-info.html",
+	               id:"server-info",
+	               createNew:true,
+	               extras:{
+			          listid:id
+			        }
+       			});
+			}
+			mui.plusReady(function() {
+				function $(el){
+					return document.getElementById(el);
+				}
+				var self = plus.webview.currentWebview();
+				console.log(self.proid);
+				if(self.zhuangtai === "申请退货中"||self.zhuangtai === "退货审核未通过"||self.zhuangtai === "退货审核通过"){
+					document.querySelector("#thxx").style.display = "block";
+				}
+				document.querySelector("#list").innerHTML = template("moban", self);
+				document.getElementById("zhuangtai").innerHTML = self.zhuangtai;
+				mui.ajax({
+					url:WEB_HOST +"/userCenter/returninfo",
+					data:{
+						"returnId":self.tid,
+						"token" : localStorage.getItem("token")
+					},
+					async: false,
+					dataType:'json',//服务器返回json格式数据
+					type:'get',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success:function(data){
+//						console.log(JSON.stringify(data));
+						if(data.status2=="1"){
+							$("weitongguo").innerHTML = data.examine_text
+							$("yuanyin").innerHTML = data.return_text
+							$("xingming").innerHTML = data.refunds_name
+							$("yinhang").innerHTML = data.refunds_bank
+							$("zhanghu").innerHTML = data.refunds_account
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						console.log(JSON.stringify(errorThrown));
+					}
+				});
+			})
+		</script>
+	</body>
+
+</html>

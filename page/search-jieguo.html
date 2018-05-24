@@ -1,0 +1,293 @@
+
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/mui.picker.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/mui.poppicker.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/seacher.css"/>
+	</head>
+
+	<body id="search">
+		<header class="mui-bar mui-bar-nav head_bg">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left color_f"></a>
+			<h1 class="mui-title">
+				<div class="mui-input-row mui-search">
+				    <div id="seach_tj" class="mui-input-clear" style="background: white;border-radius:5px;width: 100%;height: 30px;margin-top: 7px;">
+				</div>
+			</h1>
+		</header>
+		<div class="mui-content" >
+			<!--顶部选项卡-->
+		    <div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+		        <a id="cp" class="mui-control-item mui-active" href="#item1">产品</a>
+		        <a id="hd" class="mui-control-item hd" href="#item2">活动</a>
+		    </div>
+		    <div class="mui-slider-group">
+		    	
+		    	
+		        <div id="item1" class="mui-slider-item mui-control-content mui-active">
+		                <ul class="search_list" id="search_list">
+	   	
+						</ul>
+						<!--商品模板-->
+						<script type="text/html" id="spTemp">
+						    {{each data as value i}}
+								<li class="search_item" data-id = "{{value.id}}">
+							   	  	<div class="search_img fl">
+								   	  	 	<img src="{{value. PICPATH}}" />
+								   	  	 	<!--<div class="ly_type">自由行</div>-->
+								   	 </div>
+							   	  	 	<div class="search_info fr">
+								   	  	 	<h4>{{value.proname}}</h4>
+								   	  	 	<p class="searchinfos">{{value.PRODETAIL}}</p>
+								   	  	 	<p>
+								   	  	 		<!--<span class="fl">月售1212笔|324条评价</span>-->
+								   	  	 		<span class="fr"><b>&yen;{{value.mprice}}</b></span>
+								   	  	 	</p>
+								   	  	 </div>
+							   	 </li>
+						   	 {{/each}}
+						</script>
+						
+						
+						
+						
+
+						
+						
+						<!--服务模板-->
+						<script type="text/html" id="fwTemp">
+						    {{each data as value i}}
+								<li class="search_item" data-id = "{{value.id}}">
+							   	  	<div class="search_img fl">
+								   	  	 	<img src="{{value.image}}" />
+								   	  	 	<!--<div class="ly_type">自由行</div>-->
+								   	 </div>
+							   	  	 	<div class="search_info fr">
+								   	  	 	<h4>{{value.title}}</h4>
+								   	  	 	<p class="searchinfos">{{value.comment}}</p>
+								   	  	 	<p>
+								   	  	 		<!--<span class="fl">月售1212笔|324条评价</span>-->
+								   	  	 		<span class="fr"><b>&yen;{{value.price}}</b></span>
+								   	  	 	</p>
+								   	  	 </div>
+							   	 </li> 
+						   	 {{/each}}
+						</script>
+		        </div>
+		        
+		        <div id="item2" class="mui-slider-item mui-control-content">
+		            	<ul class="search_list" id="hd_list">
+						</ul>
+						<!--活动模板-->
+						<script type="text/html" id="hdTemp">
+						    {{each data as value i}}
+								<li class="search_item" data-id = "{{value.id}}">
+							   	  	<div class="search_img fl">
+								   	  	 	<img src="{{value.image}}" />
+								   	 </div>
+							   	  	 	<div class="search_info fr">
+								   	  	 	<h4>{{value.title}}</h4>
+								   	  	 	<p class="searchinfos">{{value.published_at}}</p>
+								   	  	 	<p>
+								   	  	 		<span class="fr"><b>{{value.star}}人参加</b></span>
+								   	  	 	</p>
+								   	  	 </div>
+							   	 </li>
+						   	 {{/each}}
+						</script>
+		        </div>
+		    </div>
+		</div>
+		<script src="../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/template.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/sub.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.picker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/city.data.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+//			var ws=plus.webview.currentWebview();
+//			plus.webview.close(ws);
+				
+			
+//			document.querySelector(".mui-segmented-control").style.display = "none";
+//			document.querySelector("#seach_tj").placeholder = "";
+			
+			
+           	mui.init();
+           	mui.plusReady(function(){
+           	var self = plus.webview.currentWebview();
+			var name = self.name;//获得参数
+			let gjz = self.guanJianZi;
+			let lei = self.lei;
+			console.log(JSON.stringify(self))
+			console.log(lei);
+//			console.log(giz);
+			
+			
+			$('h1')[0].addEventListener('tap',function(){
+				let ws=plus.webview.currentWebview();
+				plus.webview.close(ws);
+			});
+			if(lei == "fuwu"){name = "fuwu";
+				$('#cp').addClass('mui-active');
+				$('#hd').removeClass('mui-active');
+             	search(self.guanJianZi,"serviceSearch");
+             	
+			}else if(lei == "huodong"){name = "huodong";
+				$('#hd').addClass('mui-active');
+				$('#cp').removeClass('mui-active');
+             	search(self.guanJianZi,"searchhdlist");
+             	
+			}
+			console.log(name);
+			if(name=="fuwu"||lei=="fuwu"){
+				document.querySelector("#seach_tj").placeholder = "请输入你要查询的服务"
+				/*搜素*/
+	         	document.getElementById("seach").addEventListener("tap",function(){
+	         		var tj=gjz;
+	             	search(tj,"serviceSearch");
+	         	})
+			}else if(name=="huodong"||lei=="fuwu"){
+				document.querySelector("#seach_tj").placeholder = "请输入你要查询的活动"
+				/*搜素*/
+//	         	document.getElementById("seach").addEventListener("tap",function(){
+	         		
+	         		var tj=gjz;
+	             	search(tj,"searchhdlist");
+//	         	})
+			}else if(name == "chanpin"||lei=="fuwu"){
+				document.querySelector("#seach_tj").placeholder = "请输入你要查询的产品"
+				/*搜素*/
+//	         	document.getElementById("seach").addEventListener("tap",function(){
+	         		var tj=gjz;
+	             	search(tj,"search");
+//	         	})
+			}else if(name== "home"||lei=="fuwu"){
+				document.querySelector(".mui-segmented-control").style.display = "block";
+				document.querySelector("#seach_tj").placeholder="请输入你要查询的产品"
+				/*搜素*/
+//	         	document.getElementById("seach").addEventListener("tap",function(){
+	         		var tj=gjz;
+	             	search(tj,"search");
+//	         	})
+	         	
+			}
+			mui("#hd")[0].addEventListener("tap",function(){
+				var tj=gjz;
+             	search(tj,"searchhdlist");
+			})
+			mui("#cp")[0].addEventListener("tap",function(){
+				var tj=gjz;
+             	search(tj,"search");
+			})
+            $("#seach_tj").focus();
+            
+            var self = plus.webview.currentWebview();
+				var name = self.name;//获得参数
+          	
+             
+             
+           	//返回并刷新页面
+//          mui.back=function(){
+//          	var wobj = plus.webview.getWebviewById("main");
+//              wobj.reload(true);
+//          }
+
+//          document.addEventListener('keydown', function(evt) {
+//				if(evt.keyCode==13){
+//					var tj=gjz;
+//           	    search(tj);
+//				}
+//			})
+
+			function search(date,cl){
+            	mui.ajax({
+						url: WEB_HOST+"/index/"+cl,
+						type: "post",
+						async: false,
+						data:{
+							"token":localStorage.getItem("token"),
+							"name":date
+							},
+						dataType: "json",
+						timeout: 1000,
+						success: function(data) {
+							 console.log(JSON.stringify(data));
+							if(name == "home"){
+								if(cl=="searchhdlist"){
+							 		document.getElementById("hd_list").innerHTML=template("hdTemp",data);
+							 		if(data.status===1){
+									   	document.getElementById("hd_list").innerHTML="<li style='text-align: center;'>没有相关数据</li>";	
+									}
+								}else if(cl=="search"){
+							 		document.getElementById("search_list").innerHTML=template("spTemp",data);
+								 		if(data.status===1){
+									   document.getElementById("search_list").innerHTML="<li style='text-align: center;'>没有相关数据</li>";	
+									}
+								}
+							}else{
+							 	if(data.status==0){
+	                            	if(data.types == "1"){
+	                        		 	document.getElementById("search_list").innerHTML=template("spTemp",data);
+	                            	}else if(data.types == "2"){
+	                        			document.getElementById("search_list").innerHTML=template("hdTemp",data);
+	                            	}else if(data.types == "3"){
+	                            		document.getElementById("search_list").innerHTML=template("fwTemp",data);
+	                            	}
+								}else{
+								   document.getElementById("search_list").innerHTML="<li style='text-align: center;'>没有相关数据</li>";	
+								}
+							}
+							
+						},error:function(a){
+						   mui.toast("服务器未响应，请稍后重试");
+						}
+				});
+				bangtap(cl);
+            }
+			//跳转详情页  
+			function bangtap(cl){
+				var search_len=document.getElementsByClassName("search_item").length;
+				for(var i=0;i<search_len;i++){
+					document.getElementsByClassName("search_item")[i].addEventListener("tap",function(){
+						var listid=$(this).data("id");
+						if(cl !== "searchhdlist"){
+							mui.openWindow({
+				               url:"server-info.html",
+				               id:"server-info",
+				               createNew:true,
+				               extras:{
+						          listid:listid
+						        }
+			       			});
+						}else{
+							mui.openWindow({
+				               url:"activity-info.html",
+				               id:"activity-info",
+				               createNew:true,
+				               extras:{
+						          listid:listid
+						        }
+			       			});
+						}
+						
+					})
+				}
+			}
+         });
+		</script>
+	</body>
+
+</html>
