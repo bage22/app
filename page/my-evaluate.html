@@ -1,43 +1,91 @@
 <!doctype html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link href="../css/app.css" rel="stylesheet" />
+		<style type="text/css">
+			.djstart {
+				padding-left: 0;
+				overflow: hidden;
+			}
+			
+			.djstart li {
+				float: left;
+				list-style: none;
+				width: 27px;
+				height: 27px;
+				background: url(../img/pjdengji.gif)
+			}
+			
+			.djstart li a {
+				display: block;
+				width: 100%;
+				padding-top: 27px;
+				overflow: hidden;
+			}
+			
+			.djstart li.light {
+				background-position: 0 -29px;
+			}
+		</style>
 	</head>
 
 	<body id="my_evaluate">
-	<header class="mui-bar mui-bar-nav" style="background: #000;">
+		<header class="mui-bar mui-bar-nav" style="background: #000;">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left color_f"></a>
 			<h1 class="mui-title color_f">
 				订单评价
 			</h1>
-	</header>
+		</header>
 		<div class="mui-content">
 			<div class="evaluate">
 				<div class="evaluate_goods">
-				   <div class="evaluate_goods_img">
-				   	<img id="gimg" src="../img/01home_28.png"/>
-				   </div>
-				   <div class="goods_info">
-				   	    <div class="goods_tit" id="gname">
-				   	        
-				   	    </div>
-				   	    <div class="goods_price">
-				   	    	&yen;<span id="gprice"></span> 
-				   	    </div>
-				   </div>
-			    </div>
-			    <div class="pj_type">
-			    	<textarea class="pjtext f12" rows="2" placeholder="说点什么吧..."></textarea>
-			    	<div class="nmpj_check">
-			    	   <input type="checkbox" name="pj" id="pj" value="0" /> <label for="pj">匿名评价</label>
-			    	</div>
-			    </div>
+					<div class="evaluate_goods_img">
+						<img id="gimg" src="../img/01home_28.png" />
+					</div>
+					<div class="goods_info">
+						<div class="goods_tit" id="gname">
+
+						</div>
+						<div class="goods_price">
+							&yen;<span id="gprice"></span>
+						</div>
+					</div>
+				</div>
+				<div class="pj_type">
+					<textarea class="pjtext f12" rows="2" placeholder="说点什么吧..."></textarea>
+					<div class="nmpj_check">
+
+						<div style="width: 220px;height: auto;">
+							<span id="pingj" style="margin-left:10px;color:red;float: right;font-size: 20px"></span>
+							<ul class="djstart">
+								<li>
+									<a href="javascript:;">1</a>
+								</li>
+								<li>
+									<a href="javascript:;">2</a>
+								</li>
+								<li>
+									<a href="javascript:;">3</a>
+								</li>
+								<li>
+									<a href="javascript:;">4</a>
+								</li>
+								<li>
+									<a href="javascript:;">5</a>
+								</li>
+							</ul>
+						</div>
+						<input id="dengji" type="hidden" name="" value="5" />
+						<!--<input type="checkbox" name="pj" id="pj" value="0" /> <label for="pj">匿名评价</label>-->
+					</div>
+				</div>
 			</div>
-			
+
 			<div class="submit_pj">
 				<button id="submit" class="mui-btn mui-btn-block color_f f16">提交评价</button>
 			</div>
@@ -47,55 +95,99 @@
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/sub.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-//			$(".pj_item").click(function(){
-//				$(this).find("span").addClass("active").parent(".pj_item").siblings().find("span").removeClass("active");
-//			})
-//			$(".comment_item").click(function(){
-//				$(this).addClass("active");
-//			})
+			$(function() {
+				$(".djstart li").bind("click", function() {
+					var number = $(this).index();
+
+					if(number == 0) {
+						$(".djstart li").eq(0).addClass("light");
+						$(".djstart li").eq(0).siblings().removeClass();
+						$("#dengji").val(1);
+					} else if(number == 1) {
+						$(".djstart li").eq(0).addClass("light");
+						$(".djstart li").eq(1).addClass("light");
+						$(".djstart li").eq(2).removeClass();
+						$(".djstart li").eq(3).removeClass();
+						$(".djstart li").eq(4).removeClass();
+						$("#dengji").val(2);
+
+					} else if(number == 2) {
+						$(".djstart li").eq(0).addClass("light");
+						$(".djstart li").eq(1).addClass("light");
+						$(".djstart li").eq(2).addClass("light");
+						$(".djstart li").eq(3).removeClass();
+						$(".djstart li").eq(4).removeClass();
+						$("#dengji").val(3);
+					} else if(number == 3) {
+						$(".djstart li").eq(0).addClass("light");
+						$(".djstart li").eq(1).addClass("light");
+						$(".djstart li").eq(2).addClass("light");
+						$(".djstart li").eq(3).addClass("light");
+						$(".djstart li").eq(4).removeClass();
+						$("#dengji").val(4);
+					} else {
+						$(".djstart li").eq(0).addClass("light");
+						$(".djstart li").eq(1).addClass("light");
+						$(".djstart li").eq(2).addClass("light");
+						$(".djstart li").eq(3).addClass("light");
+						$(".djstart li").eq(4).addClass("light");
+						$("#dengji").val(5);
+					}
+
+				})
+			})
+
+			//			$(".pj_item").click(function(){
+			//				$(this).find("span").addClass("active").parent(".pj_item").siblings().find("span").removeClass("active");
+			//			})
+			//			$(".comment_item").click(function(){
+			//				$(this).addClass("active");
+			//			})
 			mui.init();
-			mui.plusReady(function(){
-				var self = plus.webview.currentWebview(); 
-			    var orderid =self.orderid;//获得列表页传过来订单id
-			    var goodsid=self.goodsid;
-			    var goodsimg=self.goodsimg;
-		        var goodsname=self.goodsname;
-		        var goodsprice=self.goodsprice;
-		        $("#gimg").attr("src",goodsimg);
-		        $("#gname").html(goodsname);
-		        $("#gprice").html(goodsprice);
-			    var pjnum=1;
-			    document.getElementById("pj").addEventListener("change",function(){
-			    	if(this.checked==true){
-			    		pjnum=0;
-			    	}else{
-			    		pjnum=1;
-			    	}
-			    })
-			    document.getElementById("submit").addEventListener('tap',function(){
-			 	   mui.ajax({
-						url: WEB_HOST+"/userCenter/myOrderPj",
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview();
+				var orderid = self.orderid; //获得列表页传过来订单id
+				var goodsid = self.goodsid;
+				var goodsimg = self.goodsimg;
+				var goodsname = self.goodsname;
+				var goodsprice = self.goodsprice;
+				$("#gimg").attr("src", goodsimg);
+				$("#gname").html(goodsname);
+				$("#gprice").html(goodsprice);
+				var pjnum = 1;
+				//			   // 匿名评价
+				//			    document.getElementById("pj").addEventListener("change",function(){
+				//			    	if(this.checked==true){
+				//			    		pjnum=0;
+				//			    	}else{
+				//			    		pjnum=1;
+				//			    	}
+				//			    })
+				document.getElementById("submit").addEventListener('tap', function() {
+					mui.ajax({
+						url: WEB_HOST + "/userCenter/myOrderPj",
 						type: "post",
 						async: false,
-						data:{
-							"token":localStorage.getItem("token"),
-							"yesorno":pjnum,
-							"pingjia":$(".pjtext").val(),
-							"orderid":orderid,
-							"proid":goodsid
+						data: {
+							"token": localStorage.getItem("token"),
+							"yesorno": pjnum,
+							"pingjia": $(".pjtext").val(),
+							"orderid": orderid,
+							"proid": goodsid,
+							"pjdengji":$("#dengji").val()
 						},
 						dataType: "json",
 						timeout: 1000,
 						success: function(data) {
 							mui.toast(data.message);
-							var wobj = plus.webview.getWebviewById("order");//注意 HBuilder 是   1.html 的 ID  你如果1.html 有ID   要替换掉HBuilder，  
-                            wobj.reload(true); 
+							var wobj = plus.webview.getWebviewById("order"); //注意 HBuilder 是   1.html 的 ID  你如果1.html 有ID   要替换掉HBuilder，  
+							wobj.reload(true);
 						},
-					    error:function(a){
+						error: function(a) {
 							mui.toast("服务器未响应，请稍后重试");
 						}
 					});
-		        });  
+				});
 			})
 		</script>
 	</body>

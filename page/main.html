@@ -52,7 +52,7 @@
 				    <div class="searchs" id="search_input"></div>
 				</div>
 			</h1>
-			<a class="mui-icon mui-icon-chatbubble mui-pull-right color_f"></a>
+			<!--<a class="mui-icon mui-icon-chatbubble mui-pull-right color_f"></a>-->
 		</header>
 		<!--周边-->
 		<header class="mui-bar mui-bar-nav head_bg">
@@ -94,12 +94,48 @@
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init();
+			var banbenhao;
 			mui.plusReady(function() {
+				plus.runtime.getProperty(plus.runtime.appid, function(wgtinfo){
+				    banbenhao = wgtinfo.version;
+					mui.ajax({
+						url:WEB_HOST+'/index/banbenupdate',
+						data:{
+							"banbenhao":banbenhao,
+						},
+						async: false,
+						dataType:'json',//服务器返回json格式数据
+						type:'get',//HTTP请求类型
+						timeout:10000,//超时时间设置为10秒；
+						success:function(data){
+//							console.log(JSON.stringify(data));
+							if(data.status==="yes"){
+								var btnArray = ['是','否'];
+								if(data.qiangzhi==="yes"){
+									btnArray = ['好的'];
+								}
+								mui.confirm("软件有新版本啦",'更新提示',btnArray ,function(e) {
+									if(e.index == 0) {
+										var w = plus.webview.create(data.src);
+										w.show(); // 显示窗口
+									}else if(e.index!==0&&e.index!==1){
+										plus.runtime.quit();
+									}
+								})
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							console.log(errorThrown);
+						}
+					});
+				});
+				
 				/**
 				 * 当前窗口对象，即父窗口；
 				 * http://www.html5plus.org/doc/zh_cn/webview.html#plus.webview.currentWebview
 				 */
 				var self = plus.webview.currentWebview();
+				
 				// 子窗口地址数组
 				var subpages = ["home.html", "serve0.html", "buy-car.html", "usercenter.html"];
 				// 子窗口样式
@@ -163,6 +199,7 @@
 //						    $("header").eq(targetIndex).addClass("show").siblings("header").removeClass("show");	
 //						}
 						switchPage("tap", activeIndex, targetIndex);
+						Index = activeIndex
 					});
 				}
 				// 子页面滑动切换事件
@@ -190,7 +227,23 @@
 //					// 切换页面
 //					switchPage("switch", activeIndex, targetIndex);
 //				});
-
+//				console.log("main页面1==============>"+localStorage.getItem("jiarugouwuche"));
+//				if(localStorage.getItem("yemian")==="jiarugouwuche"){
+//					localStorage.removeItem("yemian");
+//					switchPage("tap", 0, 2);
+//					Index = activeIndex;
+//					console.log(JSON.stringify( $("a.mui-tab-item")) );
+//					$("a.mui-tab-item").each(function(){
+//						this.removeClass("mui-active");
+//					})
+//					$("a.mui-tab-item").eq(2).addClass("mui-active");
+//				}
+//				console.log("main页面1==============>"+self.yemian);
+				
+//				if(self.yemian === "jiarugouwuche"){
+//					switchPage("tap", 0, 2);
+//					Index = activeIndex;
+//				}
 				/**
 				 * 切换页面
 				 * @param {String} _event 事件类型
@@ -257,7 +310,10 @@
 	            mui.openWindow({
 	               url:"search.html",
 	               id:"search",
-	               createNew:true
+	               createNew:true,
+	                extras:{
+				        name:'home'
+				    }
        			});
 	        });
 		</script>

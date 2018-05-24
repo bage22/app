@@ -9,14 +9,15 @@
 		<link rel="stylesheet" type="text/css" href="../css/mui.poppicker.css"/>
 		<link rel="stylesheet" type="text/css" href="../css/global.css"/>
 		<link href="../css/app.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/jiazai.css"/>
 	</head>
 	<body>
-		<header class="mui-bar mui-bar-nav" style="background: #000;">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left color_f"></a>
-			<h1 class="mui-title color_f">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left "></a>
+			<h1 class="mui-title ">
 			       添加收货地址
 			</h1>
-			<a id="save" href="javascript:void(0);" class="mui-pull-right color_f f16" style="line-height: 45px;">保存</a>
+			<a id="save" href="javascript:void(0);" class="mui-pull-right  f16" style="line-height: 45px;">保存</a>
 		</header>
 		<div class="mui-content">
 			<ul class="mui-table-view balance1">
@@ -53,13 +54,13 @@
 		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.picker.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
-		<!--<script src="../js/city.data-3.js" type="text/javascript" charset="utf-8"></script>-->
+		<script src="../js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jiazai.js" type="text/javascript"></script>
 		<script type="text/javascript">
 			var phone=localStorage.getItem("phone");
 		   	$("#telephone").val(phone);
 		   mui.init();
 		   mui.plusReady(function(){
-
 //		   	添加地址增加验证：收件人不能为空，联系电话不能为空，所在地区不能为空，详细地址不能为空。
                 var self = plus.webview.currentWebview();
         	    types=self.type;
@@ -77,22 +78,33 @@
                 		$("#telephone").focus();
                 	}
                 })
-		   	   mui.ajax({
-					url: WEB_HOST+"/userCenter/diqu", 
-					type: "get",
-					async: false,
-					data: {
-						"token":localStorage.getItem("token")
-					},
-					dataType: "json",
-					timeout: 1000,
-					success: function(data) {
+                
+                var mask=mui.createMask();//遮罩层
+			    mui.ajax({
+					 url:"chengshi.json",
+				    data:{
+				        "token":localStorage.getItem("token")
+				    },
+				    async: false,
+				    dataType: 'json', //服务器返回json格式数据
+			        type: 'get', //HTTP请求类型
+			        timeout: 100000, //超时时间设置为10秒；
+				    beforeSend: function() {
+				        plus.nativeUI.showWaiting("加载中", "options");
+				        mask.show();//显示遮罩层
+				    },
+				    complete: function() {
+				        plus.nativeUI.closeWaiting();
+				        mask.close();//关闭遮罩层
+				    },
+				    success: function(data) {
 						getcity(data.data);
-					},
-					error:function(a){
-						mui.toast("服务器未响应，请稍后重试");
-					}
+				    },
+				    error: function(xhr, type, errorThrown) {
+				        mui.alert('服务器连接超时，请稍后再试');
+				    }
 				});
+
 				var checknum=1;
 			    document.getElementById("check").addEventListener("change",function(){
 			    	if(this.checked==true){
@@ -102,17 +114,23 @@
 			    	}
 			    })
 				document.getElementById("save").addEventListener("tap",function(){
+					
 					var username=$("#username").val();
 					var telephone=$("#telephone").val();
+					var addressInfo=$("#addressInfo").val();
+					var cityResult3= $("#cityResult3").html();
 					if(telephone==""){
                 		mui.toast("联系电话不能为空");
                 		$("#telephone").focus();
-                	}
-					if(username==""){
+                	}else if(username==""){
                 		mui.toast("收件人不能为空");
                 		$("#username").focus();
-                	}
-					if(username!=""&&telephone!=""){
+                	}else if(addressInfo==""){
+                		mui.toast("详细地址不能为空");
+                		$("#addressInfo").focus();
+                	}else if(cityResult3==""){
+                		mui.toast("所在地区不能为空");
+                	}else{
 						mui.ajax({
 							url: WEB_HOST+"/userCenter/addressone", 
 							type: "post",
@@ -128,6 +146,7 @@
 							dataType: "json",
 							timeout: 1000,
 							success: function(data) {
+							    document.getElementById("save").style.display = "none";
 								mui.toast(data.message);
 								if(types=="zf"){
 									var wobj = plus.webview.getWebviewById("balance");//注意 HBuilder 是   1.html 的 ID  你如果1.html 有ID   要替换掉HBuilder，  
@@ -145,9 +164,8 @@
 								mui.toast("服务器未响应，请稍后重试");
 							}
 						});
-					}
+                	}
 				})
-		   	  
 		   })
 		   function getcity(citydata){
 			//					//级联示例

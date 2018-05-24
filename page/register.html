@@ -26,7 +26,6 @@
 				right: 0px;
 			}
 		</style>
-		</style>
 	</head>
 
 	<body>
@@ -77,7 +76,7 @@
 					<span class="mui-icon"><button type="button" id="send" class="mui-btn mui-btn-warning">发送验证码</button></span>
 				</div>
 			</form>
-			<div class="information_message"></div>
+			<!--<div class="information_message"></div>-->
 			<div class="mui-content-padded">
 				<button type="button" id="next" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined">同意以下协议并注册</button>
 			</div>
@@ -171,13 +170,13 @@
                 		$(".information_message").html("请输入正确的手机号");
                 		$("#account").focus();
                 	}else{
-                		$(".information_message").html("手机号符合");
+//              		$(".information_message").html("手机号符合");
                 	}
                 })
                 $("#password").blur(function(){
-                	var lens=$("#password").val().length;
-                	if(lens<6){
-                		$(".information_message").html("请输入正确的密码长度，至少6个字符，最多24个字符");
+//              	var lens=$("#password").val().length;
+                	if(checkPassword('#password')==="假的"){
+                		$(".information_message").html("密码长度为8到16位数字与字母组合");
                 		$("#password").focus();
                 	}
                 })
@@ -188,7 +187,7 @@
                 		$(".information_message").html("两次密码不一致");
                 		$("#password").focus();
                 	}else{
-                		$(".information_message").html("密码格式正确");
+//              		$(".information_message").html("密码格式正确");
                 	}
                 })
                 $("#username").blur(function(){
@@ -199,28 +198,34 @@
                 	}
                 })
 		        document.getElementById("send").addEventListener('tap',function(){
-		        	mui.ajax({
-						url: WEB_HOST+"/auth/code/send", 
-						type: "post",
-						async: false,
-						data: {
-							"phone":$("#account").val()
-						},
-						dataType: "json",
-						timeout: 1000,
-						success: function(data) {
-							if(data.status == 0){
-								localStorage.setItem("phone",$("#account").val());
-								 mui.toast(data.message);
-								 retrieve();
-							}else{
-								mui.toast(data.message);
-								document.getElementsByClassName("information_message")[0].innerHTML=data.message;
+		        	if($('#account').val()===""){
+		        		mui.toast("请输入手机号");
+		        		$('#account').focus();
+		        	}else{
+		        		mui.ajax({
+							url: WEB_HOST+"/auth/code/registCode", 
+							type: "post",
+							async: false,
+							data: {
+								"phone":$("#account").val()
+							},
+							dataType: "json",
+							timeout: 1000,
+							success: function(data) {
+								if(data.status == 0){
+									localStorage.setItem("phone",$("#account").val());
+								 	mui.toast(data.message);
+								 	retrieve();
+								}else{ 
+									mui.toast(data.message);
+									document.getElementsByClassName("information_message")[0].innerHTML=data.message;
+								}
+							},error:function(a){
+								mui.toast("服务器未响应，请稍后重试");
 							}
-						},error:function(a){
-							mui.toast("服务器未响应，请稍后重试");
-						}
-					});
+						});
+		        	}
+		        	
 		        });
                 var sex;
 		        document.getElementById("next").addEventListener('tap',function(){
@@ -233,6 +238,12 @@
 		        	if($("#account").val()==""){
 		        		mui.toast("请输入手机号");
                 		$("#account").focus();
+		        	}else if($("#password").val()==""){
+		        		mui.toast("请输入密码");
+                		$("#password").focus();
+		        	}else if($("#password_confirmation").val()==""){
+		        		mui.toast("请确认密码");
+                		$("#password_confirmation").focus();
 		        	}else if($("#username").val()==""){
 		        		mui.toast("请输入昵称");
                 		$("#username").focus();
@@ -259,6 +270,9 @@
 						success: function(data) {
 							if(data.status == 0){
 								localStorage.setItem("token",data.data.token);
+								$('input').each(function(){
+									$(this).val("");
+								});
 								mui.openWindow({
 									url: "login-successful.html",
 									id: "login-successful",
@@ -307,7 +321,7 @@
 	//			 重新获取并发送验证码
 	             function cxhq(){
 	             	mui.ajax({
-							url: WEB_HOST+"/auth/code/send", 
+							url: WEB_HOST+"/auth/code/registCode", 
 							type: "post",
 							async: false,
 							data: {

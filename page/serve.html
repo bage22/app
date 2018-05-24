@@ -19,7 +19,14 @@
 			</h1>
 				<a id="search_input" class="mui-icon mui-icon-search mui-pull-right color_f"></a>
 		</header>	
-		<div class="mui-content">
+		<div class="mui-content" id="refreshContainer">
+			<!--下拉刷新容器-->
+		    <!--数据列表-->
+		    <!--<ul class="mui-table-view mui-table-view-chevron">
+		      
+		    </ul>-->
+			
+			
 			<!--选项卡-->
 			<!--<div id="segmentedControl" class="mui-segmented-control">
 				<a class="mui-control-item mui-active" href="#quanbu">
@@ -30,7 +37,7 @@
 				</a>
 			</div>-->
 			<div class="tab_item">
-				<div id="quanbu" class="mui-control-content mui-active">
+				<div id="quanbu" class="mui-control-content mui-active mui-scroll" >
 					<ul class="mui-table-view mui-grid-view" id="qblist">
 					    <!--<li class="mui-table-view-cell mui-media mui-col-xs-6">
 					        <div class="bgf pbottom10">
@@ -50,7 +57,7 @@
 					<!--全部服务列表渲染-->		
 					<script type="text/html" id="qbserve">
 					    {{each data as value i}}
-						<li class="mui-table-view-cell mui-media mui-col-xs-6 fw_item" data-id="{{value.id}}">
+						<li onclick="xiangqing('{{value.id}}')" class="mui-table-view-cell mui-media mui-col-xs-6 fw_item">
 					        <div class="bgf pbottom10">
 					        	<a href="javascript:void(0)">
 						            <img class="mui-media-object" src="{{value.image}}">
@@ -59,7 +66,7 @@
 						            	<span class="fl color_red f16"> &yen;{{value.price}}</span>
 						            	<span class="fr color_b">{{value.people}}人购买</span>
 						            </div>
-						            <div class="user-rating"><span>[用户评价]</span>{{value.comment}}</div>
+						            <!--<div class="user-rating"><span>[用户评价]</span>{{value.comment}}</div>-->
 						        </a>
 					        </div>
 					    </li>
@@ -97,17 +104,52 @@
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/sub.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
+			var num = 1;
+			mui.init({ 
+				 pullRefresh : {
+				　　 swipeBack: false, //关闭左滑关闭功能
+				    container:"#quanbu",//下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+				    up : {
+					      height:500,//可选.默认50.触发上拉加载拖动距离
+					      auto:false,//可选,默认false.自动上拉加载一次
+					      contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+					      contentnomore:'没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
+					      callback :pullfresh
+				   }
+			   }
+			});
+			
+			function pullfresh() {
+				var that = this;
+			     //业务逻辑代码，比如通过ajax从服务器获取新数据；
+			    var shuju = $('#qblist').html();
+			     shuaxin(num+=1);
+			     $('#qblist').html(shuju+$('#qblist').html());
+			     //注意：
+			     //1、加载完新数据后，必须执行如下代码，true表示没有更多数据了：
+			     //2、若为ajax请求，则需将如下代码放置在处理完ajax响应数据之后
+			     setTimeout(function(){
+			     	that.endPullupToRefresh(true);
+			     },1000)
+				
+
+			}
+			
 		     	//			全部列表渲染js
-                mui.ajax({
+		     	function shuaxin(num){
+		     		  mui.ajax({
 						url: WEB_HOST+"/index/products",
 						type: "get",
 						async: false,
-						data:{"token":localStorage.getItem("token")},
+						data:{
+							"token":localStorage.getItem("token"),
+							"pageNo":num,
+						},
 						dataType: "json",
 						timeout: 1000,
 						success: function(data) {
-//							alert(JSON.stringify(data));
-							if(data.data.length>0){
+							console.log("产品"+JSON.stringify(data));
+							if(data.status===0){
 							   document.getElementById("qblist").innerHTML=template("qbserve",data);
 							}else{
 							   document.getElementById("qblist").innerHTML="<li>没有相关数据</li>";	
@@ -115,7 +157,9 @@
 						},error:function(a){
 							mui.toast("服务器未响应，请稍后重试");
 						}
-				});
+					});
+		     	}
+              shuaxin(num);
 //			金牌列表渲染js
 //              mui.ajax({
 //						url: WEB_HOST+"/index/jpservices",
@@ -135,21 +179,31 @@
 //							alert(a.status);
 //						}
 //				});
-				//		  服务
-				var hd_list=document.getElementsByClassName("fw_item").length;
-				for(var i=0;i<hd_list;i++){
-					document.getElementsByClassName("fw_item")[i].addEventListener("tap",function(){
-						var listid=$(this).data("id");
-						 mui.openWindow({
-			               url:"server-info.html",
-			               id:"server-info",
-			               createNew:true,
-			               extras:{
-					          listid:listid
-					        }
-		       			});
-					})
+				function xiangqing(id){
+					mui.openWindow({
+		               url:"server-info.html",
+		               id:"server-info",
+		               createNew:true,
+		               extras:{
+				          listid:id
+				        }
+	       			});
 				}
+//				var hd_list=document.getElementsByClassName("fw_item").length;
+//				for(var i=0;i<hd_list;i++){
+//					document.getElementsByClassName("fw_item")[i].addEventListener("tap",function(){
+//						alert($(this).data("id"));
+//						var listid=$(this).data("id");
+//						 mui.openWindow({
+//			               url:"server-info.html",
+//			               id:"server-info",
+//			               createNew:true,
+//			               extras:{
+//					          listid:listid
+//					        }
+//		       			});
+//					})
+//				}
 				// 打开搜索界面
 				document.querySelector('#search_input').addEventListener('tap', function () {
 					mui.openWindow({

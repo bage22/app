@@ -1,551 +1,656 @@
 <!doctype html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link href="../css/app.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="../css/order.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/order.css" />
 	</head>
 
 	<body id="order">
-	<header class="mui-bar mui-bar-nav">
+		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left "></a>
 			<h1 class="mui-title ">
 				订单
 			</h1>
-			<a class="mui-icon mui-icon-chatbubble mui-pull-right "></a>
-	</header>
+			<!--<a class="mui-icon mui-icon-chatbubble mui-pull-right "></a>-->
+		</header>
 		<div class="mui-content">
 			<div id="segmentedControl" class="mui-segmented-control">
-				<a class="ortab mui-control-item mui-active" href="#qb"  data-id="0">
+				<a class="ortab mui-control-item mui-active" href="#qb" data-id="0">
 					全部
 				</a>
 				<a class="ortab mui-control-item" href="#dfk" data-id="1">
 					待付款
 				</a>
-				<a class="ortab mui-control-item" href="#yfk" data-id="3">
+				<a class="ortab mui-control-item" href="#dfh" data-id="2">
+					待发货
+				</a>
+				<a class="ortab mui-control-item" href="#dsh" data-id="3">
 					待收货
 				</a>
-				<!--<a class="ortab mui-control-item" href="#ycg" data-id="4">
-					已成功
-				</a>-->
 				<a class="ortab mui-control-item" href="#dpj" data-id="5">
 					待评价
 				</a>
-				<a class="ortab mui-control-item" href="#ypj" data-id="6">
-					已评价
-				</a>
 			</div>
 			<div class="file">
-			    <div id="qb" class="mui-control-content mui-active">
-			    	<ul class="order_list" id="whole"></ul>
-			    	<script type="text/html" id="orderTemp0">
-			    	    {{each data as value i}}
-				    		<li class="order_item" data-id="{{value.id}}">
-				    			<div class="item_head">
-				    				<div class="fl">{{value.deptname}}</div>
-				    				<div class="fr">{{value.status}}</div>
-				    			</div>
-				    			<div class="item_content">
-				    				<div class="con_img"><img src="{{value.PICPATH}}"/></div>
-				    				<div class="con_info">
-				    					<div class="info_tit">
-				    						<span class="fl">{{value.proname}}</span>
-				    						<span class="fr">&yen;{{value.mprice}}</span>
-				    					</div>
-				    					<p>订单创建时间：{{value.create_time}}</p>
-				    				</div>
-				    			</div>
-				    			{{if value.status=="已评价"}}
-				    			<div class="item_foot">
-				    				<span class="del_btn fr mui-btn mui-btn-warning mui-btn-outlined" id="del{{value.id}}" data-id="{{value.id}}">删除订单</span>
-				    			</div>
-				    			{{else if value.status=="待付款"}}   			
-				    			<div class="item_foot">
-				    				<span class="del_btn fr mui-btn mui-btn-warning mui-btn-outlined" id="del{{value.id}}"  data-id="{{value.id}}">删除订单</span>
-				    				<span class="fp_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">发票信息</span>
-				    				<span class="pay_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">立即付款</span>
-				    			</div>
-				    			{{else if value.status=="确认收货"}}		    			
-				    			<div class="item_foot">
-				    				<span class="del_btn fr mui-btn mui-btn-warning mui-btn-outlined" id="del{{value.id}}"  data-id="{{value.id}}">删除订单</span>
-				    				<span class="fp_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">发票信息</span>
-				    				<span class="tk_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">申请退货</span>
-				    				<span class="confrim_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" id="con{{value.id}}" data-id="{{value.id}}">确认收货</span>
-				    			</div>
-				    			{{else}}
-				    			<div class="item_foot">
-				    				<span class="del_btn fr mui-btn mui-btn-warning mui-btn-outlined" id="del{{value.id}}" data-id="{{value.id}}">删除订单</span>
-				    				<span class="tk_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">申请退货</span>
-				    				<span class="pj_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}"  data-img="{{value.PICPATH}}" data-name = "{{value.proname}}" data-price = "{{value.mprice}}"  data-proid="{{value.proid}}">我要评价</span>
-				    			</div>
-				    			{{/if}}	
-				    		</li>
-			    	    {{/each}}
-		    	   </script>
-			    </div>
-			    <div id="dfk" class="mui-control-content">
-			    	<!--<div class="mydd">
-			    		<img src="../img/mydd.png"/>
-			    	</div>-->
-			    	<ul class="order_list" id="obligation">
-			    		
-			    	</ul>
-			    	<script type="text/html" id="orderTemp1">
-			    	    {{each data as value i}}
-				    		<li class="order_item" data-id="{{value.id}}" data-proid="{{value.proid}}">
-				    			<div class="item_head">
-				    				<div class="fl">{{value.deptname}}</div>
-				    				<div class="fr">{{value.status}}</div>
-				    			</div>
-				    			<div class="item_content dfk_item" data-id="{{value.id}}">
-				    				<div class="con_img"><img src="{{value.PICPATH}}"/></div>
-				    				<div class="con_info">
-				    					<div class="info_tit">
-				    						<span class="fl">{{value.proname}}</span>
-				    						<span class="fr">&yen;{{value.mprice}}</span>
-				    					</div>
-				    					<p>订单创建时间：{{value.create_time}}</p>
-				    				</div>
-				    			</div>
-				    			<div class="item_foot">
-				    				<span class="del_btn fr mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">删除订单</span>
-				    				<span class="fp_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">发票信息</span>
+				<div id="qb" class="mui-control-content mui-active">
+					<ul class="order_list" id="whole"></ul>
+					<script type="text/html" id="orderTemp0">
+						{{each data as value i}}
+						<li class="order_item" data-id="{{value.id}}">
+							<div class="item_head">
+								<div class="fl">{{value.deptname}}</div>
+								<div class="fr">{{value.status}}</div>
+							</div>
+							<div class="item_content" data-proid="{{value.proid}}" data-tid="{{value.returnId}}"data-lc="{{value.examineStatus}}"  data-zhuangtai="{{value.status}}" data-kdname="{{value.kdname}}" data-kdnames="{{value.kdnames}}" data-kdid="{{value.kdid}}" data-kdf="{{value.kdmoney}}" data-sta="{{value.status}}" data-id="{{value.id}}" data-src="{{value.PICPATH}}" data-dep="{{value.deptname}}" data-pro="{{value.proname}}" data-mpr="{{value.mprice}}" data-cre="{{value.create_time}}">
+								<div class="con_img"><img src="{{value.PICPATH}}" /></div>
+								<div class="con_info">
+									<div class="info_tit">
+										<span class="fl">{{value.proname}}</span>
+										<span class="fr">&yen;{{value.mprice}}</span>
+									</div>
+									<p>订单创建时间：{{value.create_time}}</p>
+								</div>
+							</div>
+							<div class="item_foot">
 
-				    				
-				    				<span class="pay_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">立即付款</span>
-				    			</div>
-				    		</li>
-			    	    {{/each}}
-		    	   </script>
-			    </div>
-			    <div id="yfk" class="mui-control-content">
-			    	<ul class="order_list" id="solved">
-			    		
-			    	</ul>
-			    	<script type="text/html" id="orderTemp2">
-			    	    {{each data as value i}}
-				    		<li class="order_item clz_item" data-id="{{value.id}}" data-proid="{{value.proid}}">
-				    			<div class="item_head">
-				    				<div class="fl">{{value.deptname}}</div>
-				    				<div class="fr">{{value.status}}</div>
-				    			</div>
-				    			<div class="item_content">
-				    				<div class="con_img"><img src="{{value.PICPATH}}"/></div>
-				    				<div class="con_info">
-				    					<div class="info_tit">
-				    						<span class="fl">{{value.proname}}</span>
-				    						<span class="fr">&yen;{{value.mprice}}</span>
-				    					</div>
-				    					<p>订单创建时间：{{value.create_time}}</p>
-				    				</div>
-				    			</div>
-				    			<div class="item_foot">
-				    				<!--<span class="del_btn fr mui-btn mui-btn-warning mui-btn-outlined" id="del{{value.id}}"  data-id="{{value.id}}">删除订单</span>-->
-				    				<span class="tk_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">申请退货</span>
-				    				<span class="wl_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">查看物流</span>
-				    				<span class="confrim_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" id="con{{value.id}}"  data-id="{{value.id}}">确认收货</span>
-				    			</div>
-				    		</li>
-			    	    {{/each}}
-		    	   </script>
-			    </div>
-			    <!--<div id="ycg" class="mui-control-content">
-			    	<ul class="order_list" id="successful">
-			    		
-			    	</ul>
-			    	<script type="text/html" id="orderTemp3">
-			    	    {{each data as value i}}
-				    		<li class="order_item" data-id="value.id">
-				    			<div class="item_head">
-				    				<div class="fl">{{value.deptname}}</div>
-				    				<div class="fr">{{value.status}}</div>
-				    			</div>
-				    			<div class="item_content">
-				    				<div class="con_img"><img src="{{value.PICPATH}}"/></div>
-				    				<div class="con_info">
-				    					<div class="info_tit">
-				    						<span class="fl">{{value.proname}}</span>
-				    						<span class="fr">&yen;{{value.mprice}}</span>
-				    					</div>
-				    					<p>订单创建时间：{{value.create_time}}</p>
-				    				</div>
-				    			</div>
-				    			<div class="item_foot">
-				    				<span class="del_btn fr">删除订单</span>
-				    			</div>
-				    		</li>
-			    	    {{/each}}
-		    	   </script>
-			    </div>-->
-			    <div id="dpj" class="mui-control-content">
-			    	<ul class="order_list" id="toevaluate">
-			    		
-			    	</ul>
-			    	<script type="text/html" id="orderTemp4">
-			    	    {{each data as value i}}
-				    		<li class="order_item" data-id="value.id">
-				    			<div class="item_head">
-				    				<div class="fl">{{value.deptname}}</div>
-				    				<div class="fr">{{value.status}}</div>
-				    			</div>
-				    			<div class="item_content">
-				    				<div class="con_img"><img src="{{value.PICPATH}}"/></div>
-				    				<div class="con_info">
-				    					<div class="info_tit">
-				    						<span class="fl">{{value.proname}}</span>
-				    						<span class="fr">&yen;{{value.mprice}}</span>
-				    					</div>
-				    					<p>订单创建时间：{{value.create_time}}</p>
-				    				</div>
-				    			</div>
-				    			<div class="item_foot">
-				    				<span class="del_btn fr mui-btn mui-btn-warning mui-btn-outlined" id="del{{value.id}}" data-id="{{value.id}}">删除订单</span>
-				    				<span class="fp_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">发票信息</span>
-				    				<span class="pj_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-img="{{value.PICPATH}}" data-name = "{{value.proname}}" data-price = "{{value.mprice}}"  data-proid="{{value.proid}}">我要评价</span>
-				    			</div>
-				    		</li>
-			    	    {{/each}}
-		    	   </script>
-			    </div>
-			    <div id="ypj" class="mui-control-content">
-			    	<ul class="order_list" id="hevaluated">
-			    		
-			    	</ul>
-			    	<script type="text/html" id="orderTemp5">
-			    	    {{each data as value i}}
-				    		<li class="order_item" data-id="{{value.id}}">
-				    			<div class="item_head">
-				    				<div class="fl">{{value.deptname}}</div>
-				    				<div class="fr">{{value.status}}</div>
-				    			</div>
-				    			<div class="item_content">
-				    				<div class="con_img"><img src="{{value.PICPATH}}"/></div>
-				    				<div class="con_info">
-				    					<div class="info_tit">
-				    						<span class="fl">{{value.proname}}</span>
-				    						<span class="fr">&yen;{{value.mprice}}</span>
-				    					</div>
-				    					<p>订单创建时间：{{value.create_time}}</p>
-				    				</div>
-				    			</div>
-				    			<div class="item_foot">
-				    				<span class="del_btn fr mui-btn mui-btn-warning mui-btn-outlined" id="del{{value.id}}"  data-id="{{value.id}}">删除订单</span>
-				    				<span class="fp_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">发票信息</span>
-				    			</div>
-				    		</li>
-			    	    {{/each}}
-		    	   </script>
-			    </div>
+								{{if value.status=="待付款"}}
+                                    <span class="del_btn fr mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">取消订单</span>
+                                    <span class="fp_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">开票信息</span>
+                                    <span class="pay_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">立即付款</span>
+                                {{else if value.status=="待发货"}}
+                                    {{if value.examineStatus=="9"}}
+                                        <span class="fp_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">开票信息</span>
+                                            {{if value.returnSGoods=="0"}}
+                                                <span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}" data-proid="{{value.proid}}">退货申请</span>
+                                            {{/if}}
+                                    {{ else if value.examineStatus=="11"}}
+                                        <span class="tg_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">审核通过</span>
+                                    {{ else if value.examineStatus=="12"}}
+                                        <span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">审核未通过</span>
+                                    {{/if}}
+
+                                {{else if value.status=="待收货"}}
+                                    {{if value.examineStatus=="9"}}
+                                        <span class="confrim_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">确认收货</span>
+                                        <span class="fp_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-fapiao="no" data-id="{{value.id}}">开票信息</span>
+                                        <span class="wl_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-kdname="{{value.kdname}}" data-kdnames="{{value.kdnames}}" data-kdid="{{value.kdid}}" data-id="{{value.id}}">物流信息</span>
+                                            {{if value.returnSGoods=="0"}}
+                                                <span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}" data-proid="{{value.proid}}">退货申请</span>
+                                            {{/if}}
+                                    {{ else if value.examineStatus=="11"}}
+                                        <span class="tg_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">审核通过</span>
+                                    {{ else if value.examineStatus=="12"}}
+                                    <span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">审核未通过</span>
+                                    {{/if}}
+                                {{else if value.status=="确认收货"}}
+                                    {{if value.examineStatus=="9"}}
+                                    	<!--<span class="del_btn fr mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">删除订单</span>-->
+                                        <span class="pj_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-img="{{value.PICPATH}}" data-name="{{value.proname}}" data-price="{{value.mprice}}" data-proid="{{value.proid}}">我要评价</span>
+                                        <span class="fp_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-fapiao="no" data-id="{{value.id}}">开票信息</span>
+                                            {{if value.returnSGoods=="0"}}
+                                                <span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}" data-proid="{{value.proid}}" >退货申请</span>
+                                            {{/if}}
+                                    {{ else if value.examineStatus=="11"}}
+                                        <span class="tg_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">审核通过</span>
+                                    {{ else if value.examineStatus=="12"}}
+                                        <span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">审核未通过</span>
+                                    {{/if}}
+
+                                {{else if value.status=="已评价"}}
+                                    {{if value.examineStatus=="9"}}
+										<!--<span class="del_btn fr mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">删除订单</span>-->
+                                        <span class="fp_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-fapiao="no" data-id="{{value.id}}">开票信息</span>
+                                            {{if value.returnSGoods=="0"}}
+                                                <span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}" data-proid="{{value.proid}}">退货申请</span>
+                                            {{/if}}
+                                    {{ else if value.examineStatus=="11"}}
+                                        <span class="tg_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">审核通过</span>
+                                    {{ else if value.examineStatus=="12"}}
+                                        <span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">审核未通过</span>
+                                    {{/if}}
+                                {{else if value.status=="已取消"}}
+									<!--<span class="del_btn fr mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">删除订单</span>-->
+								{{else if value.status=="申请退货中"}}
+                                {{else if value.status=="退货审核通过"}}
+                                    {{if value.examineStatus=="9"}}
+                                        <span class="tk_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">审核通过</span>
+                                            {{if value.returnSGoods=="0"}}
+                                                <span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}" data-proid="{{value.proid}}">退货申请</span>
+                                            {{/if}}
+                                    {{ else if value.examineStatus=="11"}}
+                                        <span class="tg_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">审核通过了，去发货</span>
+                                    {{ else if value.examineStatus=="12"}}
+                                        {{if value.returnSGoods=="0"}}
+                                            <span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">重新申请退货</span>
+                                        {{/if}}
+                                        <span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">审核未通过</span>
+                                    {{/if}}
+                                {{else if value.status=="退货审核未通过"}}
+									<!--<span class="del_btn fr mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">删除订单</span>-->
+	                                    {{if value.examineStatus=="9"}}
+	                                      		{{if value.returnSGoods=="0"}}
+	                                                <span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}" data-proid="{{value.proid}}">退货申请</span>
+	                                            {{/if}}
+	                                    {{ else if value.examineStatus=="11"}}
+	                                        <span class="tg_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">审核通过</span>
+	                                    {{ else if value.examineStatus=="12"}}
+	                                    	{{if value.returnId !=="0"}}
+											<span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">重新申请退货</span>
+											{{else}}
+	                                        <span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}" data-proid="{{value.proid}}">退货申请</span>
+	                                        {{/if}}
+	                                    {{/if}}
+                                {{else if value.status=="退货中"}}
+                                {{else if value.status=="已退货"}}
+                                {{else if value.status=="已退款"}}
+									<!--<span class="del_btn fr mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">删除订单</span>-->
+								{{/if}}
+
+							</div>
+						</li>
+						{{/each}}
+					</script>
+				</div>
+				<div id="dfk" class="mui-control-content">
+					<ul class="order_list" id="obligation"></ul>
+					<script type="text/html" id="orderTemp1">
+						{{each data as value i}}
+						<li class="order_item" data-id="{{value.id}}" data-proid="{{value.proid}}">
+							<div class="item_head">
+								<div class="fl">{{value.deptname}}</div>
+								<div class="fr">{{value.status}}</div>
+							</div>
+							<div class="item_content" data-proid="{{value.proid}}" data-tid="{{value.returnId}}"data-lc="{{value.examineStatus}}" data-zhuangtai="{{value.status}}" data-kdname="{{value.kdname}}" data-kdnames="{{value.kdnames}}" data-kdid="{{value.kdid}}" data-kdf="{{value.kdmoney}}" data-sta="{{value.status}}" data-id="{{value.id}}" data-src="{{value.PICPATH}}" data-dep="{{value.deptname}}" data-pro="{{value.proname}}" data-mpr="{{value.mprice}}" data-cre="{{value.create_time}}">
+								<div class="con_img"><img src="{{value.PICPATH}}" /></div>
+								<div class="con_info">
+									<div class="info_tit">
+										<span class="fl">{{value.proname}}</span>
+										<span class="fr">&yen;{{value.mprice}}</span>
+									</div>
+									<p>订单创建时间：{{value.create_time}}</p>
+								</div>
+							</div>
+							<div class="item_foot">
+                                {{if value.examineStatus=="9"}}
+                                    <span class="del_btn fr mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">取消订单</span>
+                                    <span class="fp_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">开票信息</span>
+                                    <span class="pay_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">立即付款</span>
+                                        {{if value.returnSGoods=="0"}}
+                                            <span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}" data-proid="{{value.proid}}">退货申请</span>
+                                        {{/if}}
+                                {{ else if value.examineStatus=="11"}}
+                                    <span class="tg_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">审核通过</span>
+                                {{ else if value.examineStatus=="12"}}
+                                     <!--<span class="del_btn fr mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">删除订单</span>-->
+                                    {{if value.returnId !=="0"}}
+                                        <span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">重新申请退货</span>
+                                    {{else}}
+                                        <span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}" data-proid="{{value.proid}}">退货申请</span>
+                                    {{/if}}
+                                {{/if}}
+							</div>
+						</li>
+						{{/each}}
+					</script>
+				</div>
+				<div id="dfh" class="mui-control-content">
+					<ul class="order_list" id="hevaluated"></ul>
+					<script type="text/html" id="orderTemp2">
+						{{each data as value i}}
+						<li class="order_item" data-id="{{value.id}}">
+							<div class="item_head">
+								<div class="fl">{{value.deptname}}</div>
+								<div class="fr">{{value.status}}</div>
+							</div>
+							<div class="item_content" data-proid="{{value.proid}}" data-tid="{{value.returnId}}"data-lc="{{value.examineStatus}}" data-zhuangtai="{{value.status}}" data-kdname="{{value.kdname}}" data-kdnames="{{value.kdnames}}" data-kdid="{{value.kdid}}" data-kdf="{{value.kdmoney}}" data-sta="{{value.status}}" data-id="{{value.id}}" data-src="{{value.PICPATH}}" data-dep="{{value.deptname}}" data-pro="{{value.proname}}" data-mpr="{{value.mprice}}" data-cre="{{value.create_time}}">
+								<div class="con_img"><img src="{{value.PICPATH}}" /></div>
+								<div class="con_info">
+									<div class="info_tit">
+										<span class="fl">{{value.proname}}</span>
+										<span class="fr">&yen;{{value.mprice}}</span>
+									</div>
+									<p>订单创建时间：{{value.create_time}}</p>
+								</div>
+							</div>
+							<div class="item_foot">
+
+                                {{if value.examineStatus=="9"}}
+                                    <span class="fp_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">开票信息</span>
+                                        {{if value.returnSGoods=="0"}}
+                                            <span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}" data-proid="{{value.proid}}">退货申请</span>
+                                        {{/if}}
+                                {{ else if value.examineStatus=="11"}}
+                                    <span class="tg_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">审核通过</span>
+                                {{ else if value.examineStatus=="12"}}
+                                    <!--<span class="del_btn fr mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">删除订单</span>-->
+                                {{if value.returnId !=="0"}}
+                                        <span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">重新申请退货</span>
+                                    {{else}}
+                                        <span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}" data-proid="{{value.proid}}">退货申请</span>
+                                    {{/if}}
+                                {{/if}}
+
+							</div>
+						</li>
+						{{/each}}
+					</script>
+				</div>
+				<div id="dsh" class="mui-control-content">
+					<ul class="order_list" id="daishouhuo"></ul>
+					<script type="text/html" id="orderTemp3">
+						{{each data as value i}}
+						<li class="order_item clz_item" data-id="{{value.id}}" data-proid="{{value.proid}}">
+							<div class="item_head">
+								<div class="fl">{{value.deptname}}</div>
+								<div class="fr">{{value.status}}</div>
+							</div>
+							<div class="item_content" data-proid="{{value.proid}}" data-tid="{{value.returnId}}"data-lc="{{value.examineStatus}}" data-zhuangtai="{{value.status}}" data-kdname="{{value.kdname}}" data-kdnames="{{value.kdnames}}" data-kdid="{{value.kdid}}" data-kdf="{{value.kdmoney}}" data-sta="{{value.status}}" data-id="{{value.id}}" data-src="{{value.PICPATH}}" data-dep="{{value.deptname}}" data-pro="{{value.proname}}" data-mpr="{{value.mprice}}" data-cre="{{value.create_time}}">
+								<div class="con_img"><img src="{{value.PICPATH}}" /></div>
+								<div class="con_info">
+									<div class="info_tit">
+										<span class="fl">{{value.proname}}</span>
+										<span class="fr">&yen;{{value.mprice}}</span>
+									</div>
+									<p>订单创建时间：{{value.create_time}}</p>
+								</div>
+							</div>
+							<div class="item_foot">
+                                {{if value.examineStatus=="9"}}
+                                    <span class="confrim_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">确认收货</span>
+                                    <span class="fp_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-fapiao="no" data-id="{{value.id}}">开票信息</span>
+                                    <span class="wl_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-kdname="{{value.kdname}}" data-kdnames="{{value.kdnames}}" data-kdid="{{value.kdid}}" data-id="{{value.id}}">物流信息</span>
+                                        {{if value.returnSGoods=="0"}}
+                                            <span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}" data-proid="{{value.proid}}">退货申请</span>
+                                        {{/if}}
+                                {{ else if value.examineStatus=="11"}}
+                                    <span class="tg_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">审核通过</span>
+                                {{ else if value.examineStatus=="12"}}
+                                    <!--<span class="del_btn fr mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">删除订单</span>-->
+                                    {{if value.returnId !=="0"}}
+                                        <span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">重新申请退货</span>
+                                    {{else}}
+                                        <span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}" data-proid="{{value.proid}}">退货申请</span>
+                                    {{/if}}
+                                {{/if}}
+
+							</div>
+						</li>
+						{{/each}}
+					</script>
+				</div>
+				<div id="dpj" class="mui-control-content">
+					<ul class="order_list" id="toevaluate"> </ul>
+					<script type="text/html" id="orderTemp5">
+						{{each data as value i}}
+						<li class="order_item" data-id="value.id">
+							<div class="item_head">
+								<div class="fl">{{value.deptname}}</div>
+								<div class="fr">{{value.status}}</div>
+							</div>
+							<div class="item_content" data-proid="{{value.proid}}" data-tid="{{value.returnId}}"data-lc="{{value.examineStatus}}" data-zhuangtai="{{value.status}}" data-kdname="{{value.kdname}}" data-kdnames="{{value.kdnames}}" data-kdid="{{value.kdid}}" data-kdf="{{value.kdmoney}}" data-sta="{{value.status}}" data-id="{{value.id}}" data-src="{{value.PICPATH}}" data-dep="{{value.deptname}}" data-pro="{{value.proname}}" data-mpr="{{value.mprice}}" data-cre="{{value.create_time}}">
+								<div class="con_img"><img src="{{value.PICPATH}}" /></div>
+								<div class="con_info">
+									<div class="info_tit">
+										<span class="fl">{{value.proname}}</span>
+										<span class="fr">&yen;{{value.mprice}}</span>
+									</div>
+									<p>订单创建时间：{{value.create_time}}</p>
+								</div>
+							</div>
+							<div class="item_foot">
+                                <!--<span class="del_btn fr mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}">删除订单</span>-->
+                                {{if value.examineStatus=="9"}}
+                                    <span class="pj_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-img="{{value.PICPATH}}" data-name="{{value.proname}}" data-price="{{value.mprice}}" data-proid="{{value.proid}}">我要评价</span>
+                                    <span class="fp_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-fapiao="no" data-id="{{value.id}}">开票信息</span>
+                                        {{if value.returnSGoods=="0"}}
+                                            <span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}" data-proid="{{value.proid}}">退货申请</span>
+                                        {{/if}}
+                                {{ else if value.examineStatus=="11"}}
+                                    <span class="tg_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">审核通过</span>
+                                {{ else if value.examineStatus=="12"}}
+                                    {{if value.returnId !=="0"}}
+                                        <span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">重新申请退货</span>
+                                    {{else}}
+                                        <span class="th_btn fr mar_rig5 mui-btn mui-btn-warning mui-btn-outlined" data-id="{{value.id}}" data-returnid="{{value.returnId}}" data-mdId="{{value.mdId}}" data-returnmoney="{{value.returnmoney}}">审核未通过</span>
+                                    {{/if}}
+                                {{/if}}
+								</div>
+						</li>
+						{{/each}}
+					</script>
+				</div>
 			</div>
 		</div>
 		<script src="../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/template.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.min.js"></script>
+		<script src="../js/tokenyanzheng.js"></script>
 		<script src="../js/sub.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			//自定义窗体事件  doit 要和b页面定义的 事件名称一致   
-            window.addEventListener('shuaxin',function(){
-            	alert("发送成功");
-            	getdata(0);
-            });
-            
-          function xiaoshi(){
-	  			for(var i=0;i<mui(".tk_btn").length;i++){
-	  				mui(".tk_btn")[i].style.display = "none";
-	  			}
-	  		}
-          function inhtml(va){
-          	for(var i=0;i<mui(".tk_btn").length;i++){
-	  				mui(".tk_btn")[i].innerHTML = va;
-	  			}
-          }
-          function addtt(){
-          	for(var i=0;i<mui(".tk_btn").length;i++){
-	  				mui(".tk_btn")[i].classList.add("tt_btn");;
-	  			}
-          }
-           function addtg(){
-          	for(var i=0;i<mui(".tk_btn").length;i++){
-	  				mui(".tk_btn")[i].classList.add("tg_btn");;
-	  			}
-          }
-//      获取订单列表
-        function getdata(state){
-        	mui.ajax({
-				url: WEB_HOST+"/userCenter/myOrderList",
-				type: "get",
-				async: false,
-				data:{
-					"token":localStorage.getItem("token"),
-					"status":state
-				},
-				dataType: "json",
-				timeout: 1000,
-				success: function(data) {
-					console.log(JSON.stringify(data));
-					if(state==0){
-					   	if(data.data.length>0){
-				   	 	 	document.getElementById("whole").innerHTML=template("orderTemp0",data);
-					   	  	for(var i=0;i<data.data.length;i++){
-						   	  	if(data.data[i].returnSGoods=="1"){
-							   	  	if(data.data[i].examineStatus=="9"){
-										inhtml( "退货申请");
-										addtt("tt_btn");
-							   	  	}else if(data.data[i].examineStatus=="1"){
-							   	  		inhtml( "审核通过");
-										addtg("tg_btn");
-							   	  	}else if(data.data[i].examineStatus=="2"){
-							   	  		inhtml( "审核未通过");
-							   	  	}else if(data.data[i].examineStatus=="3"){
-							   	  		inhtml( "退货中");
-							   	  	}else if(data.data[i].examineStatus=="4"){
-							   	  		inhtml( "已退货");
-							   	  	}else if(data.data[i].examineStatus=="5"){
-							   	  		inhtml( "已退款");
-							   	  	}
-						   	  	}else{
-						   	  		xiaoshi();
-					   	  		}	
-					   	  	}
-					   }else{
-					   	  document.getElementById("whole").innerHTML='<div class="mydd"><img src="../img/mydd.png"/></div>';
-					   }
-					}else if(state==1){
-						if(data.data.length>0){
-					   	  document.getElementById("obligation").innerHTML=template("orderTemp1",data);	
-						}else{
-						  document.getElementById("obligation").innerHTML='<div class="mydd"><img src="../img/mydd.png"/></div>';
-						}
-					}else if(state==2){
-						if(data.data.length>0){
-					   	  document.getElementById("solved").innerHTML=template("orderTemp2",data);	
-						}else{
-						  document.getElementById("solved").innerHTML='<div class="mydd"><img src="../img/mydd.png"/></div>';
-						}
-					}else if(state==5){
-						if(data.data.length>0){
-					   	  document.getElementById("toevaluate").innerHTML=template("orderTemp4",data);	
-						}else{
-						  document.getElementById("toevaluate").innerHTML='<div class="mydd"><img src="../img/mydd.png"/></div>';
-						}
-					}else if(state==6){
-						if(data.data.length>0){
-					   	  document.getElementById("hevaluated").innerHTML=template("orderTemp5",data);	
-						}else{
-						  document.getElementById("hevaluated").innerHTML='<div class="mydd"><img src="../img/mydd.png"/></div>';
-						}
-					}
-//					待付款跳转支付页面
-                        var pay_len=document.getElementsByClassName("pay_btn").length;
-						for(var i=0;i<pay_len;i++){
-							document.getElementsByClassName("pay_btn")[i].addEventListener("tap",function(){
-								var orid=$(this).data("id");
-								 mui.openWindow({
-					               url:"balance01.html",
-					               id:"balance01",
-					               createNew:true,
-					               extras:{
-							        orderid:orid
-							       }
-				       			});
-							})
-						}
-						
-						/*新增 跳转物流信息页面*/
-                        var wl_len=document.getElementsByClassName("wl_btn").length;
-						for(var i=0;i<wl_len;i++){
-							document.getElementsByClassName("wl_btn")[i].addEventListener("tap",function(){
-								var orid=$(this).data("id");
-								 mui.openWindow({
-					               url:"wuliu.html",
-					               id:"wuliu",
-					               createNew:true,
-					               extras:{
-							        orderid:orid,
-							        
-							       }
-				       			});
-							})
-						}
-						
-						/*新增 跳转退款页面*/
-                        var tt_len=document.getElementsByClassName("tt_btn").length;
+			mui.init();
+			mui.plusReady(function() {
+				//自定义窗体事件  doit 要和b页面定义的 事件名称一致   
+				window.addEventListener('shuaxin', function() {
+					mui.toast("发送成功");
+					getdata(0);
+				});
+				//      获取订单列表
+				function getdata(state) {
+					mui.ajax({
+						url: WEB_HOST + "/userCenter/myOrderList",
+						type: "get",
+						async: false,
+						data: {
+							"token": localStorage.getItem("token"),
+							"status": state
+						},
+						dataType: "json",
+						timeout: 1000,
+						success: function(data) {
+							console.log("==============>" + JSON.stringify(data));
+							if(state == 0) {
+								if(data.data.length > 0) {
+									document.getElementById("whole").innerHTML = template("orderTemp0", data);
+								} else {
+									document.getElementById("whole").innerHTML = '<div class="mydd"><img src="../img/mydd.png"/></div>';
+								}
+							} else if(state == 1) {
+								if(data.data.length > 0) {
+									document.getElementById("obligation").innerHTML = template("orderTemp1", data);
+								} else {
+									document.getElementById("obligation").innerHTML = '<div class="mydd"><img src="../img/mydd.png"/></div>';
+								}
+							} else if(state == 2) {
+								if(data.data.length > 0) {
+									document.getElementById("hevaluated").innerHTML = template("orderTemp2", data);
+								} else {
+									document.getElementById("hevaluated").innerHTML = '<div class="mydd"><img src="../img/mydd.png"/></div>';
+								}
+							} else if(state == 3) {
+								if(data.data.length > 0) {
+									document.getElementById("daishouhuo").innerHTML = template("orderTemp3", data);
+								} else {
+									document.getElementById("daishouhuo").innerHTML = '<div class="mydd"><img src="../img/mydd.png"/></div>';
+								}
+							} else if(state == 5) {
+								if(data.data.length > 0) {
+									document.getElementById("toevaluate").innerHTML = template("orderTemp5", data);
+								} else {
+									document.getElementById("toevaluate").innerHTML = '<div class="mydd"><img src="../img/mydd.png"/></div>';
+								}
+							}
 
-						for(var i=0;i<tt_len;i++){
-							document.getElementsByClassName("tt_btn")[i].addEventListener("tap",function(){
-								var orid=$(this).data("id");
-								var returnmoney=$(this).data("returnmoney");
-								var mdid=$(this).data("mdid");
-								var returnid=$(this).data("returnid");
-								 mui.openWindow({
-					               url:"tuikuan.html",
-					               id:"tuikuan",
-					               createNew:true,
-					               extras:{
-							        orderid:orid,
-							        returnmoney:returnmoney,
-							        mdid:mdid,
-							        returnid:returnid
-							       }
-				       			});
-							})
+							//					待付款跳转支付页面
+							var pay_len = document.getElementsByClassName("pay_btn").length;
+							for(var i = 0; i < pay_len; i++) {
+								document.getElementsByClassName("pay_btn")[i].addEventListener("tap", function() {
+									var orid = $(this).data("id");
+									mui.openWindow({
+										url: "balance01.html",
+										id: "balance01",
+										createNew: true,
+										extras: {
+											orderid: orid
+										}
+									});
+								})
+							}
+							//订单详情
+							var li_len = document.getElementsByClassName("item_content").length;
+							for(var i = 0; i < li_len; i++) {
+								document.getElementsByClassName("item_content")[i].addEventListener("tap", function() {
+									var orid = $(this).data("id");
+									var kdf = $(this).data("kdf");
+									var src = $(this).data("src");
+									var dep = $(this).data("dep");
+									var pro = $(this).data("pro");
+									var mpr = $(this).data("mpr");
+									var cre = $(this).data("cre");
+									var kdnames = $(this).data("kdnames");
+                                    var zhuangtai = $(this).data("zhuangtai");
+                                    var lc = $(this).data("lc");
+                                    var tid = $(this).data("tid");
+									var proid = $(this).data("proid");
+                                    var kdname = $(this).data("kdname");
+									var kdid = $(this).data("kdid");
+//									if($(this).data('sta') !== "待付款") {
+										mui.openWindow({
+											url: "dingdanxx.html",
+											id: "dingddangxx",
+											createNew: true,
+											extras: {
+												orderid: orid,
+												proid:proid,
+												src: src,
+												dep: dep,
+												pro: pro,
+												mpr: mpr,
+												kdf: kdf,
+												cre: cre,
+												kdname: kdname,
+												zhuangtai:zhuangtai,
+												kdnames: kdnames,
+                                                tid:tid,
+                                                lc:lc,
+												kdid: kdid
+											}
+										});
+//									}
+								})
+							}
+
+							/*新增 跳转物流信息页面*/
+							var wl_len = document.getElementsByClassName("wl_btn").length;
+							for(var i = 0; i < wl_len; i++) {
+								document.getElementsByClassName("wl_btn")[i].addEventListener("tap", function() {
+									var kdname = $(this).data("kdname");
+									var kdid = $(this).data("kdid");
+									var kdnames = $(this).data("kdnames");
+									var orid = $(this).data("id");
+									mui.openWindow({
+										url: "wuliu.html",
+										id: "wuliu",
+										createNew: true,
+										extras: {
+											orderid: orid,
+											kdname: kdname,
+											kdid: kdid,
+											kdnames: kdnames,
+										}
+									});
+
+
+								})
+							}
+
+							/*新增 跳转退款页面*/
+							var tt_len = document.getElementsByClassName("th_btn").length;
+							for(var i = 0; i < tt_len; i++) {
+								document.getElementsByClassName("th_btn")[i].addEventListener("tap", function() {
+									var orid = $(this).data("id");
+									var returnmoney = $(this).data("returnmoney");
+									var mdid = $(this).data("mdid");
+									var returnid = $(this).data("returnid");
+									var proid = $(this).data("proid");
+									mui.openWindow({
+										url: "tuikuan.html",
+										id: "tuikuan",
+										createNew: true,
+										extras: {
+											orderid: orid,
+											returnmoney: returnmoney,
+											mdid: mdid,
+											returnid: returnid,
+											proid:proid
+										}
+									});
+								})
+							}
+
+							/*商家回显地址*/
+							var tg_len = document.getElementsByClassName("tg_btn").length;
+							for(var i = 0; i < tg_len; i++) {
+								document.getElementsByClassName("tg_btn")[i].addEventListener("tap", function() {
+									var returnid = $(this).data("returnid");
+									mui.openWindow({
+										url: "dizhi.html",
+										id: "dizhi",
+										createNew: true,
+										extras: {
+											returnid: returnid
+										}
+									});
+								})
+							}
+							//						跳转发票信息页面
+							var fp_len = document.getElementsByClassName("fp_btn").length;
+							for(var i = 0; i < fp_len; i++) {
+								document.getElementsByClassName("fp_btn")[i].addEventListener("tap", function() {
+									var orid = $(this).data("id");
+									var fapiao = $(this).data("fapiao");
+									
+									mui.openWindow({
+										url: "invoice-info.html",
+										id: "invoice-info",
+										createNew: true,
+										extras: {
+											orderid: orid,
+											fapiao:fapiao
+										}
+									});
+								})
+							}
+							//						待评价
+							var pj_len = document.getElementsByClassName("pj_btn").length;
+							for(var i = 0; i < pj_len; i++) {
+								document.getElementsByClassName("pj_btn")[i].addEventListener("tap", function() {
+									var orid = $(this).data("id");
+									var spid = $(this).data("proid");
+									var gimg = $(this).data("img");
+									var gname = $(this).data("name");
+									var gprice = $(this).data("price");
+									mui.openWindow({
+										url: "my-evaluate.html",
+										id: "my-evaluate",
+										createNew: true,
+										extras: {
+											orderid: orid,
+											goodsid: spid,
+											goodsimg: gimg,
+											goodsname: gname,
+											goodsprice: gprice
+										}
+									});
+								})
+							}
+							//			删除订单循环
+							var del_len = document.getElementsByClassName("del_btn").length;
+							for(var i = 0; i < del_len; i++) {
+								document.getElementsByClassName("del_btn")[i].addEventListener("tap", function() {
+									var itemid = $(this).data("id");
+									var btnArray = ['是', '否'];
+									mui.confirm("是否删除该订单", function(e) {
+										if(e.index == 0) {
+											del_data(itemid);
+											$("#del" + itemid).parent().parent().remove();
+										}
+									})
+
+								})
+							}
+							//			确认收货循环
+							var confrim_len = document.getElementsByClassName("confrim_btn").length;
+							for(var i = 0; i < confrim_len; i++) {
+								document.getElementsByClassName("confrim_btn")[i].addEventListener("tap", function() {
+									var itemid = $(this).data("id");
+									var btnArray = ['是', '否'];
+									mui.confirm("是否确认收货", function(e) {
+										if(e.index == 0) {
+											confirm_data(itemid);
+											//								 $("con"+itemid).parent().parent().remove();
+											window.location.reload();
+										}
+									})
+
+								})
+							}
+						},
+						error: function(a,b,c) {
+							console.log(c);
+							mui.toast("服务器未响应，请稍后重试");
 						}
-						
-						/*商家回显地址*/
-                        var tg_len=document.getElementsByClassName("tg_btn").length;
-						for(var i=0;i<tg_len;i++){
-							document.getElementsByClassName("tg_btn")[i].addEventListener("tap",function(){
-								var returnid=$(this).data("returnid");
-								 mui.openWindow({
-					               url:"dizhi.html",
-					               id:"dizhi",
-					               createNew:true,
-					               extras:{
-							        returnid:returnid
-							       }
-				       			});
-							})
-						}
-						
-						
-//						跳转发票信息页面
-						var fp_len=document.getElementsByClassName("fp_btn").length;
-						for(var i=0;i<fp_len;i++){
-							document.getElementsByClassName("fp_btn")[i].addEventListener("tap",function(){
-								var orid=$(this).data("id");
-								 mui.openWindow({
-					               url:"invoice-info.html",
-					               id:"invoice-info",
-					               createNew:true,
-					               extras:{
-							        orderid:orid
-							       }
-				       			});
-							})
-						}
-//						待评价
-                        var pj_len=document.getElementsByClassName("pj_btn").length;
-						for(var i=0;i<pj_len;i++){
-							document.getElementsByClassName("pj_btn")[i].addEventListener("tap",function(){
-								var orid=$(this).data("id");
-								var spid=$(this).data("proid");
-								var gimg=$(this).data("img");
-								var gname=$(this).data("name");
-								var gprice=$(this).data("price");
-								 mui.openWindow({
-						         url:"my-evaluate.html",
-						         id:"my-evaluate",
-						         createNew:true,
-						         extras:{
-							        orderid:orid,
-							        goodsid:spid,
-							        goodsimg:gimg,
-							        goodsname:gname,
-							        goodsprice:gprice
-							       }
-								});
-							})
-						}
-					//			删除订单循环
-					var del_len=document.getElementsByClassName("del_btn").length;
-					for(var i=0;i<del_len;i++){
-						document.getElementsByClassName("del_btn")[i].addEventListener("tap",function(){
-							var itemid=$(this).data("id");
-							var btnArray = ['是', '否'];
-							mui.confirm("是否删除该订单", function(e) {
-								if (e.index == 0) {
-								 del_data(itemid);
-								 $("#del"+itemid).parent().parent().remove();
-								}
-							})
-							
-						})
-					}
-					//			确认收货循环
-		            var confrim_len=document.getElementsByClassName("confrim_btn").length;
-					for(var i=0;i<confrim_len;i++){
-						document.getElementsByClassName("confrim_btn")[i].addEventListener("tap",function(){
-							 var itemid=$(this).data("id");
-							var btnArray = ['是', '否'];
-							mui.confirm("是否确认收货", function(e) {
-								if (e.index == 0) {
-								 confirm_data(itemid);
-//								 $("con"+itemid).parent().parent().remove();
-								  window.location.reload();
-								}
-							})
-							 
-						})
-					}
-				},error:function(a){
-					mui.toast("服务器未响应，请稍后重试");
+					});
 				}
-		    });
-        }
-        getdata(0);
-        //不同状态穿不同的值
-        var ortablen=document.getElementsByClassName("ortab").length;
-			for(var i=0;i<ortablen;i++){
-				document.getElementsByClassName("ortab")[i].addEventListener("tap",function(){
-					 var state=$(this).data("id");
-					  getdata(state);
-				})
-			}			
-//			删除订单
-		function del_data(id){
-			mui.ajax({
-				url: WEB_HOST+"/userCenter/delOrder",
-				type: "get",
-				async: false,
-				data:{
-					"token":localStorage.getItem("token"),
-					"orderId":id
-				},
-				dataType: "json",
-				timeout: 1000,
-				success: function(data) {
-					mui.toast(data.message);
+				getdata(0);
+				//不同状态穿不同的值
+				var ortablen = document.getElementsByClassName("ortab").length;
+				for(var i = 0; i < ortablen; i++) {
+					document.getElementsByClassName("ortab")[i].addEventListener("tap", function() {
+						var state = $(this).data("id");
+						getdata(state);
+					})
 				}
-			});
-		}
-//		确认收货
-        function confirm_data(id){
-			mui.ajax({
-				url: WEB_HOST+"/userCenter/confirmSh",
-				type: "get",
-				async: false,
-				data:{
-					"token":localStorage.getItem("token"),
-					"orderid":id
-				},
-				dataType: "json",
-				timeout: 1000,
-				success: function(data) {
-					mui.toast(data.message);
+				//			删除订单
+				function del_data(id) {
+					mui.ajax({
+						url: WEB_HOST + "/userCenter/delOrder",
+						type: "get",
+						async: false,
+						data: {
+							"token": localStorage.getItem("token"),
+							"orderId": id
+						},
+						dataType: "json",
+						timeout: 1000,
+						success: function(data) {
+							mui.toast(data.message);
+							getdata(0);
+						}
+					});
 				}
-			});
-		}
-//var clz_len=document.getElementsByClassName("clz_item").length;
-//for(var i=0;i<clz_len;i++){
-//	document.getElementsByClassName("clz_item")[i].addEventListener("tap",function(){
-//		var orid=$(this).data("id");
-//		var spid=$(this).data("proid");
-//		 mui.openWindow({
-//         url:"my-evaluate.html",
-//         id:"my-evaluate",
-//         createNew:true,
-//         extras:{
-//	        orderid:orid,
-//	        goodsid:spid
-//	       }
-//		});
-//	})
-//}
-//console.log("token"+localStorage.getItem("token"));
+				//		确认收货
+				function confirm_data(id) {
+					mui.ajax({
+						url: WEB_HOST + "/userCenter/confirmSh",
+						type: "get",
+						async: false,
+						data: {
+							"token": localStorage.getItem("token"),
+							"orderid": id
+						},
+						dataType: "json",
+						timeout: 1000,
+						success: function(data) {
+							mui.toast(data.message);
+
+						}
+					});
+				}
+				//var clz_len=document.getElementsByClassName("clz_item").length;
+				//for(var i=0;i<clz_len;i++){
+				//	document.getElementsByClassName("clz_item")[i].addEventListener("tap",function(){
+				//		var orid=$(this).data("id");
+				//		var spid=$(this).data("proid");
+				//		 mui.openWindow({
+				//         url:"my-evaluate.html",
+				//         id:"my-evaluate",
+				//         createNew:true,
+				//         extras:{
+				//	        orderid:orid,
+				//	        goodsid:spid
+				//	       }
+				//		});
+				//	})
+				//}
+				//console.log("token"+localStorage.getItem("token"));
+
+			})
 		</script>
 	</body>
 

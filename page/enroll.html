@@ -42,11 +42,12 @@
 			    document.getElementById("queren").addEventListener("tap",function(){
 				   mui.ajax({
 						url: WEB_HOST+"/activity/bmActivity", 
-						type: "get",
+						type: "post",
 						async: false,
 						data: {
 							"token":localStorage.getItem("token"),
-							"hdid":hdid	
+							"hdid":hdid,
+							"status":1
 						},
 						dataType: "json",
 						timeout: 1000,

@@ -10,6 +10,11 @@
 			input[type="text"]{
 				text-indent: 0px;				
 			}
+			p>em{
+				color: black;
+				font-style: normal;
+				padding-left: 10px;
+			}
 		</style>
 	</head>
 
@@ -24,24 +29,36 @@
 				
 			</div>
 			<script type="text/html" id="moban">
-			 	<p>收货人</p>
-			    <input type="text" readonly="readonly" name="" id="" value="{{data.returnPerson}}" />
-			    <p>收货人电话</p>
-			    <input type="text" readonly="readonly" name="" id="" value="{{data.returnPhone}}" />
-			    <p>邮政编码</p>
-			    <input type="text" readonly="readonly" name="" id="" value="{{data.returnCode}}" />
-			    <p>收货地址</p>
-			    <input type="text" readonly="readonly" name="" id="" value="{{data.returnAddr}}" />
+				<ul class="mui-table-view" id="" >
+				
+				<p>扣除费用<em>{{data.returnPostage}}</em></p>
+				<p>扣除费用说明<em>{{data.returnText}}</em></p>
+				
+			 	<p>收货人<em>{{data.returnPerson}}</em></p>
+			    <p>收货人电话<em>{{data.returnPhone}}</em></p>
+			    <p>邮政编码<em>{{data.returnCode}}</em></p>
+			    <p>收货地址<em>{{data.returnAddr}}</em></p>
+			    </ul>
+			    <p>请选择:退货物品是否寄出</p>
+				<select id="jichu">
+					<option value="">请选择</option>
+					<option value="0">未寄出</option>
+					<option value="1">已寄出</option>
+				</select>
+				
+				<p>请选择:快递公司</p>
+				<select id="kuaidi">
+					<option value="">请选择</option>
+				</select>
+				<p>快递单号</p>
+				<input type="text"  id="kddh" value="" placeholder="请填写快递单号"/>
 			</script>
-			<p>退货物品是否寄出</p>
-			<select id="jichu">
-				<option value="0">没有</option>
-				<option value="1">已经寄出</option>
-			</select>
 		   </div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/template.js"></script>
 		<script src="../js/request.js"></script>
+		<script src="../js/jquery-1.11.3.js"></script>
+		
 		
 		<script type="text/javascript">
 			var returnid;
@@ -55,7 +72,7 @@
 				mui.ajax({
 					url: WEB_HOST+'/userCenter/returnSuccess',
 					type: "post",
-					async: true,
+					async: false,
 					data:{
 						"token":localStorage.getItem("token"),
 						"returnId":returnid
@@ -63,58 +80,62 @@
 					dataType: "json",
 					timeout: 1000,
 					success: function(data) {
+						console.log(JSON.stringify(data))
 						if(data.status == "0"){
 							document.querySelector("#xinxi").innerHTML = template("moban",data);
+							console.log(JSON.stringify(data.data2));
+							for(var i=0;i<data.data2.length;i++){
+								$('#kuaidi').append('<option value="'+data.data2[i][1]+'">'+data.data2[i][2]+'</option>');
+							}
 						}
 					},
 					error:function(xhr,type,errorThrown){
 						console.log(errorThrown);
 					}
 				});
-				
-				
-				
-				
-				
-			   
 				//点击发送后 提交 用户ID，商品ID，退款原因， 退款金额
 				fs_btn.addEventListener("tap",function(){
-					zhifu();
-					if(refunds == 1){
-						console.log("往后台发数据");
-						
-						mui.ajax({
-							url:WEB_HOST+'/userCenter/returnUGoods',
-							data:{
-								"token":localStorage.getItem("token"),//用户令牌
-								"returnId":returnid
-							},
-							dataType:'json',//服务器返回json格式数据
-							type:'post',//HTTP请求类型
-							timeout:10000,//超时时间设置为10秒；
-							success:function(data){
-		                            var detailPage = mui.preload({url:'order.html',id:'order'});
-									mui.fire(detailPage,'shuaxin');
-									mui.openWindow({id:'order'});
-//		                            mui.toast("发送成功")
-							},
-							error:function(xhr,type,errorThrown){
-									console.log(xhr);
-		                            mui.toast("失败")
-									
-							}
-						});
+					var tui = zhifu("jichu");
+					var gongsi = zhifu("kuaidi")
+					if($("kddh").val()==""||gongsi==""||tui==""){
+						mui.toast("请检查是否有漏填");
 					}else{
-						console.log("不发数据");
+						if(tui == 1){
+							console.log("往后台发数据");
+							mui.ajax({
+								url:WEB_HOST+'/userCenter/returnUGoods',
+								data:{
+									"token":localStorage.getItem("token"),//用户令牌
+									"returnId":returnid,
+									"expressCompany":gongsi,
+									"expressNumber":$("#kddh").val(),
+								},
+								async: false,
+								dataType:'json',//服务器返回json格式数据
+								type:'post',//HTTP请求类型
+								timeout:10000,//超时时间设置为10秒；
+								success:function(data){
+			                            var detailPage = mui.preload({url:'order.html',id:'order'});
+										mui.fire(detailPage,'shuaxin');
+										mui.openWindow({id:'order'});
+								},
+								error:function(xhr,type,errorThrown){
+										console.log(xhr);
+			                            mui.toast("失败")
+								}
+							});
+						}else{
+						mui.back();
+						mui.toast("请确认发送物品后，点击发送");
+						}
 					}
 				})
 			})
-			function zhifu(){
-				var obj = document.getElementById("jichu"); //定位id
+			function zhifu(el){
+				var obj = document.getElementById(el); //定位id
 			    var index = obj.selectedIndex; // 选中索引
-				refunds = obj.options[index].value; // 选中值
+				return obj.options[index].value; // 选中值
 			}
-			zhifu();
 		</script>
 	</body>
 

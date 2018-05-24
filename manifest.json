@@ -1,9 +1,9 @@
 {
 	"@platforms": ["android", "iPhone", "iPad"],
 	"id": "H5867D37A",/*应用的标识，创建应用时自动生成，勿手动修改*/
-	"name": "文旅大联盟",/*应用名称，程序桌面图标名称*/
+	"name": "文旅秀",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "1.0.0",/*应用版本名称*/
+		"name": "1.0.4",/*应用版本名称*/
 		"code": "83"
 	},
 	"description": "",/*应用描述信息*/
@@ -71,7 +71,7 @@
 				"keystore": "",/*Android应用打包使用的密钥库文件*/
 				"password": "",/*Android应用打包使用密钥库中证书的密码*/
 				"aliasname": "",/*Android应用打包使用密钥库中证书的别名*/
-				"permissions": ["<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.SEND_SMS\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>","<uses-feature android:name=\"android.hardware.camera.autofocus\"/>","<uses-feature android:name=\"android.hardware.camera\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.WRITE_SMS\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.CAMERA\"/>","<uses-permission android:name=\"android.permission.READ_SMS\"/>"]
+				"permissions": ["<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>","<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.SEND_SMS\"/>","<uses-permission android:name=\"android.permission.INTERNET\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>","<uses-feature android:name=\"android.hardware.camera.autofocus\"/>","<uses-feature android:name=\"android.hardware.camera\"/>","<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.WRITE_SMS\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.READ_SMS\"/>","<uses-permission android:name=\"android.permission.CAMERA\"/>"]
 			},
 			"orientation": ["portrait-primary"],/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
 			"icons": {
@@ -135,7 +135,7 @@
 					"xxhdpi": "img/zsyindex.png"
 				}
 			}
-		},"ads":{"rp":false,"splash":false,"push":false},"adid":""
+		},"ads":{"rp":false,"splash":false,"push":false}
 	},
 	"dependencies": {
 		"pages": {
@@ -309,7 +309,8 @@
 					"page/bzkx-info.html",
 					"page/activity-info.html",
 					"page/server-info.html",
-					"page/serve1.html"
+					"page/serve1.html",
+					"page/login.html"
 				],
 				"priority": 0
 			},
@@ -394,7 +395,9 @@
 					"page/registration-activities.html",
 					"page/login-mode.html",
 					"page/address.html",
-					"page/main.html"
+					"page/main.html",
+					"page/login.html",
+					"page/lianxiren.html"
 				],
 				"priority": 0
 			},
@@ -441,7 +444,8 @@
 				],
 				"refer": [
 					"page/activity-info.html",
-					"page/search.html"
+					"page/search.html",
+					"page/login.html"
 				],
 				"priority": 0
 			},
@@ -485,7 +489,8 @@
 					"page/apply-vip.html",
 					"page/dynamic-login.html",
 					"page/register.html",
-					"page/forgot-password.html"
+					"page/forgot-password.html",
+					"page/activity-info.html"
 				],
 				"priority": 0
 			},
@@ -576,7 +581,13 @@
 				"refer": [
 					"page/evaluate.html",
 					"page/enroll.html",
-					"page/hdpj.html"
+					"page/hdpj.html",
+					"page/login-mode.html",
+					"page/registration-activities.html",
+					"page/activity.html",
+					"page/login.html",
+					"page/lianxiren.html",
+					"page/add_lianxiren.html"
 				],
 				"priority": 0
 			},
@@ -659,7 +670,10 @@
 					"page/invoice-zzs.html",
 					"page/tuikuan.html",
 					"page/wuliu.html",
-					"page/dizhi.html"
+					"page/dizhi.html",
+					"page/xiangqing.html",
+					"page/login.html",
+					"page/dingdanxx.html"
 				],
 				"priority": 0
 			},
@@ -735,7 +749,9 @@
 					"js/template.js"
 				],
 				"refer": [
-					"page/server-info.html"
+					"page/server-info.html",
+					"page/activity-info.html",
+					"page/search-jieguo.html"
 				],
 				"priority": 0
 			},
@@ -800,7 +816,11 @@
 					"fonts/mui.ttf",
 					"js/request.js"
 				],
-				"refer": [],
+				"refer": [
+					"page/usercenter.html",
+					"page/login.html",
+					"page/main.html"
+				],
 				"priority": 0
 			},
 			"page/nearby-store.html": {
@@ -860,7 +880,9 @@
 					"img/hearbg@3X.png",
 					"fonts/mui-icons-extra.ttf"
 				],
-				"refer": [],
+				"refer": [
+					"page/login.html"
+				],
 				"priority": 0
 			},
 			"page/evaluate.html": {
@@ -926,7 +948,8 @@
 					"js/request.js"
 				],
 				"refer": [
-					"page/activity-info.html"
+					"page/activity-info.html",
+					"page/login.html"
 				],
 				"priority": 0
 			},
@@ -1001,7 +1024,8 @@
 					"page/balance01.html",
 					"page/balance02.html",
 					"page/login.html",
-					"page/login-mode.html"
+					"page/login-mode.html",
+					"page/main.html"
 				],
 				"priority": 0
 			},
@@ -1029,7 +1053,8 @@
 				],
 				"refer": [
 					"page/order.html",
-					"page/add_address.html"
+					"page/add_address.html",
+					"page/login.html"
 				],
 				"priority": 0
 			},
@@ -1045,7 +1070,8 @@
 					"fonts/mui.ttf"
 				],
 				"refer": [
-					"page/add_address.html"
+					"page/add_address.html",
+					"page/login.html"
 				],
 				"priority": 0
 			},
@@ -1102,9 +1128,49 @@
 			},
 			"page/wuliu.html": {
 				"resources": [
-					"img/wuliu_bottom.svg"
+					"img/wuliu_bottom.svg",
+					"page/wuliutab.html"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"page/xiangqing.html": {
+				"resources": [
+					"page/tuikuan.html"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"page/dingdanxx.html": {
+				"resources": [
+					"page/xiangqing.html",
+					"page/dingdanxxtab.html"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"page/search-jieguo.html": {
+				"resources": [],
+				"refer": [
+					"page/server-info.html"
+				],
+				"priority": 0
+			},
+			"page/dingdanxxtab.html": {
+				"resources": [],
+				"refer": [
+					"page/server-info.html"
+				],
+				"priority": 0
+			},
+			"page/lianxiren.html": {
+				"resources": [],
+				"refer": [
+					"page/add_address.html",
+					"page/add_lianxiren.html",
+					"page/activity.html",
+					"page/login.html"
+				],
 				"priority": 0
 			}
 		},

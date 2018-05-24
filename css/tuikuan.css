@@ -2,7 +2,7 @@
 	padding-left:5px;
 	padding-right: 5px;
 }
-#fasong{
+.fasong{
 	font-size: 14px;
 	height: 25px;
 	line-height: 15px;	
@@ -17,20 +17,6 @@ p{
 .jine{
 	position: relative;
 	top: 6px;
-}
-.jine span{
-	color: red;
-}
-.jine:after{
-	position: absolute;
-	left: 5px;
-	top: 33px;
-	content: "";
-	display: block;
-	width: 25px;
-	height: 25px;
-	background: url(../img/qian.svg);
-	background-size: 100%;
 }
 input{
 	text-indent: 20px;

@@ -6,6 +6,11 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link href="../css/app.css" rel="stylesheet" />
+		<style type="text/css">
+			.goods_info [name="checkbox"]{
+				visibility: hidden;
+			}
+		</style>
 	</head>
 
 	<body id="buyCar">
@@ -68,7 +73,7 @@
 				</div>
 				<div class="goods_info">
 					<div class="mui-input-row mui-checkbox mui-left fl">
-		                <input name="checkbox" class="listCheckBox listCheck{{value.id}}" data-num="{{value.id}}" value="Item{{value.id}}" type="checkbox">
+		                <input name="checkbox"  class="listCheckBox listCheck{{value.id}}" data-num="{{value.id}}" value="Item{{value.id}}" type="checkbox">
 		            </div>
 					<div class="goods_img fl">
 						<img src="{{value.PICPATH}}" />
@@ -119,8 +124,8 @@
 	<script src="../js/mui.min.js"></script>
 	<script src="../js/sub.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
+		var hezi=0;
 //			购物车列表渲染js
-//console.log(WEB_HOST+"/index/myShopcartMobile?token="+localStorage.getItem("token"));
         mui.ajax({
 				url:WEB_HOST+"/index/myShopcartMobile",
 				type: "get",
@@ -131,31 +136,27 @@
 				dataType: "json",
 				timeout: 1000,
 				success: function(data) {
-					console.log("购物车"+JSON.stringify(data));
 					document.getElementById("buyCar_list").innerHTML=template("buyCartemp",data);
 				}
 		});
         mui.init();
-//       document.getElementById("jiesuan").addEventListener('tap',function(){
-//	           mui.openWindow({
-//	               url:"balance.html",
-//	               id:"balance"
-//	   			});
-//	      });
         (function (m) {
         	var proids;
-//          function deldata(){
         		//					删除商品
                 var del_len=document.getElementsByClassName("del").length;
                 for(var i=0;i<del_len;i++){
                 	document.getElementsByClassName("del")[i].addEventListener("tap",function(){
                 		var proid=$(this).data("id");
-                		var flag=$(this).parent().siblings().find(".listCheckBox").is(':checked');
-                		if(flag){
+                		
+//              		var flag=$(this).parent().siblings().find(".listCheckBox").is(':checked');
+//              		if(flag){
+	
                 			var btnArray = ['是', '否'];
 							mui.confirm("是否删除该商品", function(e) {
 								if (e.index == 0) {
+									$("#goods"+proid).siblings("input:checkbox").checkbox = "false";
 									$("#goods"+proid).parents(".buy_item").remove();
+									many()
 			              		    mui.ajax({
 											url:WEB_HOST+"/index/deleteShopCartMobile",
 											type: "get",
@@ -172,12 +173,13 @@
 									});
 								}
 							})	
-                		}else{
-                			mui.toast("请先选中商品");
-                		}
+							
+//              		}else{
+//              			mui.toast("请先选中商品");
+//              		}
+
                 	})
                 }
-//          }
         	//	          将对应id存入数组就可以根据id计算价格总和
 	        	var arrprice=new Array();
 	        	var arr=new Array();
@@ -271,7 +273,7 @@
 		        	sum=count[i]*price[i]*10000/10000;
 //		        	console.log("单个总价"+sum);
 	        		$(".sumprice").eq(i).val(sum.toFixed(2));
-	        		console.log("单个总价de"+$(".sumprice").eq(i).val())
+//	        		console.log("单个总价de"+$(".sumprice").eq(i).val())
 	        		//是否取消选中状态后的价格
 		        }
 	        }
@@ -285,9 +287,13 @@
 		        		gid[i]=$("#count"+idnum).data("gid");
 	//		        	   根据id获取相应的价格
 		        	    idprice=$("#sumprice"+idnum).val();
-		        	    console.log("根据id获取的相应价格"+idprice)
+		        	    if(idprice == undefined || idprice==null){
+		        	    	idprice = 0;
+		        	    }
+//	        	    	console.log("根据id获取的相应价格"+idprice)
+//		        	    console.log("total======>"+total);
+//		        	    console.log("总价"+total.toFixed(2));
 		        	    total+=parseFloat(idprice);
-		        	    console.log("总价"+total.toFixed(2));
 		            }
 			        sumprice=total;
 			         document.getElementById("total").innerHTML=total.toFixed(2);

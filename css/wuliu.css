@@ -5,6 +5,7 @@
 }
 
 .dingdan{
+	margin-top: 5px;
 	padding: 10px 15px;
 	width: 100%;
 	background: white;
@@ -59,7 +60,7 @@ li:after{
 .last_div{
 	margin-left: 60px;
 	min-height: 50px;
-	padding-top: 10px;
+	padding: 10px 0 40px;
 }
 li:before{
 	position: absolute;
@@ -78,4 +79,5 @@ li:before{
 .content_p{
 	font-size: 12px;
 	margin-left: 10px;
+	/*line-height: 12px;*/
 }

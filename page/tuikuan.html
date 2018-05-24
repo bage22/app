@@ -7,89 +7,169 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../css/tuikuan.css"/>
+		<style type="text/css">
+			.no{
+				display: none;
+			}
+		</style>
 	</head>
 
 	<body id="tuikuan">
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left color_f"></a>
 			<h1 class="mui-title color_f">退款</h1>
-			<button id="fasong" type="button" class="mui-btn mui-btn-blue mui-pull-right">发送</button>
+			<button id="fasong" type="button" class="fasong mui-btn mui-btn-blue mui-pull-right">发送</button>
 		</header>
+		
 		<div class="mui-content content" >
-			<p class="jine">退款金额：（<span>扣除运费后的金额</span>）</p>
-		    <input type="number" disabled="disabled" id="qianshu" />
+			<p class="jine no">退货时扣除<span id="yuanyin1"></span><span id="qian"></span>元</p>
 		    <p>退款原因：</p>
 		    <textarea  id="yuanyin"></textarea>
-		   	<p>可选  微信/支付宝</p>
-		   	<select id="leibie">
-			  <option value ="2">微信</option>
-			  <option value ="1">支付宝</option>
-			</select>
-			<p>退款账户</p>
-			<input type="text" name="" id="zhanghu" value="" />
+			<p>退款卡号</p>
+			<input type="number" id="zhanghu" value="" />
+			<p>退款姓名</p>
+			<input type="text" name="" id="xingming" value="" />
+			<p>退款银行</p>
+			<input type="text" id="yinhang" />
+			<div id="yicang" style="display: none;">
+				<p>审核未通过原因</p>
+				<textarea type="text" readonly="readonly"  value="" id="weitongguo"/></textarea>
+			</div>
+			
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/template.js"></script>
 		<script src="../js/request.js"></script>
+		<script src="../js/bankVar.js"></script>
 		
 		<script type="text/javascript">
-			
-			function $(el){
+			function $(el) {
 				var obj = document.querySelector(el);
 				return obj;
 			}
-			mui.init();
-			var refunds;
-			function zhifu(){
-				var obj = document.getElementById("leibie"); //定位id
-			    var index = obj.selectedIndex; // 选中索引
-				refunds = obj.options[index].value; // 选中值
+mui.init();
+mui.plusReady(function() {
+	var self = plus.webview.currentWebview();
+	mui.ajax({
+		url:WEB_HOST+'/userCenter/returnSProduct',
+		data:{
+			proId:self.proid,
+		},
+		async: false,
+		dataType:'json',//服务器返回json格式数据
+		type:'post',//HTTP请求类型
+		timeout:10000,//超时时间设置为10秒；
+		success:function(data){
+//			console.log(JSON.stringify(data));
+			if(data.mailingExpenses>0){
+				$('.no').style.display = 'block';
+				$('#yuanyin1').innerText = data.mailingText;
+				$('#qian').innerText = data.mailingExpenses;
 			}
-			var refundsAccount = document.querySelector("#zhanghu");
-			var orderid;
-			var mdid;
-			mui.plusReady(function () {
-			    var self = plus.webview.currentWebview();
-			    orderid = self.orderid;
-				mdid = self.mdid;
-				$("#qianshu").value = self.returnmoney
-			
-			var fs_btn = document.querySelector("#fasong");
-			var yy = document.querySelector("#yuanyin");
-			//点击发送后 提交 用户ID，商品ID，退款原因， 退款金额
-			fs_btn.addEventListener("tap",function(){
-				zhifu();
-				if(yy.value !== "" && yy.value!==null && refundsAccount.value !== ""){
-					mui.ajax({
-						url:WEB_HOST+'/userCenter/returnSGoods',
-//						url:"tuikuan.json",
-						data:{
-							"token":localStorage.getItem("token"),//用户令牌
-							"orderid":orderid,//订单ID
-							"refunds":refunds,//支付类型(1.支付宝2.微信)
-							"refundsAccount":zhanghu.value,//账号
-							"mdId":mdid,//门店ID
-							"returnText":yy.value//原因
-						},
-						dataType:'json',//服务器返回json格式数据
-						type:'post',//HTTP请求类型
-						timeout:10000,//超时时间设置为10秒；
-						success:function(data){
-							var detailPage = mui.preload({url:'order.html',id:'order'});
-								mui.fire(detailPage,'shuaxin');
-								mui.openWindow({id:'order'});
-						},
-						error:function(xhr,type,errorThrown){
-							mui.toast("服务器未响应，请稍后重试");
-						}
-					});
-				}else{
-					mui.toast("信息不完整");
+		},
+		error:function(xhr,type,errorThrown){
+			console.log(errorThrown)
+		}
+	});
+		mui.ajax({
+			url:WEB_HOST +"/userCenter/returninfo",
+			data:{
+				"returnId":self.returnid,
+				"token" : localStorage.getItem("token")
+			},
+			async: false,
+			dataType:'json',//服务器返回json格式数据
+			type:'get',//HTTP请求类型
+			timeout:10000,//超时时间设置为10秒；
+			success:function(data){
+//				console.log(JSON.stringify(data));
+				if(data.status2=="1"){
+					document.getElementById("yicang").style.display = "block";
+					
+					$("#weitongguo").value = data.examine_text
+					$("#yuanyin").value = data.return_text
+					$("#xingming").value = data.refunds_name
+					$("#yinhang").value = data.refunds_bank
+					$("#zhanghu").value = data.refunds_account
 				}
-				
-			})
-		})
-		</script>
+			},
+			error:function(xhr,type,errorThrown){
+				console.log(JSON.stringify(errorThrown));
+			}
+		});
+
+	
+	$("#zhanghu").addEventListener('blur', function() {
+		chaxun();
+	})
+
+	//点击发送后 提交 用户ID，商品ID，退款原因， 退款金额
+	$("#fasong").addEventListener("tap", function() {
+		console.log($("#yinhang").value + "==========" + $("#xingming").value+"===="+$("#zhanghu").value+"==="+$("#yuanyin").value);
+		if($("#yuanyin").value !== "" && $("#yinhang").value !== "" &&  $("#xingming").value !== "" &&  $("#zhanghu").value !== "") {
+			mui.ajax({
+				url: WEB_HOST + '/userCenter/returnSGoods',
+				data: {
+					"token": localStorage.getItem("token"), //用户令牌
+					"orderid": self.orderid, //订单ID
+					"returnId": self.returnid,
+					"mdId": self.mdid, //门店ID
+					
+					"refundsBank": $("#yinhang").value, //退款银行
+					"refundsName": $("#xingming").value, //退款姓名
+					"refundsAccount": $("#zhanghu").value, //退款卡号
+					"returnText": $("#yuanyin").value, //原因
+				},
+				async: false,
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					document.getElementById("fasong").style.display = "none";
+					var detailPage = mui.preload({
+						url: 'order.html',
+						id: 'order'
+					});
+					mui.fire(detailPage, 'shuaxin');
+					mui.openWindow({
+						id: 'order'
+					});
+				},
+				error: function(xhr, type, errorThrown) {
+					mui.toast("服务器未响应，请稍后重试");
+				}
+			});
+		} else {
+			mui.toast("信息不完整");
+		}
+	})
+
+	function chaxun() {
+		mui.ajax('https://ccdcapi.alipay.com/validateAndCacheCardInfo.json?_input_charset=utf-8&cardNo=' + zhanghu.value + '&cardBinCheck=true', {
+			dataType: 'json',//服务器返回json格式数据
+			async: false,
+			type: 'get', //HTTP请求类型
+			timeout: 10000, //超时时间设置为10秒；
+			success: function(data) {
+				console.log(JSON.stringify(data));
+				if(data.validated) {
+					if(bank_code[data.bank]) {
+						$("#yinhang").value = bank_code[data.bank];
+					} else {
+						$("#yinhang").placeholder = "没找到,请填写";
+					}
+				} else {
+					mui.toast("银行卡号不对");
+					$("#zhanghu").focus();
+				}
+
+			},
+			error: function(xhr, type, errorThrown) {
+
+			}
+		});
+	}
+})</script>
 	</body>
 
 </html>

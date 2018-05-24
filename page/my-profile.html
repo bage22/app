@@ -27,7 +27,9 @@
 			    padding-right: 70px;
                 box-sizing: border-box;
 			}
-			
+			#nickname{
+				padding-right: 40px;
+			}
 		</style>
 	</head>
 
@@ -59,7 +61,7 @@
 					<a class="" href="javascript:void(0)">
 						<div class="mui-input-row">
 							<label class="sex mui-navigate-right" href="#">性别</label>
-							<select name="select" id="select_sex" >
+							<select style="width:90%;" name="select" id="select_sex" >
 								<option>男</option>
 								<option>女</option>
 							</select>
@@ -71,18 +73,19 @@
 						<div class="mui-input-row" style="position: relative;">
 							<label>生日</label>
 							<input name="birthday" disabled="disabled"  id="birthday" type="text" class="mui-input-clear mui-input" placeholder="">
-						    <span data-options='{"type":"date","beginYear":1900,"endYear":2018}' id="select_bir" style="position: absolute;right: 15px;top: 0px;color: #aaa;">修改</span>
+						    <span data-options='{"type":"date","beginYear":1900,"endYear":2018}' id="select_bir" style="position: absolute;right: 15px;top: 0px;color: #aaa;width: 100%;text-align: right;">修改</span>
 						</div>
 					</a>
 				</li>
 			</ul>            
 		    <div id="save">
-				<button type="button" id="saveprofile" class="mui-btn mui-btn-primary mui-btn-block" id="login">保存资料</button>
+				<button type="button" id="saveprofile" class="mui-btn mui-btn-primary mui-btn-block">保存资料</button>
 			</div>
 		</div>
 		<script src="../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/tokenyanzheng.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.picker.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.dtpicker.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/uploadImg.js" type="text/javascript" charset="utf-8"></script>
@@ -111,7 +114,6 @@
 							 */
 //							$("#birthday").val(rs.text);
                             document.getElementById("birthday").value=rs.text;
-//                          document.getElementById("select_bir").innerHTML="";
 							/* 
 							 * 返回 false 可以阻止选择框的关闭
 							 * return false;
@@ -181,15 +183,18 @@
 						dataType: "json",
 						timeout: 1000,
 						success: function(data) {
-			                mui.toast(data.message);
-//			                var wobj = plus.webview.getWebviewById("main");//注意 HBuilder 是   1.html 的 ID  你如果1.html 有ID   要替换掉HBuilder，  
-//			                wobj.reload(true); 
-                        //  返回上级页面并传参
-                            mui.fire(view,'doit',{   
-			                    avatar:$("#avatar").attr("src"),
-			                    nickname:$("#nickname").val()
-			                });   
-			                mui.back();   
+							console.log(JSON.stringify(data));
+							console.log( $("#nickname").val())
+                            mui.toast(data.message);
+							    // 获取目标口窗口对象
+							    var target = plus.webview.getWebviewById('usercenter');
+							    // 执行相应的事件
+							    mui.fire(target, 'customEvent', {});
+							    mui.back();
+							    
+//							    var detailPage = mui.preload({url:'usercenter.html',id:'usercenter'});
+//								mui.fire(detailPage,'customEvent');
+//								mui.openWindow({url:'usercenter.html'});
 						},error:function(a){
 							mui.toast("服务器未响应，请稍后重试");
 						}

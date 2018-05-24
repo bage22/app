@@ -45,9 +45,7 @@
 		    mui.plusReady(function(){
 			    var self = plus.webview.currentWebview(); 
 			    var listid = self.listid;//获得参数
-//			    mui.toast(listid);
-			    			//热门活动列表接口
-			   mui.ajax({
+			    mui.ajax({
 					url: WEB_HOST+"/index/newsdetail", 
 					type: "get",
 					async: false,
@@ -58,11 +56,14 @@
 					dataType: "json", 
 					timeout: 1000,
 					success: function(data) {
-//						mui.toast(JSON.stringify(data));
-						$(".kx_head h4").html(data.data.title);
-						$(".gly").html("发布人："+data.data.publisher);
-						$(".kx_time").html(data.data.published_at);
-						$(".kx_content p").html(data.data.content);
+						console.log(JSON.stringify(data));
+						if(data.message === "请求成功!"){
+							$(".kx_head h4").html(data.data.title);
+							$(".gly").html("发布人："+data.data.publisher);
+							$(".kx_time").html(data.data.published_at.slice(0,10));//只显示 年月日
+							$(".kx_content p").html(data.data.content);
+						}
+						
 					},
 					error:function(a){
 						mui.toast("服务器未响应，请稍后重试");

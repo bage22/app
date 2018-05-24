@@ -5,6 +5,9 @@ html,body{
 	background:url(../img/hearbg@3X.png) no-repeat;
 	background-size: 100% 100%;
 }
+table{
+	width: 100% !important;
+}
 .color_f{
 	color: #fff;
 }
@@ -54,7 +57,9 @@ margin-right: 20px;
 	margin-bottom: 50px;
 }
 .borbottom1{
-	border-bottom: 1px solid #ddd;
+	/*border-bottom: 1px solid #ddd;*/
+	border-top: 1px solid #ddd;
+	
 }
 .color_red{
 	color: red;
@@ -386,6 +391,8 @@ font-size: 14px;
 .hot_activity_info{
  background: #fff;
  padding: 6px 10px;
+ overflow: hidden;
+ margin-bottom: 10px;
 }
 .hot_activity_info .biaoqian{
 overflow: hidden;
@@ -480,6 +487,7 @@ overflow: hidden;
 background: #fff;
 font-size: 14px;
 border-bottom: 1px solid #ddd;
+width: 100%;
 }
 .travel_agency_name span img{
   width: 50px;
@@ -755,7 +763,7 @@ color: #000;
 float: left;
 font-size: 14px;
 margin-top: 3px;
-width: 40%;
+/*width: 40%;*/
 }
 .user_names span{
 margin-top: 4px;
@@ -763,8 +771,8 @@ margin-top: 4px;
 .hy{
     display: block;
     border: 1px solid #000;
-    /* width: 56px; */
-    width: 60px;
+    max-width: 56px; 
+    overflow: hidden;
     text-align: center;
     line-height: 16px;
     border-radius: 4px;
@@ -772,8 +780,7 @@ margin-top: 4px;
 }
 .user_jf{
 width: 30%;
-margin-top: 3px;
-float: left;
+margin: 0 auto;
 text-align: center;
 color: #fff;
 font-size: 12px;
@@ -1401,12 +1408,12 @@ p.prodetail{
 	height: 0px;
 }
 .profiles .mui-input-row label {
-    width: 25%;
+    width: 10%;
     padding: 11px 0px; 
 }
 .profiles .mui-input-row label~input{
     float: right;
-    width: 70%;
+    width: 90%;
     margin-bottom: 0;
     padding-left: 0;
     border: 0;
@@ -2267,4 +2274,11 @@ overflow: hidden;
 
 #invoice_info .zengzhi{
 	display: none;
+}
+
+#gao{
+	height: 320px;
+}
+#homemenu .menuli{
+	width: 20%;
 }

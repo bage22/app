@@ -79,7 +79,6 @@
                 swipeBack:true //启用右滑关闭功能  
             });  
             
-
         mui.plusReady(function() {
         	mui.ajax({
 				url: WEB_HOST+"/userCenter/myShipAdr", 
@@ -136,7 +135,7 @@
        			});
        		})
 //          购物车订单提交
-            document.getElementById("zhifu").addEventListener("tap",function(){
+            $("#zhifu").bind("click",function(){
             	var val=$('input:radio:checked').val();
             	if(val==null){
 	               mui.toast("请选择一个收货地址");
@@ -155,14 +154,17 @@
 						},
 						dataType: "json",
 						timeout: 1000,
-						success: function(data) {		
-		                    console.log(JSON.stringify(data));
+						success: function(data) {
 		                    mui.toast(data.message);
+		                    $('#zhifu').css({'display':'none'});
 	                        mui.openWindow({
 				               url:"order.html",
 				               id:"order",
 				               createNew:true
 			       			});
+			       			
+//			       			var ws=plus.webview.currentWebview();
+//							plus.webview.close(ws);
 						},
 					    error:function(a){
 							mui.toast("服务器未响应，请稍后重试");

@@ -17,7 +17,7 @@
 			</h1>
 		</header>	
 		<div class="mui-content">
-		     <div class="tw_list" style="padding:0px 10px;">
+		     <div class="tw_list">
 		     	<ul class="mui-table-view" style="background: transparent;" id="bmlist">
 	
 				</ul>
@@ -33,6 +33,7 @@
 					<div class="mui-media-body">
 						<span class="list_tit">{{value.title}}</span>
 						<p class="mui-ellipsis">{{value.published_at}}</p>
+						<p style="padding-top: 15px;">{{value.bmdate}}</p>
 					</div>
 					<!--{{if value.star=="0"}}
 					<span class="mui-icon-extra mui-icon-extra-heart-filled"></span>
@@ -48,8 +49,10 @@
 		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/template.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.min.js"></script>
+		<script src="../js/tokenyanzheng.js"></script>
 		<script src="../js/sub.js" type="text/javascript" charset="utf-8"></script>
 		<script>
+			
 //			列表渲染js
                 mui.ajax({
 						url: WEB_HOST+"/index/myhdlist", 
@@ -58,12 +61,13 @@
 						data:{"token":localStorage.getItem("token")},
 						dataType: "json",
 						timeout: 1000,
+						async: false,
 						success: function(data) {
-//							alert(JSON.stringify(data));
-                            if(data.data.length>0){
+							console.log(JSON.stringify(data));
+                            if(data.status == "0"){
 							   document.getElementById("bmlist").innerHTML=template("activitys",data);
 							}else{
-							   document.getElementById("bmlist").innerHTML="<li>没有相关数据</li>";	
+								document.getElementById("bmlist").innerHTML='<img src="../img/mydd.png"/ style="width: 170px;display: block;margin: 100px auto;">';	
 							}
 						},error:function(a){
 							mui.toast("服务器未响应，请稍后重试");

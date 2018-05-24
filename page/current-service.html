@@ -6,8 +6,8 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css" />
+		<link rel="stylesheet" type="text/css" href="../css/app.css" />
 	</head>
 
 	<body id="serve">
@@ -16,12 +16,13 @@
 			<h1 class="mui-title color_f">
 				当前服务
 			</h1>
-		</header>	
+		</header>
 		<div class="mui-content">
 			<div class="tab_item">
 				<div id="quanbu">
 					<ul class="mui-table-view mui-grid-view" id="dqfw_list">
-					    <!--<li class="mui-table-view-cell mui-media mui-col-xs-6">
+
+						<!--<li class="mui-table-view-cell mui-media mui-col-xs-6">
 					        <div class="bgf pbottom10">
 					        	<a href="javascript:void(0)">
 						            <img class="mui-media-object" src="../img/3ac79f3df8dcd100cab1840b788b4710b9122fee.jpg">
@@ -36,20 +37,20 @@
 					    </li>-->
 					</ul>
 					<script type="text/html" id="dqserve">
-					    {{each data as value i}}
+						{{each data as value i}}
 						<li class="mui-table-view-cell mui-media mui-col-xs-6 fw_item" data-id="{{value.id}}">
-					        <div class="bgf pbottom10">
-					        	<a href="javascript:void(0)">
-						            <img class="mui-media-object" src="{{value.image}}">
-						            <div class="object-info">{{value.title}}</div>
-						            <div class="buy_count borbottom1">
-						            	<span class="fl color_red f16"> &yen;{{value.price}}</span>
-						            	<span class="fr color_b">{{value.people}}人购买</span>
-						            </div>
-						            <div class="user-rating"><span>[用户评价]</span>{{value.comment}}</div>
-						        </a>
-					        </div>
-					    </li>
+							<div class="bgf pbottom10">
+								<a href="javascript:void(0)">
+									<img class="mui-media-object" src="{{value.image}}">
+									<div class="object-info">{{value.title}}</div>
+									<div class="buy_count borbottom1">
+										<span class="fl color_red f16"> &yen;{{value.price}}</span>
+										<span class="fr color_b">{{value.people}}人购买</span>
+									</div>
+									<!--<div class="user-rating"><span>[用户评价]</span>{{value.comment}}</div>-->
+								</a>
+							</div>
+						</li>
 						{{/each}}
 					</script>
 				</div>
@@ -59,41 +60,49 @@
 		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/template.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.min.js"></script>
+		<script src="../js/tokenyanzheng.js"></script>
 		<script src="../js/sub.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-		     		     	//			列表渲染js
-                mui.ajax({
-						url: WEB_HOST+"/index/myservices", 
-						type: "get",
-						async: false,
-						data:{"token":localStorage.getItem("token")},
-						dataType: "json",
-						timeout: 1000,
-						success: function(data) {
-//							mui.toast(JSON.stringify(data));
-                            if(data.data.length>0){
-							   document.getElementById("dqfw_list").innerHTML=template("dqserve",data);
-							}else{
-							   document.getElementById("dqfw_list").innerHTML="<li>没有相关数据</li>";	
-							}
-						},error:function(a){
-							mui.toast("服务器未响应，请稍后重试");
+			mui.init();
+			mui.plusReady(function() {
+				//列表渲染js
+				mui.ajax({
+					url: WEB_HOST + "/index/myservices",
+					type: "get",
+					async: false,
+					data: {
+						"token": localStorage.getItem("token")
+					},
+					dataType: "json",
+					timeout: 1000,
+					success: function(data) {
+						console.log(JSON.stringify(data));
+						if(data.status == "0") {
+							document.getElementById("dqfw_list").innerHTML = template("dqserve", data);
+						} else {
+							document.getElementById("dqfw_list").innerHTML='<img src="../img/mydd.png"/ style="width: 170px;display: block;margin: 100px auto;">';	
 						}
+					},
+					error: function(a) {
+						mui.toast("服务器未响应，请稍后重试");
+					}
 				});
-				var hd_list=document.getElementsByClassName("fw_item").length;
-				for(var i=0;i<hd_list;i++){
-					document.getElementsByClassName("fw_item")[i].addEventListener("tap",function(){
-						var listid=$(this).data("id");
-						 mui.openWindow({
-			               url:"server-info.html",
-			               id:"server-info",
-			               createNew:true,
-			               extras:{
-					        listid:listid
-					        }
-		       			});
+				var hd_list = document.getElementsByClassName("fw_item").length;
+				for(var i = 0; i < hd_list; i++) {
+					document.getElementsByClassName("fw_item")[i].addEventListener("tap", function() {
+						var listid = $(this).data("id");
+						mui.openWindow({
+							url: "server-info.html",
+							id: "server-info",
+							createNew: true,
+							extras: {
+								listid: listid
+							}
+						});
 					})
 				}
+			})
 		</script>
 	</body>
+
 </html>

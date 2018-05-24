@@ -83,6 +83,7 @@
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/mui.picker.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/tokenyanzheng.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 		mui.init({
 			swipeBack:true //启用右滑关闭功能
@@ -94,6 +95,8 @@
                 swipeBack:true //启用右滑关闭功能  
             });  
         mui.plusReady(function() { 
+        	console.log('刚进页面'+localStorage.getItem("shuliang"));
+        	
         	 mui.ajax({
 				url: WEB_HOST+"/userCenter/myShipAdr", 
 				type: "get",
@@ -106,18 +109,23 @@
 				success: function(data) {
 					document.getElementById("address_list").innerHTML=template("addressTemp",data);
 //					设置默认地址radios
-                var radios_len=document.getElementsByClassName("radios").length;
-				for(var i=0;i<radios_len;i++){
-					var chex=$(".radios").eq(i).is(':checked');
-					if(chex){
-						addressid=$(".radios").eq(i).data("id");
-					}
-					document.getElementsByClassName("radios")[i].addEventListener("change",function(){
-						if($(this).is(':checked')) {
-						  addressid=$(this).data("id");
+	                var radios_len=document.getElementsByClassName("radios").length;
+					for(var i=0;i<radios_len;i++){
+						var chex=$(".radios").eq(i).is(':checked');
+						if(chex){
+							addressid=$(".radios").eq(i).data("id");
 						}
-					})
-				}
+						document.getElementsByClassName("radios")[i].addEventListener("change",function(){
+							if($(this).is(':checked')) {
+							  addressid=$(this).data("id");
+							}
+						})
+					}
+					if(localStorage.getItem("shuliang")){
+		        		$('#count').val(localStorage.getItem("shuliang"));
+						localStorage.removeItem("shuliang");
+		        		
+		        	}
 				},error:function(a){
 					mui.toast("服务器未响应，请稍后重试");
 				}
@@ -137,6 +145,7 @@
             	document.getElementsByClassName("sumprice")[0].innerHTML=moneyall.toFixed(2);
             })
             document.getElementById("address").addEventListener("tap",function(){
+            	localStorage.setItem("shuliang",$('#count').val());
             	mui.openWindow({
 	               url:"add_address.html",
 	               id:"add_address",
@@ -166,7 +175,9 @@
 						},
 						dataType: "json",
 						timeout: 1000,
-						success: function(data) {		
+						success: function(data) {	
+							document.getElementById("zhifu").style.display = "none";
+							
 		                    console.log(JSON.stringify(data));
 		                    mui.toast(data.message);
 	                        mui.openWindow({

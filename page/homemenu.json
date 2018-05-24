@@ -30,6 +30,13 @@
             "title":"服务",
             "imgPath": "../img/01home_11 .png",
             "state":"0"
+        },
+        {
+            "id": 105,
+            "idname":"kuaixun",
+            "title":"快讯",
+            "imgPath": "../img/xx.png",
+            "state":"0"
         }
     ]
 }

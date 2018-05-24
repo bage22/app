@@ -39,7 +39,7 @@
 						            	<span class="fl color_red f16"> &yen;{{value.price}}</span>
 						            	<span class="fr color_b">{{value.people}}人购买</span>
 						            </div>
-						            <div class="user-rating"><span>[用户评价]</span>{{value.comment}}</div>
+						            <!--<div class="user-rating"><span>[用户评价]</span>{{value.comment}}</div>-->
 						        </a>
 					        </div>
 					    </li>
@@ -87,11 +87,10 @@
 						dataType: "json",
 						timeout: 1000,
 						success: function(data) {
-//							alert(JSON.stringify(data));
-							if(data.data.length>0){
+							if(data.status == "0"){
 							   document.getElementById("qblist").innerHTML=template("qbserve",data);
 							}else{
-							   document.getElementById("qblist").innerHTML="<li>没有相关数据</li>";	
+								document.getElementById("qblist").innerHTML='<img src="../img/mydd.png"/ style="width: 170px;display: block;margin: 100px auto;">';	
 							}
 						},error:function(a){
 //							alert(a.status);

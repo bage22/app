@@ -107,7 +107,7 @@ function galleryImg() {
                     //文件已存在
                     file.remove(function() {
 
-                        console.log("file remove success");
+                        //console.log("file remove success");
 
                         entry.copyTo(root, 'bg.png',
                         function(e) {
@@ -177,7 +177,7 @@ function galleryImg() {
 //上传头像图片
 function uploadHead(imgPath) {
 
-    console.log("imgPath =" + imgPath);
+    //console.log("imgPath =" + imgPath);
 
     var mainImage = document.getElementById("avatar");
 

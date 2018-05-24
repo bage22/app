@@ -9,6 +9,12 @@
 		<link rel="stylesheet" type="text/css" href="../css/mui.poppicker.css"/>
 		<link rel="stylesheet" type="text/css" href="../css/global.css"/>
 		<link href="../css/app.css" rel="stylesheet" />
+		<style type="text/css">
+			.margin_tb5{
+				margin: 10px 0;
+				overflow: hidden;
+			}
+		</style>
 	</head>
 
 	<body id="balance01">
@@ -30,24 +36,36 @@
 				<li class="mui-table-view-cell">	
 					<span class="fl">小计</span><span class="fr">&yen; <span id="total_fee"></span></span>
 				</li>
+				
 			</ul>
-				<ul class="mui-table-view balance1 mart10">
-					<li class="mui-table-view-cell takeUser">	
-						<div class="mui-input-row">
-							<label>收货人</label>
-							<input name="takeUser" id="username" disabled="disabled" type="text" class="mui-input-clear mui-input" placeholder="">
-						</div>
-					</li>
-					<li class="mui-table-view-cell takeUser">	
-						<div class="mui-input-row">
-							<label>联系电话</label>
-							<input name="phone" id="telephone" disabled="disabled" type="text" class="mui-input-clear mui-input" placeholder="">
-						</div>
-					</li>
-					<li class="mui-table-view-cell takeUser">
-						<textarea style="padding: 10px;" id="address" class="form" rows="2" placeholder="请写详细地址不少于5个字"></textarea>
-					</li>
-				</ul>
+			<ul class="mui-table-view balance1 margin_tb5">
+				<li class="mui-table-view-cell takeUser">	
+					<div class="mui-input-row">
+						<label>收货人</label>
+						<input name="takeUser" id="username" disabled="disabled" type="text" class="mui-input-clear mui-input" placeholder="">
+					</div>
+				</li>
+				<li class="mui-table-view-cell takeUser">	
+					<div class="mui-input-row">
+						<label>联系电话</label>
+						<input name="phone" id="telephone" disabled="disabled" type="text" class="mui-input-clear mui-input" placeholder="">
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" id="showCityPicker3">
+						<span class="fl">所在地区：</span><span class="fl" id="cityResult3"></span><span id="diqu"  class="fr mar_rig20 color_b">撒地方</span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell takeUser">
+					<p style="color: #000000;padding-top: 10px;">详细地址：<span id="address"></span></p>
+					<!--<textarea style="padding: 10px;" id="address" class="form" rows="2" placeholder="请写详细地址不少于5个字"></textarea>-->
+					<p ></p>
+				</li>
+			</ul>
+			
+			<ul class="mui-table-view balance1 margin_tb5">
+				<p id="qian" style="display: none;text-align: center;padding: 4px 0;font-size: 10px;">*温馨提醒:发生退货时将扣除<em id="youfei" style="padding: 0 2px;color: #23262E;"></em>元<em id="yuanyin"></em>*</p>
+			</ul>
 			
 			<div class="balance01_foot">
 				<button id="zhifu" class="mui-btn mui-btn-block color_f f16">确认支付</button>
@@ -101,9 +119,6 @@
 		$("#zhifu").click(function(){
 			$("#zf_model").fadeIn();
 		})
-		$("#mmzf").click(function(){
-			$("#zf_model").fadeOut();
-		})
 		$("#close").click(function(){
 			$("#zf_model").fadeOut();
 		})
@@ -152,7 +167,7 @@
 				dataType: "json",
 				timeout: 1000,
 				success: function(data) {
-//					alert(JSON.stringify(data));
+					console.log('支付订单====>'+JSON.stringify(data));
                     if(data.status==0){
 //                  	商品数量
                         $("#goodstitle").html(data.data.title);
@@ -163,9 +178,15 @@
                     	$("#username").val(data.data.username);
                     	$("#telephone").val(data.data.telephone);
 //                  	所在地区
-                        $("#city").val(data.data.city);
+                        $("#diqu").text(data.data.city);
                         $("#address").html(data.data.address);
+                        if(data.data.qianshu>0){
+                        	$('#qian').css({'display':'block'});
+                        	$('#youfei').text(data.data.qianshu);
+                        	$('#yuanyin').text(data.data.yuanyin);
+                        }
                      }
+                    console.log(data.data.qianshu);
 				}
 			});
             // 获取支付通道  
@@ -182,17 +203,30 @@
             });  
         })  
         $("#mmzf").click(function(){
-        	var paytype=document.getElementsByClassName("payment_type");
-        	var len=paytype.length;
-        	for (var i=0;i<len;i++) {
-        		valtype =paytype[i].checked;
-        		if(valtype==true){
-        			types=paytype[i].value;
-//      			mui.toast(vals);
-        		}
-        	}
-        	pay(types,tokens,orderIds,totalFees,titles,Ip);
-        	$("#zf_model").fadeOut();
+//      	$("#zf_model").fadeOut();
+//      	var btnarr=["不买了","知道了"];  
+//     		mui.confirm("发生退货时将扣除相应的邮费","",btnarr,function(e){  
+//	          	if(e.index == 0){ 
+////	          	$("#zf_model").fadeOut();
+//	          	}else{
+	          		var paytype=document.getElementsByClassName("payment_type");
+	        		var len=paytype.length;
+		        	for (var i=0;i<len;i++) {
+		        		valtype =paytype[i].checked;
+		        		if(valtype==true){
+		        			types=paytype[i].value;
+		      			mui.toast(vals);
+		        		}
+		        	}
+		        	pay(types,tokens,orderIds,totalFees,titles,Ip);
+		        	$("#zf_model").fadeOut();
+//
+//	          	}  
+//     		});  
+        	
+                   
+        	
+        	
 		})  
 		</script>
 	</body>

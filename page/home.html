@@ -6,9 +6,19 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css" />
+		<link rel="stylesheet" type="text/css" href="../css/app.css" />
 	</head>
+	<style type="text/css">
+		.home_banner {
+			height: 300px;
+			background: #DDDDDD;
+		}
+		
+		.home_banner img {
+			height: 300px;
+		}
+	</style>
 
 	<body id="home">
 		<!--<header class="mui-bar mui-bar-nav head_bg">
@@ -20,15 +30,15 @@
 			</h1>
 			<a class="mui-icon mui-icon-chatbubble mui-pull-right color_f"></a>
 		</header>-->
-		<div class="mui-content" >
+		<div class="mui-content">
 			<div class="home_banner">
 				<!--<img id="homebanner" src="../img/01_02.png"/>-->
 				<div id="slider" class="mui-slider">
 					<div class="mui-slider-group mui-slider-loop" id="banner">
-						
+
 					</div>
 					<div class="mui-slider-indicator" id="jiedian">
-						
+
 					</div>
 				</div>
 			</div>
@@ -40,44 +50,48 @@
 				    </a>
 				</li>-->
 			</ul>
-				<script type="text/html" id="menuTeml">
-				    {{each data as value i}}
-					<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" id="{{value.idname}}">
-					    <a href="javascript:void(0)">
-					        <span class="mui-icon"><img src="{{value.imgPath}}"/></span>
-					        <div class="mui-media-body">{{value.title}}</div>
-				        </a>
-					</li>
-					{{/each}}
-				</script>
-			<div class="bzkx">
+			<script type="text/html" id="menuTeml">
+				{{each data as value i}}
+				<li class="mui-table-view-cell mui-media menuli" style="width: 25%;" id="{{value.idname}}">
+					<a href="javascript:void(0)">
+						<span class="mui-icon"><img src="{{value.imgPath}}"/></span>
+						<div class="mui-media-body">{{value.title}}</div>
+					</a>
+				</li>
+				{{/each}}
+			</script>
+
+			<!--快讯 暂时不用-->
+			<!--<div class="bzkx">
 				<div class="bzkx_left"><img src="../img/01home_17.png"/></div>
 				<div class="bzkx_rig">
-					<ul class="bzkx_list" id="bzkx_list">
-						<!--<li class="bzkx_item"><a href="javascript:void(0)">尼泊尔个人旅游签证-停留30天</a></li>
+					<ul class="bzkx_list" id="bzkx_list">-->
+
+			<!--<li class="bzkx_item"><a href="javascript:void(0)">尼泊尔个人旅游签证-停留30天</a></li>
 						<li class="bzkx_item"><a href="javascript:void(0)">南京大排档来了-停留30天</a></li>-->
-					</ul>
+
+			<!--</ul>
 					<script type="text/html" id="bzkxlist">
 					    {{each data as value i}}
 						<li class="bzkx_item" data-id="{{value.ID}}"><a href="javascript:void(0)">{{value.TITLE}}</a></li>
 						{{/each}}
 					</script>
 				</div>
-			</div>
-			
+			</div>-->
+
 			<!--选项卡-->
 			<div id="segmentedControl" class="mui-segmented-control">
-				<a class="mui-control-item mui-active" href="#jpfu">
-				     <span><img src="../img/01hoem_21.png"/></span>金牌服务
+				<a class="mui-control-item " href="#jpfu">
+					<span><img src="../img/01hoem_21.png"/></span>金牌服务
 				</a>
-				<a class="mui-control-item" href="#rmhd">
+				<a class="mui-control-item mui-active" href="#rmhd">
 					<span><img src="../img/01home_23.png"/></span>热门活动
 				</a>
 			</div>
 			<div class="tab_item">
-				<div id="jpfu" class="mui-control-content mui-active">
+				<div id="jpfu" class="mui-control-content ">
 					<ul class="mui-table-view mui-grid-view" id="jpfw_list">
-					    <!--<li class="mui-table-view-cell mui-media mui-col-xs-6 fw_item">
+						<!--<li class="mui-table-view-cell mui-media mui-col-xs-6 fw_item">
 					        <div class="bgf">
 					        	<a href="javascript:void(0)">
 						            <img class="mui-media-object" src="../img/3ac79f3df8dcd100cab1840b788b4710b9122fee.jpg">
@@ -90,43 +104,43 @@
 					        </div>
 					    </li>-->
 					</ul>
-					<!--金牌服务列表-->   
+					<!--金牌服务列表-->
 					<script type="text/html" id="jpfwserve">
-					    {{each data as value i}}
+						{{each data as value i}}
 						<li class="mui-table-view-cell mui-media mui-col-xs-6 fw_item" data-id="{{value.id}}">
-					        <div class="bgf">
-					        	<a href="javascript:void(0)">
-						            <img class="mui-media-object" src="{{value.image}}">
-						            <div class="object-info">{{value.title}}</div>
-						            <div class="buy_count">
-						            	<span class="fl color_red f16"> &yen;{{value.price}}</span>
-						            	<span class="fr color_b">{{value.people}}人购买</span>
-						            </div>
-						        </a>
-					        </div>
-					    </li>
+							<div class="bgf">
+								<a href="javascript:void(0)">
+									<img class="mui-media-object" src="{{value.image}}">
+									<div class="object-info">{{value.title}}</div>
+									<div class="buy_count">
+										<span class="fl color_red f16"> &yen;{{value.price}}</span>
+										<span class="fr color_b">{{value.people}}人购买</span>
+									</div>
+								</a>
+							</div>
+						</li>
 						{{/each}}
 					</script>
 				</div>
-				<div id="rmhd" class="mui-control-content">
+				<div id="rmhd" class="mui-control-content mui-active">
 					<ul class="mui-table-view mui-grid-view" id="rmhd_list">
-					    
+
 					</ul>
 					<!--热门活动列表-->
 					<script type="text/html" id="rmhdserve">
-					    {{each data as value i}}
-						<li class="mui-table-view-cell mui-media mui-col-xs-6 hd_item" data-id="{{value.id}}">
-					        <div class="bgf">
-					        	<a href="javascript:void(0)">
-						            <img class="mui-media-object" src="{{value.image}}">
-						            <div class="object-info">{{value.title}}</div>
-						            <div class="buy_count">
-						            	<span class="fl color_red f16"> &yen;{{value.price}}</span>
-						            	<span class="fr color_b">{{value.people}}人购买</span>
-						            </div>
-						        </a>
-					        </div>
-					    </li>
+						{{each data.list as value i}}
+						<li class="mui-table-view-cell mui-media mui-col-xs-6 hd_item" onclick="rmxiangqing('{{value.id}}')">
+							<div class="bgf">
+								<a href="javascript:void(0)">
+									<img class="mui-media-object" src="{{value.image}}">
+									<div class="object-info">{{value.title}}</div>
+									<div class="buy_count">
+										<span class="fl color_red f16"> &yen;{{value.price}}</span>
+										<span class="fr color_b">{{value.people}}人已参加</span>
+									</div>
+								</a>
+							</div>
+						</li>
 						{{/each}}
 					</script>
 				</div>
@@ -138,241 +152,258 @@
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/sub.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
-		<script>	
-//			if(localStorage.getItem("token")==null){
-//				var btnArray = ['是', '否'];
-//				mui.confirm("未登录，现在是否去登陆", function(e) {
-//					if (e.index == 0) {
-//						mui.openWindow({
-//							url: "login-mode.html",
-//							id: "login-mode",
-//							createNew:true,
-//							waiting: {
-//								autoShow: true
-//							},show: {
-//								aniShow: 'none'
-//							}
-//						});
-//					}
-//				})
-//			}
-		      mui.init();
-		      mui.plusReady(function(){
-				if(!hasNet()){
-					mui.toast("无网络");
-				}
-			    //轮播图渲染
-				// 请求
-					mui.ajax({	
-						url: WEB_HOST+"/index/carousel", //deviceUrl,
-						type: "get",
-						data: {
-							"token":localStorage.getItem("token")
-							},
-						dataType: "json",
-						timeout: 0,
-						success: function(data){
-//							alert(JSON.stringify(data));
-//							console(data.data[0].id)
-							//轮播图    
-							var item="";
-							var nodes='';
-				//			图片的个数
-							var len=data.data.length;
-							item+='<div class="mui-slider-item mui-slider-item-duplicate" data-id="'+data.data[0].id+'"><a href="#"><img src="'+data.data[0].src+'" title="'+data.data[0].title+'" data-preview-group="2"></a></div>';
-							for(i in data.data){
-				//				mui.toast(data.thumb_souluetu[i]);
-								item+='<div  class="mui-slider-item" data-id="'+data.data[i].id+'"><a href="#"><img  src="';
-								item+=data.data[i].src;//缩略图
-								item+='" title="'+data.data[i].title+'" data-preview-group="1"></a></div>';
-								if(i<1){
-									nodes+='<div class="mui-indicator mui-active"></div>';
-								}else{
-									nodes+='<div class="mui-indicator"></div>';
-								}
-							}
-							item+=' <div class="mui-slider-item mui-slider-item-duplicate"  data-id="'+data.data[len-1].id+'"><a href="#"><img src="'+data.data[len-1].src+'" title="'+data.data[len-1].title+'" data-preview-group="2"></a></div>';
-							document.getElementById("banner").innerHTML=item;
-				            document.getElementById("jiedian").innerHTML=nodes;
-							var silder = mui(".mui-slider").slider();
-//							console.log(JSON.stringify(data));
-							mui("#banner").on("tap",".mui-slider-item",function(){
-								var listid=$(this).data("id");
-								mui.openWindow({
-					               url:"server-info.html",
-					               id:"server-info",
-					               createNew:true,
-					               extras:{
-							          listid:listid
-							        }
-				       			});
-							})
+		<script>
+//			window.addEventListener('shuaxin', function(e) {
+//				xuanran();
+//			})
+			mui.init();
+			mui.plusReady(function() {
+				function huidiao() {
+					var mask = mui.createMask(huidiao);
+					mui.toast("登陆异常，请重新登陆");
+					mask.show(); //显示遮罩
+					mui.openWindow({
+						url: "login.html",
+						id: "login",
+						createNew: true,
+						waiting: {
+							autoShow: true
+						},
+						show: {
+							aniShow: 'none'
 						}
 					});
-					
-					
-//		      	首页菜单数据渲染
-                mui.ajax({
-						url: "homemenu.json",
-						type: "get",
-						async: false,
-						data:"",
-						dataType: "json",
-						timeout: 1000,
-						success: function(data) {
-							if(data.data.length>0){
-							   document.getElementById("homemenu").innerHTML=template("menuTeml",data);	
-							}else{
-							   document.getElementById("homemenu").innerHTML="<li>没有相关数据</li>";	
-							}
-						}
-				});
-//		      	北中快讯数据渲染
-                mui.ajax({ 
-						url:WEB_HOST+"/index/news",
-						type: "get",
-						async: false,
-						data: {
-						"token":localStorage.getItem("token")
-					    },
-						dataType: "json",
-						timeout: 1000,
-						success: function(data) {
-//							mui.toast(JSON.stringify(data));
-							if(data.data.length>0){
-							   document.getElementById("bzkx_list").innerHTML=template("bzkxlist",data);
-							}else{
-							   document.getElementById("bzkx_list").innerHTML="<li>没有相关数据</li>";	
-							}
-						}
-				});
-//		      	金牌服务数据渲染
-                mui.ajax({ 
-						url:WEB_HOST+"/index/service", 
-						type: "get",
-						async: false,
-						data: {
-							"token":localStorage.getItem("token")
-						},
-						dataType: "json",
-						timeout: 1000,
-						success: function(data) {
-							console.log(JSON.stringify(data));
-							if(data.data.length>0){
-							   document.getElementById("jpfw_list").innerHTML=template("jpfwserve",data);
-							}else{
-							   document.getElementById("jpfw_list").innerHTML="<li>没有相关数据</li>";
-							}
-						}
-				});
-//		      	热门活动数据渲染
-                mui.ajax({
-						url: WEB_HOST+"/index/rmhdlist", 
-						type: "get",
-						async: false,
-						data: {
-							"token":localStorage.getItem("token")
-						},
-						dataType: "json",
-						timeout: 1000,
-						success: function(data){ 
-//							console.log(JSON.stringify(data));
-							if(data.status == 1){
-								
-							}else if(data.status=="0"){
-							   document.getElementById("rmhd_list").innerHTML=template("rmhdserve",data);
-							}else{
-							   document.getElementById("rmhd_list").innerHTML="<li>没有相关数据</li>";	
-							}
-						}
-				});
-		      	plus.navigator.setStatusBarBackground("#7854F1");
-		      	var gallery = mui('.mui-slider');  
-				gallery.slider({  
-				  interval:5000//自动轮播周期，若为0则不自动播放，默认为0；  
-				});  
+				}
 
-		      	document.getElementById("chanpin").addEventListener('tap',function(){
-		           mui.openWindow({
-		               url:"serve.html",
-		               id:"serve",
-		               createNew:true
-	       			});
-		        });
-		        document.getElementById("huodong").addEventListener('tap',function(){
-		           mui.openWindow({
-		               url:"activity.html",
-		               id:"activity",
-		               createNew:true
-	       			});
-		        });
-		        document.getElementById("fuwu").addEventListener('tap',function(){
-		           mui.openWindow({
-		               url:"serve1.html",
-		               id:"serve1",
-		               createNew:true
-	       			});
-		        });
-		        
-//		     金牌服务		
-				var slider_item=document.getElementsByClassName("mui-slider-item").length;
-				for(var i=0;i<slider_item;i++){
-					document.getElementsByClassName("mui-slider-item")[i].addEventListener("tap",function(){
-						var listid=$(this).data("id");
-						 mui.openWindow({
-			               url:"server-info.html",
-			               id:"server-info",
-			               createNew:true,
-			               extras:{
-					        listid:listid
-					       }
-		       			});
+				if(!hasNet()) {
+					mui.toast("无网络");
+				}
+				//轮播图渲染
+				// 请求
+				mui.ajax({
+					url: WEB_HOST + "/index/carousel", //deviceUrl,
+					type: "get",
+					data: {
+						"token": localStorage.getItem("token")
+					},
+					dataType: "json",
+					async: false,
+					timeout: 0,
+					success: function(data) {
+						//						console.log("lbt"+JSON.stringify(data))
+						//							console(data.data[0].id)
+						//轮播图    
+						var item = "";
+						var nodes = '';
+						//			图片的个数
+						var len = data.data.length;
+						item += '<div class="mui-slider-item mui-slider-item-duplicate" onclick="xiangqing(' + data.data[0].id + ')" data-id="' + data.data[0].id + '"><a href="#"><img src="' + data.data[0].src + '" title="' + data.data[0].title + '" data-preview-group="2"></a></div>';
+						for(i in data.data) {
+							//				mui.toast(data.thumb_souluetu[i]);
+							item += '<div  class="mui-slider-item" onclick="xiangqing(' + data.data[i].id + ')" data-id="' + data.data[i].id + '"><a href="#"><img  src="';
+							item += data.data[i].src; //缩略图
+							item += '" title="' + data.data[i].title + '" data-preview-group="1"></a></div>';
+							if(i < 1) {
+								nodes += '<div class="mui-indicator mui-active"></div>';
+							} else {
+								nodes += '<div class="mui-indicator"></div>';
+							}
+						}
+						item += ' <div class="mui-slider-item onclick="xiangqing(' + data.data[len - 1].id + ')" mui-slider-item-duplicate"  data-id="' + data.data[len - 1].id + '"><a href="#"><img src="' + data.data[len - 1].src + '" title="' + data.data[len - 1].title + '" data-preview-group="2"></a></div>';
+						document.getElementById("banner").innerHTML = item;
+						document.getElementById("jiedian").innerHTML = nodes;
+						var silder = mui(".mui-slider").slider();
+					}
+				});
+
+				//		      	首页菜单数据渲染
+				mui.ajax({
+					url: "homemenu1.json",
+					type: "get",
+					async: false,
+					data: "",
+					dataType: "json",
+					timeout: 1000,
+					success: function(data) {
+						if(data.data.length > 0) {
+							document.getElementById("homemenu").innerHTML = template("menuTeml", data);
+						} else {
+							document.getElementById("homemenu").innerHTML = "<li>没有相关数据</li>";
+						}
+					}
+				});
+
+				////		      	北中快讯数据渲染 暂时停用
+				//              mui.ajax({ 
+				//						url:WEB_HOST+"/index/news",
+				//						type: "get",
+				//						async: false,
+				//						data: {
+				//						"token":localStorage.getItem("token")
+				//					    },
+				//						dataType: "json",
+				//						timeout: 1000,
+				//						success: function(data) {
+				////							mui.toast(JSON.stringify(data));
+				//							if(data.data.length>0){
+				//							   document.getElementById("bzkx_list").innerHTML=template("bzkxlist",data);
+				//							}else{
+				//							   document.getElementById("bzkx_list").innerHTML="<li>没有相关数据</li>";	
+				//							}
+				//						}
+				//				});
+
+				//		      	金牌服务数据渲染
+				mui.ajax({
+					url: WEB_HOST + "/index/service",
+					type: "get",
+					async: false,
+					data: {
+						"token": localStorage.getItem("token")
+					},
+					dataType: "json",
+					timeout: 1000,
+					success: function(data) {
+						//						console.log("============="+JSON.stringify(data))
+						if(data.status == "0") {
+							document.getElementById("jpfw_list").innerHTML = template("jpfwserve", data);
+						} else {
+							document.getElementById("jpfw_list").innerHTML = "<li>没有相关数据</li>";
+						}
+						//						}
+
+					}
+				});
+
+				plus.navigator.setStatusBarBackground("#7854F1");
+				var gallery = mui('.mui-slider');
+				gallery.slider({
+					interval: 5000 //自动轮播周期，若为0则不自动播放，默认为0；  
+				});
+
+				document.getElementById("chanpin").addEventListener('tap', function() {
+					mui.openWindow({
+						url: "serve.html",
+						id: "serve",
+						createNew: true
+					});
+				});
+				document.getElementById("huodong").addEventListener('tap', function() {
+					mui.openWindow({
+						url: "activity.html",
+						id: "activity",
+						createNew: true
+					});
+				});
+				document.getElementById("fuwu").addEventListener('tap', function() {
+					mui.openWindow({
+						url: "serve1.html",
+						id: "serve1",
+						createNew: true
+					});
+				});
+				document.getElementById("kuaixun").addEventListener('tap', function() {
+					mui.openWindow({
+						url: "bzkx-info.html",
+						id: "bzkx-info",
+						createNew: true
+					});
+				});
+
+				//		     金牌服务		
+				var slider_item = document.getElementsByClassName("mui-slider-item").length;
+				for(var i = 0; i < slider_item; i++) {
+					document.getElementsByClassName("mui-slider-item")[i].addEventListener("tap", function() {
+						var listid = $(this).data("id");
+						mui.openWindow({
+							url: "server-info.html",
+							id: "server-info",
+							createNew: true,
+							extras: {
+								listid: listid
+							}
+						});
 					})
 				}
-//		        北中快讯
-		        var bzkx_item=document.getElementsByClassName("bzkx_item").length;
-				for(var i=0;i<bzkx_item;i++){
-					document.getElementsByClassName("bzkx_item")[i].addEventListener("tap",function(){
-						 mui.openWindow({
-			               url:"bzkx-info.html",
-			               id:"bzkx-info",
-			               createNew:true
-		       			});
+
+				////		        北中快讯 暂时停用
+				//		        var bzkx_item=document.getElementsByClassName("bzkx_item").length;
+				//				for(var i=0;i<bzkx_item;i++){
+				//					document.getElementsByClassName("bzkx_item")[i].addEventListener("tap",function(){
+				//						 mui.openWindow({
+				//			               url:"bzkx-info.html",
+				//			               id:"bzkx-info",
+				//			               createNew:true
+				//		       			});
+				//					})
+				//				}
+
+				//		     金牌服务		
+				var hd_list = document.getElementsByClassName("fw_item").length;
+				for(var i = 0; i < hd_list; i++) {
+					document.getElementsByClassName("fw_item")[i].addEventListener("tap", function() {
+						var listid = $(this).data("id");
+						mui.openWindow({
+							url: "server-info.html",
+							id: "server-info",
+							createNew: true,
+							extras: {
+								listid: listid
+							}
+						});
 					})
 				}
-//		     金牌服务		
-				var hd_list=document.getElementsByClassName("fw_item").length;
-				for(var i=0;i<hd_list;i++){
-					document.getElementsByClassName("fw_item")[i].addEventListener("tap",function(){
-						var listid=$(this).data("id");
-						 mui.openWindow({
-			               url:"server-info.html",
-			               id:"server-info",
-			               createNew:true,
-			               extras:{
-					        listid:listid
-					         }
-		       			});
-					})
-				}
-//		     热门活动		
-				var hd_list=document.getElementsByClassName("hd_item").length;
-				for(var i=0;i<hd_list;i++){
-					document.getElementsByClassName("hd_item")[i].addEventListener("tap",function(){
-						var listid=$(this).data("id");
-						 mui.openWindow({
-			               url:"activity-info.html",
-			               id:"activity-info",
-			               createNew:true,
-			               extras:{
-					        listid:listid
-					         }
-		       			});
-					})
-				}
-				
-		      })
- 		</script>
+
+			})
+
+			xuanran = function() {
+				 //		      	热门活动数据渲染
+				mui.ajax({
+					url: WEB_HOST + "/index/rmhdlist2",
+					type: "get",
+					async: false,
+					data: {
+						"token": localStorage.getItem("token")
+					},
+					dataType: "json",
+					timeout: 1000,
+					success: function(data) {
+						console.log("=====rmhd" + JSON.stringify(data));
+						if(data.status == 1) {} else if(data.status == "0") {
+							document.getElementById("rmhd_list").innerHTML = template("rmhdserve", data);
+						} else {
+							document.getElementById("rmhd_list").innerHTML = "<li>没有相关数据</li>";
+						}
+					},
+					error: function(a, b, c) {
+						console.log(c);
+					}
+				});
+			}
+			xuanran();
+
+			function xiangqing(id) {
+				mui.openWindow({
+					url: "server-info.html",
+					id: "server-info",
+					createNew: true,
+					extras: {
+						listid: id
+					}
+				});
+			}
+
+			function rmxiangqing(id) {
+				mui.openWindow({
+					url: "activity-info.html",
+					id: "activity-info",
+					createNew: true,
+					extras: {
+						listid: id
+					}
+				});
+			}
+		</script>
 	</body>
 
 </html>
