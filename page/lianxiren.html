@@ -274,6 +274,7 @@
 				}else{
 				var li = listid.join(',');
 				if(li !== '' && didian !== undefined){
+					console.log("token="+localStorage.getItem('token')+"hdid="+hdid+"users"+li+"address"+didian);
 					mui.ajax({
 								url: WEB_HOST + "/activity/bmActivity",
 								type: "post",

@@ -52,7 +52,7 @@
 		<script src="../js/tokenyanzheng.js"></script>
 		<script src="../js/sub.js" type="text/javascript" charset="utf-8"></script>
 		<script>
-			
+			console.log("token===="+localStorage.getItem('token'));
 //			列表渲染js
                 mui.ajax({
 						url: WEB_HOST+"/index/myhdlist", 
@@ -63,7 +63,7 @@
 						timeout: 1000,
 						async: false,
 						success: function(data) {
-							console.log(JSON.stringify(data));
+							console.log("======"+JSON.stringify(data));
                             if(data.status == "0"){
 							   document.getElementById("bmlist").innerHTML=template("activitys",data);
 							}else{

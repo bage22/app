@@ -118,28 +118,30 @@
 	<!--<div class="balance01_foot">
 		<button id="login" class="mui-btn mui-btn-block color_f f16">结算</button>
 	</div>-->
+	<script src="../js/mui.min.js"></script>
 	<script src="../js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../js/template.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../js/mui.min.js"></script>
 	<script src="../js/sub.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
+        mui.init();
 		var hezi=0;
 //			购物车列表渲染js
-        mui.ajax({
-				url:WEB_HOST+"/index/myShopcartMobile",
-				type: "get",
-				async: false,
-				data:{
-					"token":localStorage.getItem("token")
-				},
-				dataType: "json",
-				timeout: 1000,
-				success: function(data) {
-					document.getElementById("buyCar_list").innerHTML=template("buyCartemp",data);
-				}
-		});
-        mui.init();
+			 mui.ajax({
+					url:WEB_HOST+"/index/myShopcartMobile",
+					type: "get",
+					async: false,
+					data:{
+						"token":localStorage.getItem("token")
+					},
+					dataType: "json",
+					timeout: 1000,
+					success: function(data) {
+//						alert("购物车刷新了");
+						console.log(JSON.stringify(data));
+						document.getElementById("buyCar_list").innerHTML=template("buyCartemp",data);
+					}
+			});
         (function (m) {
         	var proids;
         		//					删除商品

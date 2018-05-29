@@ -88,6 +88,8 @@
 		<script src="../js/request.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.min.js"></script>
 	    <script src="../js/mui.picker.js" type="text/javascript" charset="utf-8"></script>
+	    <script src="../js/mimayanzheng.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/yanzhengshoujihao.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.dtpicker.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 		      mui.init();
@@ -166,37 +168,35 @@
                 })
                 $("#account").blur(function(){
                 	var lens=$("#account").val().length;
-                	if(lens!=11){
-                		$(".information_message").html("请输入正确的手机号");
-                		$("#account").focus();
-                	}else{
-//              		$(".information_message").html("手机号符合");
+                	if(!checkPhone('#account')) {
+                		mui.toast("请输入正确的手机号");
+//              		$("#account").focus();
                 	}
                 })
                 $("#password").blur(function(){
 //              	var lens=$("#password").val().length;
                 	if(checkPassword('#password')==="假的"){
-                		$(".information_message").html("密码长度为8到16位数字与字母组合");
-                		$("#password").focus();
+                		mui.toast("密码长度为8到16位数字与字母组合");
+//              		$("#password").focus();
                 	}
                 })
                 $("#password_confirmation").blur(function(){
                 	var pass1=$("#password").val();
                 	var pass2=$("#password_confirmation").val();
                 	if(pass2!=pass1){
-                		$(".information_message").html("两次密码不一致");
-                		$("#password").focus();
-                	}else{
-//              		$(".information_message").html("密码格式正确");
+                		mui.toast("两次密码不一致");
+//              		$("#password").focus();
                 	}
                 })
                 $("#username").blur(function(){
                 	var username=$("#username").val();
                 	if(username==""){
-                		$(".information_message").html("昵称不能为空");
-                		$("#username").focus();
+                		mui.toast("昵称不能为空");
+//              		$("#username").focus();
                 	}
                 })
+                
+                
 		        document.getElementById("send").addEventListener('tap',function(){
 		        	if($('#account').val()===""){
 		        		mui.toast("请输入手机号");
