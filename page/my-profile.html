@@ -34,9 +34,9 @@
 	</head>
 
 	<body id="my_profile">
-	<header class="mui-bar mui-bar-nav" style="background: #000;">
+	<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left color_f"></a>
-			<h1 class="mui-title color_f">
+			<h1 class="mui-title">
 				我的资料
 			</h1>
 	</header>
@@ -191,10 +191,6 @@
 							    // 执行相应的事件
 							    mui.fire(target, 'customEvent', {});
 							    mui.back();
-							    
-//							    var detailPage = mui.preload({url:'usercenter.html',id:'usercenter'});
-//								mui.fire(detailPage,'customEvent');
-//								mui.openWindow({url:'usercenter.html'});
 						},error:function(a){
 							mui.toast("服务器未响应，请稍后重试");
 						}
@@ -203,23 +199,6 @@
 				   
 			   })
 		})
-
-//		   function getcity(citydata){
-//			//  级联示例
-//				var cityPicker3 = new mui.PopPicker({
-//					layer: 3
-//				});
-//				cityPicker3.setData(citydata);
-//				var showCityPickerButton = document.getElementById('showCityPicker3');
-//				var cityResult3 = document.getElementById('cityResult3');
-//				showCityPickerButton.addEventListener('tap', function(event) {
-//					cityPicker3.show(function(items) {
-//						cityResult3.innerText = (items[0] || {}).text + "/" + (items[1] || {}).text + "/" + (items[2] || {}).text;
-//						//返回 false 可以阻止选择框的关闭
-//						//return false;
-//					});
-//				}, false);
-//		   }
 	    </script>
 	</body>
 

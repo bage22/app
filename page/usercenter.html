@@ -80,16 +80,16 @@
 						<span class="mui-icon mui-icon-person f22 mar_rig5"></span>常用联系人
 					</a>
 				</li>
-				<li class="mui-table-view-cell">
+				<!--<li class="mui-table-view-cell">
 					<a class="mui-navigate-right f14">
 						<span class="mui-icon mui-icon-gear f22 mar_rig5"></span>设置
 					</a>
-				</li>
-				<li class="mui-table-view-cell">
+				</li>-->
+				<!--<li class="mui-table-view-cell" onclick="guanyu()">
 					<a class="mui-navigate-right f14">
 						<span class="mui-icon mui-icon-info f22 mar_rig5"></span>关于
 					</a>
-				</li>
+				</li>-->
 			</ul>
 			<ul class="mui-table-view" style="margin-top: 30px;">
 				<li class="mui-table-view-cell f14" id="logoff" style="text-align: center;">退出登录</li>
@@ -101,7 +101,6 @@
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/sub.js" type="text/javascript" charset="utf-8"></script>
 		<script>
-			
 mui.init();
 mui.plusReady(function() {
 	window.addEventListener('customEvent', function(event) {
@@ -119,6 +118,8 @@ mui.plusReady(function() {
 		yonghu();
 		
 	}
+	
+
 	/*点击登录 打开登录页面*/
 	document.querySelector("#li_ji_deng_lu").addEventListener("tap", function() {
 		mui.openWindow({

@@ -7,6 +7,12 @@
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css"/>
 		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+		<style type="text/css">
+			.mui-table-view:after{
+				background-color: none;
+				
+			}
+		</style>
 	</head>
 
 	<body id="activity">
@@ -18,7 +24,7 @@
 		</header>	
 		<div class="mui-content">
 		     <div class="tw_list">
-		     	<ul class="mui-table-view" style="background: transparent;" id="bmlist">
+		     	<ul class="mui-table-view" id="bmlist">
 	
 				</ul>
 		    </div>		
@@ -67,7 +73,7 @@
                             if(data.status == "0"){
 							   document.getElementById("bmlist").innerHTML=template("activitys",data);
 							}else{
-								document.getElementById("bmlist").innerHTML='<img src="../img/mydd.png"/ style="width: 170px;display: block;margin: 100px auto;">';	
+								document.getElementById("bmlist").innerHTML="<p style='text-align: center;line-height: 50px;'>您还没有报名活动</p>";	
 							}
 						},error:function(a){
 							mui.toast("服务器未响应，请稍后重试");

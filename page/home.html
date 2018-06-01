@@ -232,27 +232,7 @@
 						}
 					}
 				});
-
-				////		      	北中快讯数据渲染 暂时停用
-				//              mui.ajax({ 
-				//						url:WEB_HOST+"/index/news",
-				//						type: "get",
-				//						async: false,
-				//						data: {
-				//						"token":localStorage.getItem("token")
-				//					    },
-				//						dataType: "json",
-				//						timeout: 1000,
-				//						success: function(data) {
-				////							mui.toast(JSON.stringify(data));
-				//							if(data.data.length>0){
-				//							   document.getElementById("bzkx_list").innerHTML=template("bzkxlist",data);
-				//							}else{
-				//							   document.getElementById("bzkx_list").innerHTML="<li>没有相关数据</li>";	
-				//							}
-				//						}
-				//				});
-
+			
 				//		      	金牌服务数据渲染
 				mui.ajax({
 					url: WEB_HOST + "/index/service",

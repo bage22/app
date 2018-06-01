@@ -231,7 +231,8 @@ mui.plusReady(function() {
 						"invoice": invoice,
 						"invoiceType": invoiceType,
 						"spname": mui("#companyname")[0].value,
-						"contents": contents
+						"contents": contents,
+						"invoiceStatus":"1"
 					}
 					fasong();
 				}
@@ -246,7 +247,8 @@ mui.plusReady(function() {
 						"invoiceType": invoiceType,
 						"companyname": mui("#companyname")[0].value,
 						"shibiecode": mui("#shibiecode")[0].value,
-						"contents": contents
+						"contents": contents,
+						"invoiceStatus":"1"
 					}
 					fasong();
 				}
@@ -270,7 +272,8 @@ mui.plusReady(function() {
 					"sptelephone": mui("#sptelephone")[0].value,
 					"spaddress": $("#cityResult3").html(),
 					"addressId ": mui("#addressId")[0].value,
-					"apaddress2": mui("#apaddress2")[0].value
+					"apaddress2": mui("#apaddress2")[0].value,
+					"invoiceStatus":"1"
 				}
 				fasong();
 			}
@@ -279,6 +282,7 @@ mui.plusReady(function() {
 		console.log("param===>" + JSON.stringify(param));
 
 		function fasong() {
+			console.log('发票信息======》'+ param);
 			mui.ajax({ /*发送 发票信息*/
 				url: WEB_HOST + "/invoice/save",
 				type: "post",

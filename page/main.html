@@ -96,40 +96,51 @@
 			mui.init();
 			var banbenhao;
 			mui.plusReady(function() {
-				plus.runtime.getProperty(plus.runtime.appid, function(wgtinfo){
-				    banbenhao = wgtinfo.version;
-					mui.ajax({
-						url:WEB_HOST+'/index/banbenupdate',
-						data:{
-							"banbenhao":banbenhao,
-						},
-						async: false,
-						dataType:'json',//服务器返回json格式数据
-						type:'get',//HTTP请求类型
-						timeout:10000,//超时时间设置为10秒；
-						success:function(data){
-//							console.log(JSON.stringify(data));
-							if(data.status==="yes"){
-								var btnArray = ['是','否'];
-								if(data.qiangzhi==="yes"){
-									btnArray = ['好的'];
-								}
-								mui.confirm("软件有新版本啦",'更新提示',btnArray ,function(e) {
-									if(e.index == 0) {
-										var w = plus.webview.create(data.src);
-										w.show(); // 显示窗口
-									}else if(e.index!==0&&e.index!==1){
-										plus.runtime.quit();
+				 if(!mui.os.ios){
+				 	plus.runtime.getProperty(plus.runtime.appid, function(wgtinfo){
+					    banbenhao = wgtinfo.version;
+						mui.ajax({
+							url:WEB_HOST+'/index/banbenupdate',
+							data:{
+								"banbenhao":banbenhao,
+							},
+							async: false,
+							dataType:'json',//服务器返回json格式数据
+							type:'get',//HTTP请求类型
+							timeout:10000,//超时时间设置为10秒；
+							success:function(data){
+	//							console.log(JSON.stringify(data));
+								if(data.status==="yes"){
+									var btnArray = ['是','否'];
+									if(data.qiangzhi==="yes"){
+										btnArray = ['好的'];
 									}
-								})
+									mui.confirm("软件有新版本啦",'更新提示',btnArray ,function(e) {
+										if(e.index == 0) {
+											var url=data.src; // 下载文件地址
+											mui.toast("已转入后台更新");
+											var dtask = plus.downloader.createDownload( url, {}, function ( d, status ) {
+											    if ( status == 200 ) { // 下载成功
+											        var path = d.filename;
+											        console.log(d.filename);
+											        plus.runtime.install(path);  // 安装下载的apk文件
+											    } else {//下载失败
+											        alert( "Download failed: " + status ); 
+											    }  
+											});
+											dtask.start();
+										}else if(e.index!==0&&e.index!==1){
+											plus.runtime.quit();
+										}
+									})
+								}
+							},
+							error:function(xhr,type,errorThrown){
+								console.log(errorThrown);
 							}
-						},
-						error:function(xhr,type,errorThrown){
-							console.log(errorThrown);
-						}
+						});
 					});
-				});
-				
+				 }
 				/**
 				 * 当前窗口对象，即父窗口；
 				 * http://www.html5plus.org/doc/zh_cn/webview.html#plus.webview.currentWebview

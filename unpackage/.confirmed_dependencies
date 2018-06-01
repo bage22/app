@@ -1,255 +1,259 @@
 {
-  "page/main.html": {
-    "resources": [
-      "page/home.html",
-      "img/icon042@3X.png",
-      "img/icon01@3X.png"
-    ],
-    "refer": [
-      "page/usercenter.html",
-      "page/serve0.html",
-      "page/buy-car.html",
-      "page/home.html",
-      "page/barcode_scan.html",
-      "page/search.html"
-    ]
-  },
-  "index.html": {
-    "refer": [
-      "page/main.html"
-    ]
-  },
-  "page/usercenter.html": {
-    "refer": [
-      "page/main.html",
-      "page/login-mode.html",
-      "page/order.html",
-      "page/my-profile.html",
-      "page/registration-activities.html",
-      "page/login.html",
-      "page/address.html",
-      "page/current-service.html",
-      "page/lianxiren.html"
-    ]
-  },
-  "page/login-mode.html": {
-    "refer": [
-      "page/login.html"
-    ]
-  },
-  "page/login.html": {
-    "refer": [
-      "page/login-successful.html",
-      "page/dynamic-login.html",
-      "page/register.html",
-      "page/forgot-password.html",
-      "page/activity-info.html"
-    ]
-  },
-  "page/login-successful.html": {
-    "refer": [
-      "page/main.html"
-    ]
-  },
-  "page/home.html": {
-    "refer": [
-      "page/serve.html",
-      "page/bzkx-info.html",
-      "page/server-info.html",
-      "page/activity.html",
-      "page/serve1.html",
-      "page/login.html",
-      "page/activity-info.html"
-    ]
-  },
-  "page/serve.html": {
-    "refer": [
-      "page/server-info.html",
-      "page/search.html"
-    ]
-  },
-  "page/server-info.html": {
-    "refer": [
-      "page/balance02.html",
-      "page/login.html",
-      "page/main.html"
-    ]
-  },
-  "page/order.html": {
-    "refer": [
-      "page/invoice-info.html",
-      "page/tuikuan.html",
-      "page/wuliu.html",
-      "page/xiangqing.html",
-      "page/dizhi.html",
-      "page/balance01.html",
-      "page/my-evaluate.html",
-      "page/login.html",
-      "page/dingdanxx.html"
-    ]
-  },
-  "page/balance02.html": {
-    "refer": [
-      "page/order.html",
-      "page/add_address.html",
-      "page/login.html"
-    ]
-  },
-  "page/invoice-info.html": {
-    "refer": [
-      "page/invoice-zzs.html"
-    ]
-  },
-  "page/activity.html": {
-    "refer": [
-      "page/activity-info.html",
-      "page/search.html",
-      "page/login.html"
-    ]
-  },
-  "page/bzkx-info.html": {
-    "refer": [
-      "page/kx-info.html"
-    ]
-  },
-  "page/activity-info.html": {
-    "refer": [
-      "page/login-mode.html",
-      "page/enroll.html",
-      "page/registration-activities.html",
-      "page/activity.html",
-      "page/hdpj.html",
-      "page/login.html",
-      "page/lianxiren.html",
-      "page/add_lianxiren.html"
-    ]
-  },
-  "page/serve1.html": {
-    "refer": [
-      "page/search.html",
-      "page/server-info.html"
-    ]
-  },
-  "page/search.html": {
-    "refer": [
-      "page/server-info.html",
-      "page/activity-info.html",
-      "page/search-jieguo.html"
-    ]
-  },
-  "page/enroll.html": {
-    "refer": [
-      "page/registration-activities.html"
-    ]
-  },
-  "page/registration-activities.html": {
-    "refer": [
-      "page/activity-info.html",
-      "page/login.html"
-    ]
-  },
-  "page/buy-car.html": {
-    "refer": [
-      "page/balance.html"
-    ]
-  },
-  "page/balance.html": {
-    "refer": [
-      "page/order.html"
-    ]
-  },
-  "page/address.html": {
-    "refer": [
-      "page/add_address.html",
-      "page/login.html"
-    ]
-  },
-  "page/my-profile.html": {
-    "refer": [
-      "page/usercenter.html",
-      "page/login.html",
-      "page/main.html"
-    ]
-  },
-  "page/register.html": {
-    "refer": [
-      "page/xieyi.html",
-      "page/login.html",
-      "page/login-successful.html"
-    ]
-  },
-  "page/dynamic-login.html": {
-    "refer": [
-      "page/dynamic-login-yzm.html"
-    ]
-  },
-  "page/dynamic-login-yzm.html": {
-    "refer": [
-      "page/login-successful.html"
-    ]
-  },
-  "page/forgot-password.html": {
-    "refer": [
-      "page/forgot-password1.html"
-    ]
-  },
-  "page/forgot-password1.html": {
-    "refer": [
-      "page/login-successful.html"
-    ]
-  },
-  "page/xiangqing.html": {
-    "resources": [
-      "page/tuikuan.html"
-    ],
-    "refer": [
-      "page/tuikuan.html"
-    ]
-  },
-  "page/dingdanxx.html": {
-    "resources": [
-      "page/xiangqing.html",
-      "page/dingdanxxtab.html"
-    ],
-    "refer": [
-      "page/xiangqing.html",
-      "page/dingdanxxtab.html"
-    ]
-  },
-  "page/wuliu.html": {
-    "resources": [
-      "page/wuliutab.html"
-    ],
-    "refer": [
-      "page/wuliutab.html"
-    ]
-  },
-  "page/serve0.html": {
-    "refer": [
-      "page/server-info.html"
-    ]
-  },
-  "page/search-jieguo.html": {
-    "refer": [
-      "page/server-info.html"
-    ]
-  },
-  "page/kx-info.html": {
-    "refer": [
-      "page/login.html"
-    ]
-  },
-  "page/dingdanxxtab.html": {
-    "refer": [
-      "page/server-info.html"
-    ]
-  },
-  "page/lianxiren.html": {
-    "refer": [
-      "page/add_address.html",
-      "page/add_lianxiren.html",
-      "page/activity.html",
-      "page/login.html"
-    ]
-  }
+	"page/main.html": {
+		"resources": [
+			"page/home.html",
+			"img/icon042@3X.png",
+			"img/icon01@3X.png"
+		],
+		"refer": [
+			"page/usercenter.html",
+			"page/serve0.html",
+			"page/buy-car.html",
+			"page/home.html",
+			"page/barcode_scan.html",
+			"page/search.html"
+		]
+	},
+	"index.html": {
+		"refer": [
+			"page/main.html"
+		]
+	},
+	"page/usercenter.html": {
+		"refer": [
+			"page/main.html",
+			"page/login-mode.html",
+			"page/order.html",
+			"page/my-profile.html",
+			"page/registration-activities.html",
+			"page/login.html",
+			"page/address.html",
+			"page/current-service.html",
+			"page/lianxiren.html",
+			"page/updata.html"
+		]
+	},
+	"page/login-mode.html": {
+		"refer": [
+			"page/login.html"
+		]
+	},
+	"page/login.html": {
+		"refer": [
+			"page/login-successful.html",
+			"page/dynamic-login.html",
+			"page/register.html",
+			"page/forgot-password.html",
+			"page/activity-info.html"
+		]
+	},
+	"page/login-successful.html": {
+		"refer": [
+			"page/main.html"
+		]
+	},
+	"page/home.html": {
+		"refer": [
+			"page/serve.html",
+			"page/bzkx-info.html",
+			"page/server-info.html",
+			"page/activity.html",
+			"page/serve1.html",
+			"page/login.html",
+			"page/activity-info.html"
+		],
+		"resources": [
+			"page/homemenu1.json"
+		]
+	},
+	"page/serve.html": {
+		"refer": [
+			"page/server-info.html",
+			"page/search.html"
+		]
+	},
+	"page/server-info.html": {
+		"refer": [
+			"page/balance02.html",
+			"page/login.html",
+			"page/main.html"
+		]
+	},
+	"page/order.html": {
+		"refer": [
+			"page/invoice-info.html",
+			"page/tuikuan.html",
+			"page/wuliu.html",
+			"page/xiangqing.html",
+			"page/dizhi.html",
+			"page/balance01.html",
+			"page/my-evaluate.html",
+			"page/login.html",
+			"page/dingdanxx.html"
+		]
+	},
+	"page/balance02.html": {
+		"refer": [
+			"page/order.html",
+			"page/add_address.html",
+			"page/login.html"
+		]
+	},
+	"page/invoice-info.html": {
+		"refer": [
+			"page/invoice-zzs.html"
+		]
+	},
+	"page/activity.html": {
+		"refer": [
+			"page/activity-info.html",
+			"page/search.html",
+			"page/login.html"
+		]
+	},
+	"page/bzkx-info.html": {
+		"refer": [
+			"page/kx-info.html"
+		]
+	},
+	"page/activity-info.html": {
+		"refer": [
+			"page/login-mode.html",
+			"page/enroll.html",
+			"page/registration-activities.html",
+			"page/activity.html",
+			"page/hdpj.html",
+			"page/login.html",
+			"page/lianxiren.html",
+			"page/add_lianxiren.html"
+		]
+	},
+	"page/serve1.html": {
+		"refer": [
+			"page/search.html",
+			"page/server-info.html"
+		]
+	},
+	"page/search.html": {
+		"refer": [
+			"page/server-info.html",
+			"page/activity-info.html",
+			"page/search-jieguo.html"
+		]
+	},
+	"page/enroll.html": {
+		"refer": [
+			"page/registration-activities.html"
+		]
+	},
+	"page/registration-activities.html": {
+		"refer": [
+			"page/activity-info.html",
+			"page/login.html"
+		]
+	},
+	"page/buy-car.html": {
+		"refer": [
+			"page/balance.html"
+		]
+	},
+	"page/balance.html": {
+		"refer": [
+			"page/order.html"
+		]
+	},
+	"page/address.html": {
+		"refer": [
+			"page/add_address.html",
+			"page/login.html"
+		]
+	},
+	"page/my-profile.html": {
+		"refer": [
+			"page/usercenter.html",
+			"page/login.html",
+			"page/main.html"
+		]
+	},
+	"page/register.html": {
+		"refer": [
+			"page/xieyi.html",
+			"page/login.html",
+			"page/login-successful.html"
+		]
+	},
+	"page/dynamic-login.html": {
+		"refer": [
+			"page/dynamic-login-yzm.html"
+		]
+	},
+	"page/dynamic-login-yzm.html": {
+		"refer": [
+			"page/login-successful.html"
+		]
+	},
+	"page/forgot-password.html": {
+		"refer": [
+			"page/forgot-password1.html"
+		]
+	},
+	"page/forgot-password1.html": {
+		"refer": [
+			"page/login-successful.html"
+		]
+	},
+	"page/xiangqing.html": {
+		"resources": [
+			"page/tuikuan.html"
+		],
+		"refer": [
+			"page/tuikuan.html"
+		]
+	},
+	"page/dingdanxx.html": {
+		"resources": [
+			"page/xiangqing.html",
+			"page/dingdanxxtab.html"
+		],
+		"refer": [
+			"page/xiangqing.html",
+			"page/dingdanxxtab.html"
+		]
+	},
+	"page/wuliu.html": {
+		"resources": [
+			"page/wuliutab.html"
+		],
+		"refer": [
+			"page/wuliutab.html"
+		]
+	},
+	"page/serve0.html": {
+		"refer": [
+			"page/server-info.html"
+		]
+	},
+	"page/search-jieguo.html": {
+		"refer": [
+			"page/server-info.html"
+		]
+	},
+	"page/kx-info.html": {
+		"refer": [
+			"page/login.html"
+		]
+	},
+	"page/dingdanxxtab.html": {
+		"refer": [
+			"page/server-info.html"
+		]
+	},
+	"page/lianxiren.html": {
+		"refer": [
+			"page/add_address.html",
+			"page/add_lianxiren.html",
+			"page/activity.html",
+			"page/login.html"
+		]
+	}
 }

@@ -1,7 +1,7 @@
 const WEB_HOST = 'https://zhifu.tjbzljt.com/bzglcustom';
 //const WEB_HOST = 'http://192.168.10.31:8080/bzglcustom';
 //const WEB_HOST = 'http://192.168.10.29:8080/bzglcustom';
-//const WEB_HOST = 'http://192.168.10.177:8088/bzglcustom';
+//const WEB_HOST = 'http://192.168.10.85:8080/bzglcustom';
 //const WEB_HOST = 'http://bzl.mangoc.cc';
 const ENV = 'debug';
 

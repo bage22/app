@@ -59,6 +59,7 @@
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/sub.js" type="text/javascript" charset="utf-8"></script>
 		<script>
+			console.log(localStorage.getItem("token"));
 			//热门活动列表接口
 			   mui.ajax({
 					url:WEB_HOST+"/index/newsList", 
@@ -70,8 +71,7 @@
 					dataType: "json",
 					timeout: 1000,
 					success: function(data) {
-//						mui.toast(JSON.stringify(data)); 
-//                      mui.toast(data.message);
+						console.log(JSON.stringify(data)); 
                         if(data.data.length>0){
 						   document.getElementById("bzkx_list").innerHTML=template("bzkxtemp",data);
 						}else{
@@ -82,18 +82,7 @@
 						mui.toast("服务器未响应，请稍后重试");
 					}
 				});
-			//			列表渲染js
-//              mui.ajax({
-//						url: "bzkx.json",
-//						type: "get",
-//						async: false,
-//						data:"",
-//						dataType: "json",
-//						timeout: 1000,
-//						success: function(data) {
-//							document.getElementById("bzkx_list").innerHTML=template("bzkxtemp",data);
-//						}
-//				});
+	
 		    var itemlen=document.getElementsByClassName("bzkx_item").length;
 		    for(var i=0;i<itemlen;i++){
 		    	document.getElementsByClassName("bzkx_item")[i].addEventListener("tap",function(){
